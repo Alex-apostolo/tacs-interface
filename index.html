@@ -1,11 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>TACS</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js"></script>
+    <script src="https://cdn.anychart.com/js/8.0.1/anychart-core.min.js"></script>
+      <script src="https://cdn.anychart.com/js/8.0.1/anychart-pie.min.js"></script>
 </head>
+
 <body>
-    
+    <div></div>
+    <h4>Create a folder with all the .txt, .docs, .pdf
+        files you want to classify and select it below</h4>
+    <div></div>
+    <button>APPLY TACS</button>
+
+    <h2>Results</h2>
+    <p>omg baby</p>
+
+    <div>
+        <h3>General</h3>
+        <general-pie-chart type='General'></general-pie-chart>
+    </div>
+
+    <div>
+        <h3>Comparisson</h3>
+        <comparisson-chart></comparisson-chart>
+    </div>
+
+    <div>
+        <h3>Specific</h3>
+        <specific-analysis-line></specific-analysis-line>
+    </div>
+
+    <button>EXPORT RESULTS</button>
+    <script src="generalPieChart.js"></script>
+
+    <div class="pie-chart">
+        <div class="pie"></div>
+        <div class="content"></div>
+    </div>
+
+    <div id="container"></div>
 </body>
+
 </html>
