@@ -1,4 +1,5 @@
 const pie = document.getElementById('pie-chart');
+const column = document.getElementById('column-chart');
 
 const chart_div = document.createElement('div');
 chart_div.setAttribute('id', 'chart_div');
@@ -9,9 +10,10 @@ chart_div2.setAttribute('id', 'chart_div2');
 const chart_div3 = document.createElement('div');
 chart_div3.setAttribute('id', 'chart_div3');
 
+
 pie.append(chart_div);
 pie.append(chart_div2);
-pie.append(chart_div3);
+column.append(chart_div3);
 
 // Load the Visualization API and the piechart package.
 google.load('visualization', '1.0', { 'packages': ['corechart'] });
@@ -62,19 +64,25 @@ function drawChart() {
     var options = {
         'title': 'How Much Pizza I Ate Last Night',
         'width': 400,
-        'height': 300
+        'height': 300,
+        'chartArea': { 'width': '100%', 'height': '80%' },
+        'legend': { 'position': 'bottom' }
     };
     // Set chart options
     var options2 = {
         'title': 'How Much Pizza You Ate Last Night',
         'width': 400,
-        'height': 300
+        'height': 300,
+        'chartArea': { 'width': '100%', 'height': '80%' },
+        'legend': { 'position': 'bottom' }
     };
     // Set chart options
     var options3 = {
         'title': 'Line chart',
         'width': 400,
-        'height': 300
+        'height': 300,
+        'chartArea': { 'width': '100%', 'height': '80%' },
+        'legend': { 'position': 'bottom' }
     };
 
     // Instantiate and draw our chart, passing in some options.
@@ -82,6 +90,7 @@ function drawChart() {
     chart.draw(data, options);
     var chart2 = new google.visualization.PieChart(document.getElementById('chart_div2'));
     chart2.draw(data2, options2);
-    var chart3 = new google.visualization.LineChart(document.getElementById('chart_div3'));
+    var chart3 = new google.visualization.ColumnChart(document.getElementById('chart_div3'));
     chart3.draw(data3, options3);
 }
+

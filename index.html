@@ -6,34 +6,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TACS</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Hanalei&display=swap" rel="stylesheet">
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script src='googlePieChart.js' defer></script>
+    <script>
+        window.
+            onload
+            = function () {
+                Particles.
+                    init
+                    ({
+                        selector: '.background',
+                        connectParticles: 'true',
+                        color: '#408ec6'
+                    });
+            };
+    </script>
 </head>
 
 <body>
-    <div></div>
-    <h4>Create a folder with all the .txt, .docs, .pdf
-        files you want to classify and select it below</h4>
-    <div></div>
-    <button>APPLY TACS</button>
+    <header>
+        <div class="logo-container">
+            <img src="logo.png" alt="logo.png" class="logo">
+            <p>Textual Analysis for Cyber Security</p>
+        </div>
+        <div class="navigation-bar"></div>
+        <div class="container">
+            <h4>To use the tool make a folder with your .txt, .docs files you want to classify:</h4>
+            <!--Create a widget through shadowDom for the following part-->
+            <button class="apply-button">APPLY</button>
+        </div>
+        <canvas class="background"></canvas>
+    </header>
 
     <h2>Results</h2>
-    <p>omg baby</p>
 
     <h3>General</h3>
+    <button id="add-pie-number">Add new element</button>
     <div id="pie-chart"></div>
 
-    <div>
-        <h3>Comparisson</h3>
-        <comparisson-chart></comparisson-chart>
-    </div>
+    <h3>Comparisson</h3>
+    <button>Add new element</button>
+    <div id="column-chart"></div>
 
-    <div>
-        <h3>Specific</h3>
-        <specific-analysis-line></specific-analysis-line>
-    </div>
+    <h3>Specific</h3>
+    <div id="bar-chart"></div>
 
     <button>EXPORT RESULTS</button>
+    <script src="node_modules/particlesjs/dist/particles.min.js"></script>
 </body>
 
 </html>
