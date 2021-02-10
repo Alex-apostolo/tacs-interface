@@ -7,7 +7,7 @@
     <title>TACS</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Hanalei&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script src='googlePieChart.js' defer></script>
     <script>
@@ -19,7 +19,8 @@
                     ({
                         selector: '.background',
                         connectParticles: 'true',
-                        color: '#408ec6'
+                        color: '#408ec6',
+                        maxParticles: 0
                     });
             };
     </script>
@@ -30,14 +31,14 @@
         <div class="logo-container">
             <img src="logo.png" alt="logo.png" class="logo">
             <p>Textual Analysis for Cyber Security</p>
+            <div class="navigation-bar"></div>
+            <button>TOGGLE PARTICLES</button>
         </div>
-        <div class="navigation-bar"></div>
-        <div class="container">
+        <div class="main-container">
+            <h1>A powerful tool that uses our Cyber Security<br>dictionary to analyse your documents</h1>
             <h4>To use the tool make a folder with your .txt, .docs files you want to classify:</h4>
-            <!--Create a widget through shadowDom for the following part-->
-            <button class="apply-button">APPLY</button>
+            <button>APPLY</button>
         </div>
-        <canvas class="background"></canvas>
     </header>
 
     <h2>Results</h2>
