@@ -11,18 +11,28 @@
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script src='googlePieChart.js' defer></script>
     <script>
-        window.
-            onload
-            = function () {
-                Particles.
-                    init
-                    ({
-                        selector: '.background',
-                        connectParticles: 'true',
-                        color: '#408ec6',
-                        maxParticles: 0
-                    });
-            };
+        window.onload = function () {
+
+            var particles = Particles.init({
+                selector: '.background',
+                connectParticles: 'true',
+                color: '#408ec6',
+                maxParticles: 50
+            });
+
+            // particles.pauseAnimation();
+            var paused = false;
+            const background = document.getElementsByClassName('background')[0];
+            const toggle_btn = document.getElementById('easter-egg');
+            toggle_btn.addEventListener('click', function () {
+                if (paused) {
+                    particles.resumeAnimation();
+                } else {
+                    particles.pauseAnimation();
+                }
+                paused = !paused;
+            }, false);
+        }
     </script>
 </head>
 
@@ -32,13 +42,14 @@
             <img src="logo.png" alt="logo.png" class="logo">
             <p>Textual Analysis for Cyber Security</p>
             <div class="navigation-bar"></div>
-            <button>TOGGLE PARTICLES</button>
+            <button id='easter-egg'></button>
         </div>
         <div class="main-container">
-            <h1>A powerful tool that uses our Cyber Security<br>dictionary to analyse your documents</h1>
+            <h1>A powerful tool that uses our Cyber Security dictionary to analyse your documents</h1>
             <h4>To use the tool make a folder with your .txt, .docs files you want to classify:</h4>
-            <button>APPLY</button>
+            <button id="apply-btn">APPLY</button>
         </div>
+        <canvas class="background"></canvas>
     </header>
 
     <h2>Results</h2>

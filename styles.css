@@ -4,9 +4,13 @@
     margin: 0;
 }
 
+html {
+    font-family: 'EB Garamond', serif;
+    font-size: 100%;
+}
+
 body {
     background: linear-gradient(to top, #1e2761, #7a2048);
-    font-family: 'EB Garamond', serif;
     color: whitesmoke;
 }
 
@@ -17,9 +21,26 @@ header {
 
 .background {
     position: absolute;
+    display: block;
     top: 0;
     left: 0;
-    z-index: 0;
+    z-index: -1;
+}
+
+#easter-egg {
+    position: relative;
+    align-self: flex-start;
+    margin-left: auto;
+    border: none;
+    border-top: 2rem solid white;
+    border-left: 2rem solid #7a2048;
+    outline: none;
+    cursor: pointer;
+}
+
+#easter-egg:hover {
+    border-top: 2rem solid #408ec6;
+    transition: 0.3s;
 }
 
 .logo-container {
@@ -27,19 +48,12 @@ header {
     position: absolute;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: start;
 }
 
 .logo-container .logo {
-    width: 10em;
-    height: 5em;
-}
-
-.logo-container button {
-    position: relative;
-    align-self: flex-start;
-    margin: 1em;
-    margin-left: auto;
+    width: 10rem;
+    height: 5rem;
 }
 
 .main-container {
@@ -57,12 +71,28 @@ header {
 
 .main-container h1 {
     text-align: center;
-    margin-bottom: 2em;
+    max-width: 40rem;
+    margin-bottom: 2rem;
 }
 
 .main-container h4 {
     text-align: center;
-    margin-bottom: 1.5em;
+    margin-bottom: 1.5rem;
+}
+
+#apply-btn {
+    width: 20rem;
+    height: 2rem;
+    border: none;
+    outline: transparent;
+    color: #1e2761;
+    cursor: pointer;
+    border-radius: 5rem;
+}
+
+#apply-btn:hover {
+    background-color: #408ec6;
+    transition: 0.3s;
 }
 
 #pie-chart {
