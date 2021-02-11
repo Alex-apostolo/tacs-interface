@@ -2,6 +2,7 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    z-index: 1;
 }
 
 html {
@@ -10,7 +11,8 @@ html {
 }
 
 body {
-    background: linear-gradient(to top, #1e2761, #7a2048);
+    --color: #7a2048;
+    background: linear-gradient(to top, #1e2761, var(--color));
     color: whitesmoke;
 }
 
@@ -24,7 +26,7 @@ header {
     display: block;
     top: 0;
     left: 0;
-    z-index: -1;
+    z-index: 0;
 }
 
 #easter-egg {
@@ -32,8 +34,8 @@ header {
     align-self: flex-start;
     margin-left: auto;
     border: none;
-    border-top: 2rem solid white;
-    border-left: 2rem solid #7a2048;
+    border-top: 2rem solid whitesmoke;
+    border-left: 2rem solid var(--color);
     outline: none;
     cursor: pointer;
 }

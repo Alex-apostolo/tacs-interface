@@ -8,32 +8,6 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script src='googlePieChart.js' defer></script>
-    <script>
-        window.onload = function () {
-
-            var particles = Particles.init({
-                selector: '.background',
-                connectParticles: 'true',
-                color: '#408ec6',
-                maxParticles: 50
-            });
-
-            // particles.pauseAnimation();
-            var paused = false;
-            const background = document.getElementsByClassName('background')[0];
-            const toggle_btn = document.getElementById('easter-egg');
-            toggle_btn.addEventListener('click', function () {
-                if (paused) {
-                    particles.resumeAnimation();
-                } else {
-                    particles.pauseAnimation();
-                }
-                paused = !paused;
-            }, false);
-        }
-    </script>
 </head>
 
 <body>
@@ -47,6 +21,7 @@
         <div class="main-container">
             <h1>A powerful tool that uses our Cyber Security dictionary to analyse your documents</h1>
             <h4>To use the tool make a folder with your .txt, .docs files you want to classify:</h4>
+            <browse-widget></browse-widget>
             <button id="apply-btn">APPLY</button>
         </div>
         <canvas class="background"></canvas>
@@ -66,7 +41,12 @@
     <div id="bar-chart"></div>
 
     <button>EXPORT RESULTS</button>
+
+    <script src="browse_widget.js" defer></script>
     <script src="node_modules/particlesjs/dist/particles.min.js"></script>
+    <script src="particles.js" defer></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script src='googlePieChart.js' defer></script>
 </body>
 
 </html>

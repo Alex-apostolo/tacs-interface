@@ -27,7 +27,7 @@ google.setOnLoadCallback(drawChart);
 function drawChart() {
 
     // Create the data table.
-    var data = new google.visualization.DataTable();
+    let data = new google.visualization.DataTable();
     data.addColumn('string', 'Topping');
     data.addColumn('number', 'Slices');
     data.addRows([
@@ -38,7 +38,7 @@ function drawChart() {
         ['Pepperoni', 2]
     ]);
     // Create the data table.
-    var data2 = new google.visualization.DataTable();
+    let data2 = new google.visualization.DataTable();
     data2.addColumn('string', 'Topping');
     data2.addColumn('number', 'Slices');
     data2.addRows([
@@ -49,7 +49,7 @@ function drawChart() {
         ['Pepperoni', 2]
     ]);
 
-    var data3 = new google.visualization.DataTable();
+    let data3 = new google.visualization.DataTable();
     data3.addColumn('string', 'Year');
     data3.addColumn('number', 'Sales');
     data3.addColumn('number', 'Expenses');
@@ -61,7 +61,7 @@ function drawChart() {
     ]);
 
     // Set chart options
-    var options = {
+    let options = {
         'title': 'How Much Pizza I Ate Last Night',
         'width': 400,
         'height': 300,
@@ -69,7 +69,7 @@ function drawChart() {
         'legend': { 'position': 'bottom' }
     };
     // Set chart options
-    var options2 = {
+    let options2 = {
         'title': 'How Much Pizza You Ate Last Night',
         'width': 400,
         'height': 300,
@@ -77,7 +77,7 @@ function drawChart() {
         'legend': { 'position': 'bottom' }
     };
     // Set chart options
-    var options3 = {
+    let options3 = {
         'title': 'Line chart',
         'width': 400,
         'height': 300,
@@ -86,11 +86,11 @@ function drawChart() {
     };
 
     // Instantiate and draw our chart, passing in some options.
-    var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+    let chart = new google.visualization.PieChart(document.getElementById('chart_div'));
     chart.draw(data, options);
-    var chart2 = new google.visualization.PieChart(document.getElementById('chart_div2'));
+    let chart2 = new google.visualization.PieChart(document.getElementById('chart_div2'));
     chart2.draw(data2, options2);
-    var chart3 = new google.visualization.ColumnChart(document.getElementById('chart_div3'));
+    let chart3 = new google.visualization.ColumnChart(document.getElementById('chart_div3'));
     chart3.draw(data3, options3);
 }
 
