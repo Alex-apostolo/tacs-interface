@@ -94,12 +94,13 @@ header {
     margin-left: 0.3rem;
 }
 
-.add-browse-widget {
+.add-btn {
     align-self: flex-start;
     margin-left: 0.3rem;
     width: 1.4rem;
     height: 1.4rem;
     margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
     border: 0.123rem solid;
     border-radius: 50%;
     border-color: #408ec6;
@@ -107,31 +108,32 @@ header {
     outline: none;
 }
 
-.add-browse-widget:hover {
+.add-btn:hover {
     background-color: #408ec6;
     transition: 0.3s;
 }
 
 /* Vertical bar */
-.add-browse-widget::after {
+.add-btn::after {
     position: relative;
     display: block;
     background-color: #1e2761;
-    width: 12.5%;
-    height: 50%;
+    width: 0.125rem;
+    height: 0.75rem;
+    top: -4.2%;
     left: 43.75%;
     content: " ";
 }
 
 /* Horizontal bar */
-.add-browse-widget::before {
+.add-btn::before {
     position: relative;
     display: block;
     background-color: #1e2761;
-    width: 50%;
-    height: 12.5%;
-    left: 25%;
-    top: 32%;
+    width: 0.75rem;
+    height: 0.125rem;
+    left: 20%;
+    top: 32.5%;
     content: " ";
 }
 

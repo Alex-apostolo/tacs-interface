@@ -23,7 +23,7 @@
             <h4>To use the tool make a folder with your .txt file/s and select them below:</h4>
             <form action="/action_page.php" method="GET">
                 <input type="file" class='browse-widget'>
-                <button type="button" class="add-browse-widget"></button>
+                <button type="button" class="add-btn" id="add-browse-widget"></button>
                 <button type="submit" id="apply-btn">APPLY</button>
             </form>
         </div>
@@ -33,16 +33,15 @@
     <h2>Results</h2>
 
     <h3>General</h3>
-    <button id="add-pie-number">Add new element</button>
+    <button type="button" class="add-btn" id="append-pie"></button>
     <div id="pie-chart"></div>
 
     <h3>Comparisson</h3>
-    <button>Add new element</button>
+    <button type="button" class="add-btn" id="append-bar-chart"></button>
     <div id="column-chart"></div>
 
     <h3>Specific</h3>
     <div id="bar-chart"></div>
-
     <button>EXPORT RESULTS</button>
 
     <script src="node_modules/particlesjs/dist/particles.min.js"></script>
