@@ -20,9 +20,12 @@
         </div>
         <div class="main-container">
             <h1>A powerful tool that uses our Cyber Security dictionary to analyse your documents</h1>
-            <h4>To use the tool make a folder with your .txt, .docs files you want to classify:</h4>
-            <browse-widget></browse-widget>
-            <button id="apply-btn">APPLY</button>
+            <h4>To use the tool make a folder with your .txt file/s and select them below:</h4>
+            <form action="/action_page.php" method="GET">
+                <input type="file" class='browse-widget'>
+                <button type="button" class="add-browse-widget"></button>
+                <button type="submit" id="apply-btn">APPLY</button>
+            </form>
         </div>
         <canvas class="background"></canvas>
     </header>
@@ -42,7 +45,6 @@
 
     <button>EXPORT RESULTS</button>
 
-    <script src="browse_widget.js" defer></script>
     <script src="node_modules/particlesjs/dist/particles.min.js"></script>
     <script src="particles.js" defer></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
