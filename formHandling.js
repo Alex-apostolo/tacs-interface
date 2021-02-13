@@ -49,6 +49,9 @@ addBtnBrowse.addEventListener('click', () => {
         addBtnBrowse.hidden = false;
         // Hides associated element
         document.getElementById('browse' + newMinus.dataset.index).style.display = 'none';
+
+        const browseInput = document.querySelector('#browse' + newMinus.dataset.index + ' input');
+        browseInput.value = '';
     });
 
     // Insert before add button
