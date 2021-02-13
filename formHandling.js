@@ -7,6 +7,22 @@ const addBtnBrowse = document.getElementById('add-btn-browse');
 addBtnBrowse.addEventListener('click', () => {
     // return if the limit has been reached
     if (browseCount >= limit) {
+        // Go through browse elements, check which have display of none and update them. If its the last element also hide the button.
+        for(let i = 0; i < limit + 1; i++) {
+            let temp = document.getElementById('browse' + i);
+            if (temp.style.display === 'none'){
+                temp.style.display = 'flex';
+                addBtnBrowse.before(temp);
+                break;
+            }
+        }
+        for(let i = 0; i < limit + 1; i++) {
+            if(document.getElementById('browse' + i).style.display === 'none') {
+                break;
+            }
+            if (i === limit)
+                addBtnBrowse.hidden = true;
+        }
         return;
     }
     browseCount++;
@@ -23,14 +39,16 @@ addBtnBrowse.addEventListener('click', () => {
     const newMinus = document.createElement('div');
     newMinus.nodeType = 'button';
     newMinus.classList.add('minus-btn');
+    newMinus.setAttribute('data-index', browseCount);
 
-    // Append to newMinus
+    // Append newMinus
     newBrowse.append(newMinus);
 
     // Adds event listener to newMinus
     newMinus.addEventListener('click', () => {
-        // Removes associated browse_widget
-        // Fixes the ordering of widgets
+        addBtnBrowse.hidden = false;
+        // Hides associated element
+        document.getElementById('browse' + newMinus.dataset.index).style.display = 'none';
     });
 
     // Insert before add button
