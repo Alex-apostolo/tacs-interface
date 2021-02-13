@@ -1,64 +1,59 @@
-// Keeps track of the browse elements on the DOM
-let browseCount = 0;
-const limit = 3;
+// Keeps a limit of the browse elements on the DOM
+const limit = 4;
+const browseCount = limit;
+
+// Add button browse
+const addBtnBrowse = document.getElementById('add-btn-browse');
+
+init(limit);
+
+// Initialization method used to create input fields based on the limit
+function init(limit) {
+    for (let i = 0; i < limit; i++) {
+        // Get previous browse element
+        const previousBrowse = document.getElementById('browse0');
+
+        // Create new browse element
+        const newBrowse = previousBrowse.cloneNode(true);
+        newBrowse.id = 'browse' + i;
+        newBrowse.classList.add('browse-with-minus');
+
+        // Create newMinus 
+        const newMinus = document.createElement('div');
+        newMinus.nodeType = 'button';
+        newMinus.classList.add('minus-btn');
+        newMinus.setAttribute('data-index', i);
+        // Adds event listener to newMinus
+        newMinus.addEventListener('click', () => {
+            addBtnBrowse.hidden = false;
+            // Hides associated element
+            document.getElementById('browse' + newMinus.dataset.index).style.display = 'none';
+
+            const browseInput = document.querySelector('#browse' + newMinus.dataset.index + ' input');
+            browseInput.value = '';
+        });
+
+        // Append newMinus
+        newBrowse.append(newMinus);
+        newBrowse.style.display = 'none';
+
+        // Insert before add button
+        addBtnBrowse.before(newBrowse);
+    }
+}
 
 // Listen for clicks and add elements
-const addBtnBrowse = document.getElementById('add-btn-browse');
 addBtnBrowse.addEventListener('click', () => {
-    // return if the limit has been reached
-    if (browseCount >= limit) {
-        // Go through browse elements, check which have display of none and update them. If its the last element also hide the button.
-        for(let i = 0; i < limit + 1; i++) {
-            let temp = document.getElementById('browse' + i);
-            if (temp.style.display === 'none'){
-                temp.style.display = 'flex';
-                addBtnBrowse.before(temp);
-                break;
-            }
+    // Find the next element with display attribute set to none and set it to flex
+    for (let i = 0; i < limit; i++) {
+        let temp = document.getElementById('browse' + i);
+        if (temp.style.display === 'none') {
+            temp.style.display = 'flex';
+            addBtnBrowse.before(temp);
+            break;
         }
-        for(let i = 0; i < limit + 1; i++) {
-            if(document.getElementById('browse' + i).style.display === 'none') {
-                break;
-            }
-            if (i === limit)
-                addBtnBrowse.hidden = true;
-        }
-        return;
+        // Hide add button when element before limit has been reached
+        if (i === limit - 2)
+            addBtnBrowse.hidden = true;
     }
-    browseCount++;
-
-    // Get previous browse element
-    const previousBrowse = document.getElementById('browse0');
-
-    // Create new browse element
-    const newBrowse = previousBrowse.cloneNode(true);
-    newBrowse.id = 'browse' + browseCount;
-    newBrowse.classList.add('browse-with-minus');
-
-    // Create newMinus 
-    const newMinus = document.createElement('div');
-    newMinus.nodeType = 'button';
-    newMinus.classList.add('minus-btn');
-    newMinus.setAttribute('data-index', browseCount);
-
-    // Append newMinus
-    newBrowse.append(newMinus);
-
-    // Adds event listener to newMinus
-    newMinus.addEventListener('click', () => {
-        addBtnBrowse.hidden = false;
-        // Hides associated element
-        document.getElementById('browse' + newMinus.dataset.index).style.display = 'none';
-
-        const browseInput = document.querySelector('#browse' + newMinus.dataset.index + ' input');
-        browseInput.value = '';
-    });
-
-    // Insert before add button
-    addBtnBrowse.before(newBrowse);
-
-    // If the limit is reached hide the add btn
-    if (browseCount === limit) {
-        addBtnBrowse.hidden = true;
-    }
-})
+});
