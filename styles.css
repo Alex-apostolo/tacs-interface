@@ -14,8 +14,10 @@ body {
     --color: #7a2048;
     background: linear-gradient(to top, #1e2761, var(--color));
     color: whitesmoke;
+    background-attachment: fixed;
 }
 
+/* HEADER SECTION */
 header {
     position: relative;
     height: 100vh;
@@ -91,12 +93,15 @@ header {
 
 .browse-widget {
     align-self: flex-start;
-    margin-left: 0.3rem;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: bold;
+    font-style: italic;
+    margin: 0.3rem;
 }
 
 .add-btn {
     align-self: flex-start;
-    margin-left: 0.3rem;
     width: 1.4rem;
     height: 1.4rem;
     margin-top: 0.25rem;
@@ -132,9 +137,26 @@ header {
     background-color: #1e2761;
     width: 0.75rem;
     height: 0.125rem;
-    left: 20%;
-    top: 32.5%;
+    left: 15%;
+    top: 34%;
     content: " ";
+}
+
+.page-brake {
+    position: absolute;
+    bottom: 0%;
+    width: 100vw;
+    height: 3px;
+    background: linear-gradient(to right, transparent, whitesmoke, transparent);
+}
+
+/* MAIN SECTION */
+
+/* main h1, main h2, main h3, main h2, main h3, main h4, main h5, main h6 {
+    margin: 0.4rem;
+} */
+main * {
+    margin: 0.4em;
 }
 
 #apply-btn {
@@ -162,4 +184,39 @@ header {
     width: 100px;
     height: 100px;
     margin: 10px;
+}
+
+input[type="file"]::-ms-browse {
+    font: inherit;
+    font-style: initial;
+    width: 8rem;
+    height: 2rem;
+    border: none;
+    outline: transparent;
+    color: #1e2761;
+    cursor: pointer;
+    border-radius: 5rem;
+    margin-right: 0.5rem;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+    font: inherit;
+    font-style: initial;
+    width: 8rem;
+    height: 2rem;
+    border: none;
+    outline: transparent;
+    color: #1e2761;
+    cursor: pointer;
+    border-radius: 5rem;
+    margin-right: 0.5rem;
+}
+
+input[type="file"]::-webkit-file-upload-button:hover {
+    background-color: #408ec6;
+    transition: 0.3s;    
+}
+input[type="file"]::-ms-browse:hover {
+    background-color: #408ec6;
+    transition: 0.3s;  
 }

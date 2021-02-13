@@ -22,32 +22,37 @@
             <h1>A powerful tool that uses our Cyber Security dictionary to analyse your documents</h1>
             <h4>To use the tool make a folder with your .txt file/s and select them below:</h4>
             <form action="/action_page.php" method="GET">
-                <input type="file" class='browse-widget'>
+                <input type="file" class='browse-widget' id="browse-widget1">
                 <button type="button" class="add-btn" id="add-browse-widget"></button>
                 <button type="submit" id="apply-btn">APPLY</button>
             </form>
         </div>
+        <div class="page-brake"></div>
         <canvas class="background"></canvas>
     </header>
 
-    <h2>Results</h2>
+    <!-- This section will be generated -->
+    <main>
+        <h2>Results</h2>
 
-    <h3>General</h3>
-    <button type="button" class="add-btn" id="append-pie"></button>
-    <div id="pie-chart"></div>
+        <h3>General</h3>
+        <button type="button" class="add-btn" id="append-pie"></button>
+        <div id="pie-chart"></div>
 
-    <h3>Comparisson</h3>
-    <button type="button" class="add-btn" id="append-bar-chart"></button>
-    <div id="column-chart"></div>
+        <h3>Comparisson</h3>
+        <button type="button" class="add-btn" id="append-bar-chart"></button>
+        <div id="column-chart"></div>
 
-    <h3>Specific</h3>
-    <div id="bar-chart"></div>
-    <button>EXPORT RESULTS</button>
+        <h3>Specific</h3>
+        <div id="bar-chart"></div>
+        <button>EXPORT RESULTS</button>
+    </main>
 
     <script src="node_modules/particlesjs/dist/particles.min.js"></script>
     <script src="particles.js" defer></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script src='googlePieChart.js' defer></script>
+    <script src='googleCharts.js' defer></script>
+    <script src="formHandling.js"></script>
 </body>
 
 </html>
