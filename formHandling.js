@@ -1,17 +1,43 @@
-// Keeps a track of the browse_widgets on the DOM
-let browse_widgets = 1;
+// Keeps track of the browse elements on the DOM
+let browseCount = 0;
+const limit = 3;
 
-const add_browse_widget = document.getElementById('add-browse-widget');
-add_browse_widget.addEventListener('click', () => {
-    // Create new browse_widget and append it
-    browse_widgets++;
-    const previous_id = 'browse-widget' + (browse_widgets - 1);
-    const previous_node = document.getElementById(previous_id);
+// Listen for clicks and add elements
+const addBtnBrowse = document.getElementById('add-btn-browse');
+addBtnBrowse.addEventListener('click', () => {
+    // return if the limit has been reached
+    if (browseCount >= limit) {
+        return;
+    }
+    browseCount++;
 
-    const new_id = 'browse-widget' + browse_widgets;
-    const new_node = previous_node.cloneNode(true);
-    new_node.id = new_id;
+    // Get previous browse element
+    const previousBrowse = document.getElementById('browse0');
 
-    previous_node.after(new_node);
+    // Create new browse element
+    const newBrowse = previousBrowse.cloneNode(true);
+    newBrowse.id = 'browse' + browseCount;
+    newBrowse.classList.add('browse-with-minus');
 
+    // Create newMinus 
+    const newMinus = document.createElement('div');
+    newMinus.nodeType = 'button';
+    newMinus.classList.add('minus-btn');
+
+    // Append to newMinus
+    newBrowse.append(newMinus);
+
+    // Adds event listener to newMinus
+    newMinus.addEventListener('click', () => {
+        // Removes associated browse_widget
+        // Fixes the ordering of widgets
+    });
+
+    // Insert before add button
+    addBtnBrowse.before(newBrowse);
+
+    // If the limit is reached hide the add btn
+    if (browseCount === limit) {
+        addBtnBrowse.hidden = true;
+    }
 })

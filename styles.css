@@ -91,15 +91,55 @@ header {
     width: 27rem;
 }
 
-.browse-widget {
+.browse {
     align-self: flex-start;
-    font-family: inherit;
-    font-size: 1rem;
-    font-weight: bold;
-    font-style: italic;
-    margin: 0.3rem;
+    margin: 0.2rem;
+    margin-left: 0;
 }
 
+.browse-with-minus {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* MINUS BTN */
+
+.minus-btn {
+    /* align-self: flex-start; */
+    position: relative;
+    width: 1.4rem;
+    height: 1.4rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    border: 0.123rem solid;
+    border-radius: 50%;
+    border-color: #408ec6;
+    background-color: whitesmoke;
+    cursor: pointer;
+    outline: none;
+}
+
+.minus-btn:hover {
+    background-color: #408ec6;
+    transition: 0.3s;
+}
+
+/* Horizontal bar */
+.minus-btn::before {
+    position: absolute;
+    display: block;
+    background-color: #1e2761;
+    width: 11px;
+    height: 2px;
+    bottom: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(50%);
+    content: " ";
+}
+
+/* ADD BTN */
 .add-btn {
     align-self: flex-start;
     width: 1.4rem;
@@ -142,6 +182,22 @@ header {
     content: " ";
 }
 
+/* APPLY BTN */
+#apply-btn {
+    width: 20rem;
+    height: 2rem;
+    border: none;
+    outline: transparent;
+    color: #1e2761;
+    cursor: pointer;
+    border-radius: 5rem;
+    margin-top: 2rem;
+}
+
+#apply-btn:hover {
+    background-color: #408ec6;
+    transition: 0.3s;
+}
 .page-brake {
     position: absolute;
     bottom: 0%;
@@ -159,21 +215,7 @@ main * {
     margin: 0.4em;
 }
 
-#apply-btn {
-    width: 20rem;
-    height: 2rem;
-    border: none;
-    outline: transparent;
-    color: #1e2761;
-    cursor: pointer;
-    border-radius: 5rem;
-    margin-top: 2rem;
-}
 
-#apply-btn:hover {
-    background-color: #408ec6;
-    transition: 0.3s;
-}
 
 #pie-chart {
     display: flex;

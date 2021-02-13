@@ -22,8 +22,11 @@
             <h1>A powerful tool that uses our Cyber Security dictionary to analyse your documents</h1>
             <h4>To use the tool make a folder with your .txt file/s and select them below:</h4>
             <form action="/action_page.php" method="GET">
-                <input type="file" class='browse-widget' id="browse-widget1">
-                <button type="button" class="add-btn" id="add-browse-widget"></button>
+                <div id='browse0' class='browse'>
+                    <input type="file">
+                </div>
+                <!-- Dynamically added browse elements go in here -->
+                <button type="button" class="add-btn" id="add-btn-browse"></button>
                 <button type="submit" id="apply-btn">APPLY</button>
             </form>
         </div>
