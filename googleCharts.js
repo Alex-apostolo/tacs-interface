@@ -1,5 +1,5 @@
 const pie = document.getElementById('pie-chart-container');
-const column = document.getElementById('column-chart');
+const column = document.getElementById('column-chart-container');
 
 const pieChart = document.createElement('div');
 pieChart.setAttribute('id', 'pie-chart');
@@ -65,35 +65,38 @@ function drawChart() {
 
     // Set chart options
     let options = {
-        'title': 'How Much Pizza I Ate Last Night',
-        'width': 400,
-        'height': 300,
-        'chartArea': { 'width': '100%', 'height': '80%' },
-        'legend': { 'position': 'bottom' }
+        width: 400,
+        height: 300,
+        backgroundColor: '#1a2256',
+        chartArea: { width: '100%', height: '80%' },
+        legend: {
+            position: 'bottom',
+            textStyle: {
+                color: 'whitesmoke',
+                fontName: 'EB Garamond'
+            }
+        },
+        hAxis: {
+            textStyle: {
+                color: 'whitesmoke',
+                fontName: 'EB Garamond',
+                fontSize: 13
+            }
+        },
+        titleTextStyle: {
+            color: 'whitesmoke',
+            fontName: 'EB Garamond',
+            fontSize: 20
+        }
     };
-    // Set chart options
-    let options2 = {
-        'title': 'How Much Pizza You Ate Last Night',
-        'width': 400,
-        'height': 300,
-        'chartArea': { 'width': '100%', 'height': '80%' },
-        'legend': { 'position': 'bottom' }
-    };
-    // Set chart options
-    let options3 = {
-        'title': 'Line chart',
-        'width': 400,
-        'height': 300,
-        'chartArea': { 'width': '100%', 'height': '80%' },
-        'legend': { 'position': 'bottom' }
-    };
+    options.title = 'Hello';
 
     // Instantiate and draw our chart, passing in some options.
     let chart = new google.visualization.PieChart(pieChart);
     chart.draw(data, options);
     let chart2 = new google.visualization.PieChart(pieChart2);
-    chart2.draw(data2, options2);
+    chart2.draw(data2, options);
     let chart3 = new google.visualization.ColumnChart(pieChart3);
-    chart3.draw(data3, options3);
+    chart3.draw(data3, options);
 }
 

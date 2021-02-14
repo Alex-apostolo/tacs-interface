@@ -38,19 +38,31 @@
     <main>
         <h1>Results</h1>
         <div class="pagebrake"></div>
-        <h2>General</h2>
-        <button type="button" class="add-btn" id="append-pie-chart"></button>
-        <div id="pie-chart-container"></div>
 
-        <div class="pagebreak"></div>
-        <h2>Comparisson</h2>
-        <button type="button" class="add-btn" id="append-bar-chart"></button>
-        <div id="column-chart"></div>
+        <!-- General Section -->
+        <div class="section-container">
+            <div class="heading-container">
+                <h2>General</h2>
+                <button type="button" class="add-btn" id="append-pie-chart"></button>
+            </div>
+            <div id="pie-chart-container"></div>
+        </div>
 
-        <div class="pagebreak"></div>
-        <h2>Specific</h2>
-        <div id="bar-chart"></div>
-        <button>EXPORT RESULTS</button>
+        <!-- Comparisson Section -->
+        <div class="section-container">
+            <div class="heading-container">
+                <h2>Comparisson</h2>
+                <button type="button" class="add-btn" id="append-bar-chart"></button>
+            </div>
+            <div id="column-chart-container"></div>
+        </div>
+
+        <!-- Specific Section -->
+        <div class="section-container">
+            <h2>Specific</h2>
+            <div id="bar-chart"></div>
+            <button>EXPORT RESULTS</button>
+        </div>
     </main>
 
     <script src="node_modules/particlesjs/dist/particles.min.js"></script>
