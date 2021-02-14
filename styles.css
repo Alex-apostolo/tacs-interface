@@ -8,22 +8,19 @@
 html {
     font-family: 'EB Garamond', serif;
     font-size: 100%;
-}
-
-body {
-    --color: #7a2048;
-    background: linear-gradient(to top, #1e2761, var(--color));
+    background-color: hsl(232, 53%, 22%);
     color: whitesmoke;
-    background-attachment: fixed;
 }
 
 /* HEADER SECTION */
+
 header {
     position: relative;
     height: 100vh;
+    background: linear-gradient(to top, #1e2761, #7a2048);
 }
 
-.background {
+u .background {
     position: absolute;
     display: block;
     top: 0;
@@ -37,7 +34,7 @@ header {
     margin-left: auto;
     border: none;
     border-top: 2rem solid whitesmoke;
-    border-left: 2rem solid var(--color);
+    border-left: 2rem solid #7a2048;
     outline: none;
     cursor: pointer;
 }
@@ -127,6 +124,7 @@ header {
 }
 
 /* Horizontal bar */
+
 .minus-btn::before {
     position: absolute;
     display: block;
@@ -140,6 +138,7 @@ header {
 }
 
 /* ADD BTN */
+
 .add-btn {
     align-self: flex-start;
     width: 1.4rem;
@@ -159,6 +158,7 @@ header {
 }
 
 /* Vertical bar */
+
 .add-btn::after {
     position: relative;
     display: block;
@@ -171,6 +171,7 @@ header {
 }
 
 /* Horizontal bar */
+
 .add-btn::before {
     position: relative;
     display: block;
@@ -183,6 +184,7 @@ header {
 }
 
 /* APPLY BTN */
+
 #apply-btn {
     width: 20rem;
     height: 2rem;
@@ -199,12 +201,15 @@ header {
     transition: 0.3s;
 }
 
-.page-brake {
-    position: absolute;
-    bottom: 0%;
+.pagebrake {
     width: 100vw;
-    height: 3px;
+    height: 4px;
     background: linear-gradient(to right, transparent, whitesmoke, transparent);
+}
+
+header .pagebrake {
+    position: absolute;
+    bottom: 0;
 }
 
 /* MAIN SECTION */
@@ -212,22 +217,48 @@ header {
 /* main h1, main h2, main h3, main h2, main h3, main h4, main h5, main h6 {
     margin: 0.4rem;
 } */
-main * {
-    margin: 0.4em;
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 2rem;
 }
 
+main .pagebrake {
+    margin-left: -2rem;
+}
 
+main h1 {
+    margin-left: -2rem;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+    align-self: center;
+    font-size: 2.25rem;
+}
 
-#pie-chart {
+main h2 {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.7rem;
+    text-decoration: underline wavy #408ec6;
+    text-underline-offset: 0.5rem;
+    text-underline-position: right;
+}
+
+.pie-chart {
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+    margin-right: 1.5rem;
+}
+
+#pie-chart-container {
     display: flex;
     flex-wrap: wrap;
 }
 
-#add-pie-button {
-    width: 100px;
-    height: 100px;
-    margin: 10px;
-}
+/* Miscelenious */
 
 input[type="file"]::-ms-browse {
     font: inherit;
@@ -257,9 +288,10 @@ input[type="file"]::-webkit-file-upload-button {
 
 input[type="file"]::-webkit-file-upload-button:hover {
     background-color: #408ec6;
-    transition: 0.3s;    
+    transition: 0.3s;
 }
+
 input[type="file"]::-ms-browse:hover {
     background-color: #408ec6;
-    transition: 0.3s;  
+    transition: 0.3s;
 }

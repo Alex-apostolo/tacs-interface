@@ -1,19 +1,22 @@
-const pie = document.getElementById('pie-chart');
+const pie = document.getElementById('pie-chart-container');
 const column = document.getElementById('column-chart');
 
-const chart_div = document.createElement('div');
-chart_div.setAttribute('id', 'chart_div');
+const pieChart = document.createElement('div');
+pieChart.setAttribute('id', 'pie-chart');
+pieChart.classList.add('pie-chart');
 
-const chart_div2 = document.createElement('div');
-chart_div2.setAttribute('id', 'chart_div2');
+const pieChart2 = document.createElement('div');
+pieChart2.setAttribute('id', 'pie-chart2');
+pieChart2.classList.add('pie-chart');
 
-const chart_div3 = document.createElement('div');
-chart_div3.setAttribute('id', 'chart_div3');
+const pieChart3 = document.createElement('div');
+pieChart3.setAttribute('id', 'pie-chart3');
+pieChart3.classList.add('pie-chart');
 
 
-pie.append(chart_div);
-pie.append(chart_div2);
-column.append(chart_div3);
+pie.append(pieChart);
+pie.append(pieChart2);
+column.append(pieChart3);
 
 // Load the Visualization API and the piechart package.
 google.load('visualization', '1.0', { 'packages': ['corechart'] });
@@ -86,11 +89,11 @@ function drawChart() {
     };
 
     // Instantiate and draw our chart, passing in some options.
-    let chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+    let chart = new google.visualization.PieChart(pieChart);
     chart.draw(data, options);
-    let chart2 = new google.visualization.PieChart(document.getElementById('chart_div2'));
+    let chart2 = new google.visualization.PieChart(pieChart2);
     chart2.draw(data2, options2);
-    let chart3 = new google.visualization.ColumnChart(document.getElementById('chart_div3'));
+    let chart3 = new google.visualization.ColumnChart(pieChart3);
     chart3.draw(data3, options3);
 }
 
