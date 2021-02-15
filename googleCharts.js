@@ -1,22 +1,22 @@
-const pie = document.getElementById('pie-chart-container');
-const column = document.getElementById('column-chart-container');
+const generalContainer = document.getElementById('general-container');
+const comparissonContainer = document.getElementById('comparisson-container');
 
+// Create container
+const pieContainer = document.createElement('div');
+pieContainer.classList.add('pie-container');
+// Create pie chart
 const pieChart = document.createElement('div');
-pieChart.setAttribute('id', 'pie-chart');
+pieChart.id = 'pie-chart0';
 pieChart.classList.add('pie-chart');
+// Create minus button
+const minusBtn = document.createElement('div');
+minusBtn.classList.add('minus-btn');
+// Append to container
+pieContainer.append(pieChart);
+pieContainer.append(minusBtn);
 
-const pieChart2 = document.createElement('div');
-pieChart2.setAttribute('id', 'pie-chart2');
-pieChart2.classList.add('pie-chart');
-
-const pieChart3 = document.createElement('div');
-pieChart3.setAttribute('id', 'pie-chart3');
-pieChart3.classList.add('pie-chart');
-
-
-pie.append(pieChart);
-pie.append(pieChart2);
-column.append(pieChart3);
+//Append to general container
+generalContainer.append(pieContainer);
 
 // Load the Visualization API and the piechart package.
 google.load('visualization', '1.0', { 'packages': ['corechart'] });
@@ -40,34 +40,12 @@ function drawChart() {
         ['Zucchini', 1],
         ['Pepperoni', 2]
     ]);
-    // Create the data table.
-    let data2 = new google.visualization.DataTable();
-    data2.addColumn('string', 'Topping');
-    data2.addColumn('number', 'Slices');
-    data2.addRows([
-        ['Mushrooms', 3],
-        ['Onions', 1],
-        ['Olives', 15],
-        ['Zucchini', 1],
-        ['Pepperoni', 2]
-    ]);
-
-    let data3 = new google.visualization.DataTable();
-    data3.addColumn('string', 'Year');
-    data3.addColumn('number', 'Sales');
-    data3.addColumn('number', 'Expenses');
-    data3.addRows([
-        ['2004', 1000, 400],
-        ['2005', 1170, 460],
-        ['2006', 860, 580],
-        ['2007', 1030, 540]
-    ]);
 
     // Set chart options
     let options = {
         width: 400,
         height: 300,
-        backgroundColor: '#1a2256',
+        backgroundColor: '#1f2761',
         chartArea: { width: '100%', height: '80%' },
         legend: {
             position: 'bottom',
@@ -94,9 +72,5 @@ function drawChart() {
     // Instantiate and draw our chart, passing in some options.
     let chart = new google.visualization.PieChart(pieChart);
     chart.draw(data, options);
-    let chart2 = new google.visualization.PieChart(pieChart2);
-    chart2.draw(data2, options);
-    let chart3 = new google.visualization.ColumnChart(pieChart3);
-    chart3.draw(data3, options);
 }
 
