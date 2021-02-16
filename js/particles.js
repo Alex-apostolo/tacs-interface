@@ -19,5 +19,3 @@ export default function () {
         paused = !paused;
     }, false);
 }
-
-export const hello = 154;

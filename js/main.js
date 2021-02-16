@@ -5,5 +5,8 @@ import TACSChart from './TACSChart.js';
 window.onload = particles;
 form(4);
 
-const chart2 = new TACSChart();
-document.getElementById('general-container').append(chart2);
+const chart = new TACSChart();
+chart.setAttribute('showminus', 'true');
+document.getElementById('general-container').append(chart);
+
+chart.draw(undefined, undefined, 'BarChart');
