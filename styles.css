@@ -137,10 +137,6 @@ main h2 {
     margin-left: 0.62rem;
 }
 
-.pie-chart {
-    margin-bottom: 2.5rem;
-}
-
 #general-container {
     display: flex;
     flex-wrap: wrap;

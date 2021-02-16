@@ -1,22 +1,25 @@
+// Only requirement is a minus button with class minus-btn
 // Uses Google Charts along with other elements to create this custom element
 export default class TACSChart extends HTMLElement {
-    constructor() {
-        super();
+
+    connectedCallback() {
         this.innerHTML = `
+            <style>
+                tacs-chart .minus-btn {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                }
+
+                tacs-chart .pie-chart {
+                    margin-bottom: 2.5rem;
+                }
+            </style>
             <div class="pie-chart"></div>
             <div class="minus-btn"></div>
         `
         this.style.position = 'relative';
-        // Position minus button on top right
-        const minusBtn = this.querySelector('.minus-btn');
-        minusBtn.style.cssText = `
-            position: absolute;
-            top: 0;
-            right: 0;
-        `
-    }
-
-    connectedCallback() {
+        
         // Load the Visualization API and the piechart package.
         google.load('visualization', '1.0', { 'packages': ['corechart'] });
 
@@ -27,7 +30,7 @@ export default class TACSChart extends HTMLElement {
     // Callback that creates and populates a data table,
     // instantiates the pie chart, passes in the data and
     // draws it.
-    drawChart(data1, options1, type) {
+    drawChart() {
         // Create the data table.
         let data = new google.visualization.DataTable();
         data.addColumn('string', 'Topping');
