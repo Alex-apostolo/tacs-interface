@@ -1,9 +1,18 @@
-class TACSChart extends HTMLElement {
+// Uses Google Charts along with other elements to create this custom element
+export default class TACSChart extends HTMLElement {
     constructor() {
         super();
         this.innerHTML = `
             <div class="pie-chart"></div>
             <div class="minus-btn"></div>
+        `
+        this.style.position = 'relative';
+        // Position minus button on top right
+        const minusBtn = this.querySelector('.minus-btn');
+        minusBtn.style.cssText = `
+            position: absolute;
+            top: 0;
+            right: 0;
         `
     }
 
@@ -18,9 +27,7 @@ class TACSChart extends HTMLElement {
     // Callback that creates and populates a data table,
     // instantiates the pie chart, passes in the data and
     // draws it.
-    drawChart() {
-        console.log('cool');
-        console.log(this);
+    drawChart(data1, options1, type) {
         // Create the data table.
         let data = new google.visualization.DataTable();
         data.addColumn('string', 'Topping');

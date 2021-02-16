@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TACS</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="btns.css">
+    <link rel="stylesheet" href="buttons.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
 </head>
@@ -48,7 +48,7 @@
             </div>
             <div id="general-container">
                 <!-- Div contains dynamically generated Google Charts -->
-                <tacs-chart class="pie-container"></tacs-chart>
+                <tacs-chart></tacs-chart>
             </div>
         </div>
 
@@ -60,7 +60,7 @@
             </div>
             <div id="comparisson-container">
                 <!-- Div contains dynamically generated Google Charts -->
-                <tacs-chart class="bar-container"></tacs-chart>
+                <tacs-chart></tacs-chart>
             </div>
         </div>
 
@@ -75,10 +75,8 @@
     </main>
 
     <script src="node_modules/particlesjs/dist/particles.min.js"></script>
-    <script src="js/particles.js" defer></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script src='js/googleCharts.js' defer></script>
-    <script src="js/formHandling.js"></script>
+    <script src="js/main.js" type="module"></script>
 </body>
 
 </html>
