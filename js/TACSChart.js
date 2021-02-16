@@ -12,6 +12,9 @@ export default class TACSChart extends HTMLElement {
                 let minusBtn = document.createElement('div');
                 minusBtn.classList.add('minus-btn');
                 this.append(minusBtn);
+                minusBtn.addEventListener('click', () => {
+                    this.remove();
+                })
             } else if (newValue === 'false') {
                 this.querySelector('.minus-btn').remove();
             }
@@ -42,6 +45,9 @@ export default class TACSChart extends HTMLElement {
                 let minusBtn = document.createElement('div');
                 minusBtn.classList.add('minus-btn');
                 this.append(minusBtn);
+                minusBtn.addEventListener('click', () => {
+                    this.remove();
+                })
             }
         }
         this.draw();
