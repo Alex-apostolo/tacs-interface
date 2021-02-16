@@ -15,6 +15,12 @@ minusBtn.classList.add('minus-btn');
 pieContainer.append(pieChart);
 pieContainer.append(minusBtn);
 
+class TACSChart extends HTMLElement {
+    constructor() {
+        super();
+    }
+}
+
 //Append to general container
 generalContainer.append(pieContainer);
 
@@ -74,3 +80,6 @@ function drawChart() {
     chart.draw(data, options);
 }
 
+customElements.define('Tacs-chart', TACSChart);
+
+export default TACSChart;

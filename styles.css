@@ -5,7 +5,7 @@
     z-index: 1;
 }
 
-html {
+body {
     font-family: 'EB Garamond', serif;
     font-size: 100%;
     background-color: #1f2761;
@@ -13,35 +13,19 @@ html {
 }
 
 /* HEADER SECTION */
-
+/*  */
 header {
     position: relative;
     height: 100vh;
     background: linear-gradient(to top, #1e2761, #7a2048);
 }
 
-u .background {
+.background {
     position: absolute;
     display: block;
     top: 0;
     left: 0;
     z-index: 0;
-}
-
-#easter-egg {
-    position: relative;
-    align-self: flex-start;
-    margin-left: auto;
-    border: none;
-    border-top: 2rem solid whitesmoke;
-    border-left: 2rem solid #7a2048;
-    outline: none;
-    cursor: pointer;
-}
-
-#easter-egg:hover {
-    border-top: 2rem solid #408ec6;
-    transition: 0.3s;
 }
 
 .logo-container {
@@ -57,7 +41,7 @@ u .background {
     height: 5rem;
 }
 
-.main-container {
+.center-container {
     position: absolute;
     width: 100%;
     bottom: 50%;
@@ -70,18 +54,18 @@ u .background {
     right: auto;
 }
 
-.main-container h1 {
+.center-container h1 {
     text-align: center;
     max-width: 40rem;
     margin-bottom: 2.5rem;
 }
 
-.main-container h4 {
+.center-container h4 {
     text-align: center;
     margin-bottom: 0.5rem;
 }
 
-.main-container form {
+.center-container form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -101,106 +85,6 @@ u .background {
     width: 100%;
 }
 
-/* MINUS BTN */
-
-.minus-btn {
-    /* align-self: flex-start; */
-    position: relative;
-    width: 1.4rem;
-    height: 1.4rem;
-    margin-top: 0.25rem;
-    margin-bottom: 0.25rem;
-    border: 0.123rem solid;
-    border-radius: 50%;
-    border-color: #408ec6;
-    background-color: whitesmoke;
-    cursor: pointer;
-    outline: none;
-}
-
-.minus-btn:hover {
-    background-color: #408ec6;
-    transition: 0.3s;
-}
-
-/* Horizontal bar */
-
-.minus-btn::before {
-    position: absolute;
-    display: block;
-    background-color: #1e2761;
-    width: 11px;
-    height: 2px;
-    bottom: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(50%);
-    content: " ";
-}
-
-/* ADD BTN */
-
-.add-btn {
-    align-self: flex-start;
-    width: 1.4rem;
-    height: 1.4rem;
-    margin-top: 0.25rem;
-    margin-bottom: 0.25rem;
-    border: 0.123rem solid;
-    border-radius: 50%;
-    border-color: #408ec6;
-    cursor: pointer;
-    outline: none;
-}
-
-.add-btn:hover {
-    background-color: #408ec6;
-    transition: 0.3s;
-}
-
-/* Vertical bar */
-
-.add-btn::after {
-    position: relative;
-    display: block;
-    background-color: #1e2761;
-    width: 0.125rem;
-    height: 0.75rem;
-    top: -4.2%;
-    left: 43.75%;
-    content: " ";
-}
-
-/* Horizontal bar */
-
-.add-btn::before {
-    position: relative;
-    display: block;
-    background-color: #1e2761;
-    width: 0.75rem;
-    height: 0.125rem;
-    left: 15%;
-    top: 34%;
-    content: " ";
-}
-
-/* APPLY BTN */
-
-#apply-btn {
-    width: 20rem;
-    height: 2rem;
-    border: none;
-    outline: transparent;
-    color: #1e2761;
-    cursor: pointer;
-    border-radius: 5rem;
-    margin-top: 2rem;
-}
-
-#apply-btn:hover {
-    background-color: #408ec6;
-    transition: 0.3s;
-}
-
 .pagebrake {
     width: 100vw;
     height: 4px;
@@ -213,7 +97,7 @@ header .pagebrake {
 }
 
 /* MAIN SECTION */
-
+/*  */
 main {
     min-height: 100vh;
     width: 100vw;
@@ -234,7 +118,7 @@ main h2 {
     text-underline-position: right;
 }
 
-.section-container {
+.section {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -242,13 +126,13 @@ main h2 {
     margin: 1rem;
 }
 
-.heading-container {
+.heading {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.heading-container .add-btn {
+.heading .add-btn {
     margin-top: 0.62rem;
     margin-left: 0.62rem;
 }
@@ -279,42 +163,4 @@ main h2 {
     flex-wrap: wrap;
     width: 100%;
     justify-content: space-evenly;
-}
-
-/* Miscelenious */
-
-input[type="file"]::-ms-browse {
-    font: inherit;
-    font-style: initial;
-    width: 8rem;
-    height: 2rem;
-    border: none;
-    outline: transparent;
-    color: #1e2761;
-    cursor: pointer;
-    border-radius: 5rem;
-    margin-right: 0.5rem;
-}
-
-input[type="file"]::-webkit-file-upload-button {
-    font: inherit;
-    font-style: initial;
-    width: 8rem;
-    height: 2rem;
-    border: none;
-    outline: transparent;
-    color: #1e2761;
-    cursor: pointer;
-    border-radius: 5rem;
-    margin-right: 0.5rem;
-}
-
-input[type="file"]::-webkit-file-upload-button:hover {
-    background-color: #408ec6;
-    transition: 0.3s;
-}
-
-input[type="file"]::-ms-browse:hover {
-    background-color: #408ec6;
-    transition: 0.3s;
 }

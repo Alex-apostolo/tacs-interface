@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TACS</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="btns.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
 </head>
@@ -18,14 +19,14 @@
             <div class="navigation-bar"></div>
             <button id='easter-egg'></button>
         </div>
-        <div class="main-container">
+        <div class="center-container">
             <h1>A powerful tool that uses our Cyber Security dictionary to analyse your documents</h1>
             <h4>To use the tool make a folder with your .txt file/s and select them below:</h4>
             <form action="/action_page.php" method="GET">
                 <div class='browse' id='browse0'>
                     <input type="file">
                 </div>
-                <!-- Dynamically added browse elements go in here -->
+                <!-- Dynamically adds browse elements -->
                 <button type="button" class="add-btn" id="add-btn-browse"></button>
                 <button type="submit" id="apply-btn">APPLY</button>
             </form>
@@ -40,41 +41,42 @@
         <div class="pagebrake"></div>
 
         <!-- General Section -->
-        <div class="section-container">
-            <div class="heading-container">
+        <div class="section">
+            <div class="heading">
                 <h2>General</h2>
-                <button type="button" class="add-btn" id="append-pie-chart"></button>
+                <button type="button" class="add-btn"></button>
             </div>
-            <!-- Div contains dynamically generated Google Charts -->
             <div id="general-container">
-                <!-- <div class="minus-btn"></div> -->
+                <!-- Div contains dynamically generated Google Charts -->
             </div>
         </div>
 
         <!-- Comparisson Section -->
-        <div class="section-container">
-            <div class="heading-container">
+        <div class="section">
+            <div class="heading">
                 <h2>Comparisson</h2>
-                <button type="button" class="add-btn" id="append-bar-chart"></button>
+                <button type="button" class="add-btn"></button>
             </div>
-            <!-- Div contains dynamically generated Google Charts -->
-            <div id="comparisson-container"></div>
+            <div id="comparisson-container">
+                <!-- Div contains dynamically generated Google Charts -->
+            </div>
         </div>
 
         <!-- Specific Section -->
-        <div class="section-container">
+        <div class="section">
             <h2>Specific</h2>
-            <!-- Div contains dynamically generated Google Charts -->
-            <div id="bar-chart"></div>
+            <div id="specific-container">
+                <!-- Div contains dynamically generated Google Charts -->
+            </div>
             <button>EXPORT RESULTS</button>
         </div>
     </main>
 
     <script src="node_modules/particlesjs/dist/particles.min.js"></script>
-    <script src="particles.js" defer></script>
+    <script src="js/particles.js" defer></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script src='googleCharts.js' defer></script>
-    <script src="formHandling.js"></script>
+    <script src='js/googleCharts.js' defer></script>
+    <script src="js/formHandling.js"></script>
 </body>
 
 </html>
