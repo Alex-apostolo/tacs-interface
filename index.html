@@ -23,12 +23,10 @@
             <h1>A powerful tool that uses our Cyber Security dictionary to analyse your documents</h1>
             <h4>To use the tool make a folder with your .txt file/s and select them below:</h4>
             <form action="/action_page.php" method="GET">
-                <div class='browse' id='browse0'>
-                    <input type="file">
-                </div>
-                <!-- Dynamically adds browse elements -->
+                <!-- Dynamically added browse elements -->
+                <browse-input></browse-input>
                 <button type="button" class="add-btn" id="add-btn-browse"></button>
-                <button type="submit" id="apply-btn">APPLY</button>
+                <button type="submit" class="apply-btn">APPLY</button>
             </form>
         </div>
         <div class="pagebrake"></div>
@@ -47,7 +45,7 @@
                 <button type="button" class="add-btn" id="add-btn-general"></button>
             </div>
             <div id="general-container">
-                <!-- Div contains dynamically generated Google Charts -->
+                <!-- Dynamically generated Google Charts -->
                 <tacs-chart></tacs-chart>
             </div>
         </div>
@@ -59,7 +57,7 @@
                 <button type="button" class="add-btn" id="add-btn-comparisson"></button>
             </div>
             <div id="comparisson-container">
-                <!-- Div contains dynamically generated Google Charts -->
+                <!-- Dynamically generated Google Charts -->
                 <tacs-chart></tacs-chart>
             </div>
         </div>
@@ -68,9 +66,9 @@
         <div class="section">
             <h2>Specific</h2>
             <div id="specific-container">
-                <!-- Div contains dynamically generated Google Charts -->
+                <!-- Dynamically generated Google Charts -->
             </div>
-            <button>EXPORT RESULTS</button>
+            <button class="apply-btn">EXPORT RESULTS</button>
         </div>
     </main>
 

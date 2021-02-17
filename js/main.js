@@ -1,9 +1,21 @@
 import particles from './particles.js';
-import form from './form.js';
+import BrowseInput from './BrowseInput.js';
 import TACSChart from './TACSChart.js';
 
 window.onload = particles;
-form(4);
+
+// Max browse-input elements we can have
+const limit = 4;
+// Add event listener for adding browse-input elements
+const browseBtn = document.getElementById('add-btn-browse');
+browseBtn.addEventListener('click', () => {
+    if (BrowseInput.count !== limit) {
+        const newBrowse = new BrowseInput();
+        newBrowse.setAttribute('showminus', 'true');
+        browseBtn.before(newBrowse);
+        console.log(BrowseInput.count);
+    }
+})
 
 // Add Bar Chart
 const chart = new TACSChart();

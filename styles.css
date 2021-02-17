@@ -72,19 +72,6 @@ header {
     width: 27rem;
 }
 
-.browse {
-    align-self: flex-start;
-    margin: 0.2rem;
-    margin-left: 0;
-}
-
-.browse-with-minus {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
 .pagebrake {
     width: 100vw;
     height: 4px;
