@@ -1,3 +1,7 @@
+/*
+ CSS Dependencies: minus-btn 
+*/
+
 export default class BrowseInput extends HTMLElement {
     static count = 0;
 

@@ -1,6 +1,9 @@
-// Only requirement is a minus button with class minus-btn
+/*
+ CSS Dependencies: minus-btn 
+*/
+
 // Uses Google Charts along with other elements to create this custom element
-export default class TACSChart extends HTMLElement {
+export default class TacsChart extends HTMLElement {
 
     static get observedAttributes() {
         return ['showminus'];
@@ -127,4 +130,4 @@ export default class TACSChart extends HTMLElement {
         }
     }
 }
-customElements.define('tacs-chart', TACSChart);
+customElements.define('tacs-chart', TacsChart);

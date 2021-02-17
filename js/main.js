@@ -1,6 +1,6 @@
 import particles from './particles.js';
 import BrowseInput from './BrowseInput.js';
-import TACSChart from './TACSChart.js';
+import TacsChart from './TacsChart.js';
 
 window.onload = particles;
 
@@ -18,7 +18,7 @@ browseBtn.addEventListener('click', () => {
 })
 
 // Add Bar Chart
-const chart = new TACSChart();
+const chart = new TacsChart();
 chart.setAttribute('showminus', 'true');
 document.getElementById('general-container').append(chart);
 
@@ -27,7 +27,7 @@ chart.draw(undefined, undefined, 'BarChart');
 // Add event listener for general container
 const generalBtn = document.getElementById('add-btn-general');
 generalBtn.addEventListener('click', () => {
-    const newChart = new TACSChart();
+    const newChart = new TacsChart();
     newChart.setAttribute('showminus', 'true');
     document.getElementById('general-container').append(newChart);
 })
@@ -35,7 +35,7 @@ generalBtn.addEventListener('click', () => {
 // Add event listener for comparisson container
 const comparissonBtn = document.getElementById('add-btn-comparisson');
 comparissonBtn.addEventListener('click', () => {
-    const newChart = new TACSChart();
+    const newChart = new TacsChart();
     newChart.setAttribute('showminus', 'true');
     document.getElementById('comparisson-container').append(newChart);
 })
