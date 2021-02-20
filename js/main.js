@@ -6,6 +6,7 @@ window.onload = particles;
 
 // Max browse-input elements we can have
 const limit = 4;
+
 // Add event listener for adding browse-input elements
 const browseBtn = document.getElementById('add-btn-browse');
 browseBtn.addEventListener('click', () => {
@@ -16,13 +17,6 @@ browseBtn.addEventListener('click', () => {
         console.log(BrowseInput.count);
     }
 })
-
-// Add Bar Chart
-const chart = new TacsChart();
-chart.setAttribute('showminus', 'true');
-document.getElementById('general-container').append(chart);
-
-chart.draw(undefined, undefined, 'BarChart');
 
 // Add event listener for general container
 const generalBtn = document.getElementById('add-btn-general');
@@ -37,5 +31,6 @@ const comparissonBtn = document.getElementById('add-btn-comparisson');
 comparissonBtn.addEventListener('click', () => {
     const newChart = new TacsChart();
     newChart.setAttribute('showminus', 'true');
+    newChart.setAttribute('type', 'ColumnChart');
     document.getElementById('comparisson-container').append(newChart);
 })

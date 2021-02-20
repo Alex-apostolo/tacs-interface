@@ -6,7 +6,7 @@
 export default class TacsChart extends HTMLElement {
 
     static get observedAttributes() {
-        return ['showminus'];
+        return ['showminus', 'type'];
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -22,6 +22,8 @@ export default class TacsChart extends HTMLElement {
                 this.querySelector('.minus-btn').remove();
             }
         }
+        if ('type' === name) 
+            this.drawChart('newValue');
     }
 
     connectedCallback() {
@@ -36,11 +38,11 @@ export default class TacsChart extends HTMLElement {
                     right: 0;
                 }
 
-                tacs-chart .pie-chart {
+                tacs-chart .tacs-container {
                     margin-bottom: 2.5rem;
                 }
             </style>
-            <div class="pie-chart"></div>
+            <div class="tacs-container"></div>
         `
         if (this.hasAttribute('showminus')) {
             const showMinus = this.getAttribute('showminus');
@@ -53,40 +55,70 @@ export default class TacsChart extends HTMLElement {
                 })
             }
         }
-        this.draw();
+        this.hasAttribute('type') ? this.drawChart(this.getAttribute('type')) : this.drawChart();
     }
 
-    // Takes a JSON string for data, an object for options and a string for type
-    draw(data, options, type) {
+    // Wrapper method for drawCallback
+    drawChart(type, data, options) {
+
         // Load the Visualization API and the piechart package.
         google.load('visualization', '1.0', { 'packages': ['corechart'] });
 
         // Set a callback to run when the Google Visualization API is loaded.
-        google.setOnLoadCallback(drawChart.bind(this, data, options, type));
+        google.setOnLoadCallback(this.drawCallback.bind(this, type, data, options));
 
-        // Callback that creates and populates a data table,
-        // instantiates the pie chart, passes in the data and
-        // draws it.
-        function drawChart(data, options, type) {
-            if (data !== undefined) {
-                // Convert JSON dats to googles DatsTable
+    }
+
+    // Callback that creates and populates a data table,
+    // instantiates the pie chart, passes in the data and
+    // draws it.
+    drawCallback(type, data, options) {
+        // The below conditional statements outline the default behaviour
+        if (type === undefined)
+            type = 'PieChart';
+        if (data === undefined) {
+            switch (type) {
+                case 'PieChart':
+                    data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Topping');
+                    data.addColumn('number', 'Slices');
+                    data.addRows([
+                        ['Mushrooms', 3],
+                        ['Onions', 1],
+                        ['Olives', 1],
+                        ['Zucchini', 1],
+                        ['Pepperoni', 2]
+                    ]);
+                    break;
+                case 'ColumnChart':
+                    data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Year');
+                    data.addColumn('number', 'Sales');
+                    data.addColumn('number', 'Expenses');
+                    data.addRows([
+                        ['2004', 1000, 400],
+                        ['2005', 1170, 460],
+                        ['2006', 860, 580],
+                        ['2007', 1030, 540]
+                    ]);
+                    break;
+                case 'BarChart':
+                    data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Topping');
+                    data.addColumn('number', 'Slices');
+                    data.addRows([
+                        ['Mushrooms', 3],
+                        ['Onions', 1],
+                        ['Olives', 1],
+                        ['Zucchini', 1],
+                        ['Pepperoni', 2]
+                    ]);
+                    break;
             }
-            // Default data shown below
-            // Create the data table.
-            let defaultData = new google.visualization.DataTable();
-
-            defaultData.addColumn('string', 'Topping');
-            defaultData.addColumn('number', 'Slices');
-            defaultData.addRows([
-                ['Mushrooms', 3],
-                ['Onions', 1],
-                ['Olives', 1],
-                ['Zucchini', 1],
-                ['Pepperoni', 2]
-            ]);
-
+        }
+        if (options === undefined) {
             // Set chart options
-            let defaultOptions = {
+            options = {
                 width: 400,
                 height: 300,
                 backgroundColor: '#1f2761',
@@ -111,23 +143,23 @@ export default class TacsChart extends HTMLElement {
                     fontSize: 20
                 }
             };
-
-            // Instantiate and draw our chart, passing in some options.
-            let chart;
-            if (type === 'BarChart')
-                chart = new google.visualization.BarChart(this.querySelector('.pie-chart'));
-            else if (type === 'SpecificChart')
-                chart = new google.visualization.PieChart(this.querySelector('.pie-chart'));
-            else
-                chart = new google.visualization.PieChart(this.querySelector('.pie-chart'));
-
-            if (data !== undefined && options !== undefined)
-                chart.draw(data, options);
-            else if (data !== undefined && options === undefined)
-                chart.draw(data, defaultData);
-            else
-                chart.draw(defaultData, defaultOptions);
         }
+
+        if (data !== undefined) {
+            // Call function to change JSON data into a DataTable
+        }
+
+        // Instantiate and draw our chart, passing in some options.
+        let chart;
+        if (type === 'ColumnChart')
+            chart = new google.visualization.ColumnChart(this.querySelector('.tacs-container'));
+        else if (type === 'BarChart')
+            chart = new google.visualization.BarChart(this.querySelector('.tacs-container'));
+        else
+            chart = new google.visualization.PieChart(this.querySelector('.tacs-container'));
+
+        chart.draw(data, options);
     }
+
 }
 customElements.define('tacs-chart', TacsChart);

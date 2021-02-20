@@ -1,5 +1,5 @@
 /*
- CSS Dependencies: minus-btn 
+ CSS Dependencies: minus-btn, input[type="file"] 
 */
 
 export default class BrowseInput extends HTMLElement {
@@ -35,7 +35,7 @@ export default class BrowseInput extends HTMLElement {
                     width: 100%;
                 }
             </style> 
-            <input type="file">
+            <input type="file" multiple>
         `
         this.classList.add('browse');
 
