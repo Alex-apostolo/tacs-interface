@@ -1,5 +1,5 @@
 /*
- CSS Dependencies: minus-btn 
+ CSS Dependencies: minus-btn, dropdown 
 */
 
 // Uses Google Charts along with other elements to create this custom element
@@ -32,6 +32,14 @@ export default class TacsChart extends HTMLElement {
                 tacs-chart {
                     position: relative;
                 }
+
+                tacs-chart .dropdown {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    z-index: 2;
+                }
+
                 tacs-chart .minus-btn {
                     position: absolute;
                     top: 0;
@@ -42,6 +50,15 @@ export default class TacsChart extends HTMLElement {
                     margin-bottom: 2.5rem;
                 }
             </style>
+                <div class="dropdown">
+                    <button class="dropdown-btn">Security</button>
+                    <ul>
+                        <li><button>Security</button></li>
+                        <li><button>CyberSecurity</button></li>
+                        <li><button>Context</button></li>
+                        <li><button>Threats</button></li>
+                    </ul>
+                </div>
             <div class="tacs-container"></div>
         `
         if (this.hasAttribute('showminus')) {
