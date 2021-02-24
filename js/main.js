@@ -1,6 +1,7 @@
 import particles from './particles.js';
 import BrowseInput from './BrowseInput.js';
 import TacsChart from './TacsChart.js';
+import './controller.js';
 
 window.onload = particles;
 
@@ -14,7 +15,6 @@ browseBtn.addEventListener('click', () => {
         const newBrowse = new BrowseInput();
         newBrowse.setAttribute('showminus', 'true');
         browseBtn.before(newBrowse);
-        console.log(BrowseInput.count);
     }
 })
 
