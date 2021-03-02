@@ -124,14 +124,7 @@ main h2 {
     margin-left: 0.62rem;
 }
 
-#general-container {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    justify-content: space-evenly;
-}
-
-#comparisson-container {
+#general-container, #comparisson-container, #specific-container {
     display: flex;
     flex-wrap: wrap;
     width: 100%;

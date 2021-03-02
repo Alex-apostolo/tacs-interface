@@ -3,6 +3,8 @@ import BrowseInput from './BrowseInput.js';
 import TacsChart from './TacsChart.js';
 import './controller.js';
 
+// document.querySelector('main').hidden = true;
+
 window.onload = particles;
 
 // Max browse-input elements we can have

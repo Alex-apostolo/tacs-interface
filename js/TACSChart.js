@@ -22,7 +22,7 @@ export default class TacsChart extends HTMLElement {
                 this.querySelector('.minus-btn').remove();
             }
         }
-        if ('type' === name) 
+        if ('type' === name)
             this.drawChart('newValue');
     }
 
@@ -51,12 +51,11 @@ export default class TacsChart extends HTMLElement {
                 }
             </style>
                 <div class="dropdown">
-                    <button class="dropdown-btn">Security</button>
+                    <button class="dropdown-btn">Dictionary</button>
                     <ul>
-                        <li><button>Security</button></li>
-                        <li><button>CyberSecurity</button></li>
-                        <li><button>Context</button></li>
-                        <li><button>Threats</button></li>
+                        <li><button>Dictionary</button></li>
+                        <li><button>Category</button></li>
+                        <li><button>Concept</button></li>
                     </ul>
                 </div>
             <div class="tacs-container"></div>
@@ -90,6 +89,36 @@ export default class TacsChart extends HTMLElement {
     // instantiates the pie chart, passes in the data and
     // draws it.
     drawCallback(type, data, options) {
+
+        if (options === undefined) {
+            // Set chart options
+            options = {
+                width: 400,
+                height: 300,
+                backgroundColor: '#1f2761',
+                chartArea: { width: '100%', height: '80%' },
+                legend: {
+                    position: 'bottom',
+                    textStyle: {
+                        color: 'whitesmoke',
+                        fontName: 'EB Garamond'
+                    }
+                },
+                hAxis: {
+                    textStyle: {
+                        color: 'whitesmoke',
+                        fontName: 'EB Garamond',
+                        fontSize: 13
+                    }
+                },
+                titleTextStyle: {
+                    color: 'whitesmoke',
+                    fontName: 'EB Garamond',
+                    fontSize: 20
+                }
+            };
+        }
+
         // The below conditional statements outline the default behaviour
         if (type === undefined)
             type = 'PieChart';
@@ -120,46 +149,16 @@ export default class TacsChart extends HTMLElement {
                     ]);
                     break;
                 case 'BarChart':
-                    data = new google.visualization.DataTable();
-                    data.addColumn('string', 'Topping');
-                    data.addColumn('number', 'Slices');
-                    data.addRows([
-                        ['Mushrooms', 3],
-                        ['Onions', 1],
-                        ['Olives', 1],
-                        ['Zucchini', 1],
-                        ['Pepperoni', 2]
+                    data = google.visualization.arrayToDataTable([
+                        ['Genre', 'Fantasy & Sci Fi', 'Romance', 'Mystery/Crime', 'General',
+                            'Western', 'Literature', { role: 'annotation' }],
+                        ['2010', 10, 24, 20, 32, 18, 5, ''],
+                        ['2020', 16, 22, 23, 30, 16, 9, ''],
+                        ['2030', 28, 19, 29, 30, 12, 13, '']
                     ]);
+                    options.isStacked = 'percent';
                     break;
             }
-        }
-        if (options === undefined) {
-            // Set chart options
-            options = {
-                width: 400,
-                height: 300,
-                backgroundColor: '#1f2761',
-                chartArea: { width: '100%', height: '80%' },
-                legend: {
-                    position: 'bottom',
-                    textStyle: {
-                        color: 'whitesmoke',
-                        fontName: 'EB Garamond'
-                    }
-                },
-                hAxis: {
-                    textStyle: {
-                        color: 'whitesmoke',
-                        fontName: 'EB Garamond',
-                        fontSize: 13
-                    }
-                },
-                titleTextStyle: {
-                    color: 'whitesmoke',
-                    fontName: 'EB Garamond',
-                    fontSize: 20
-                }
-            };
         }
 
         if (data !== undefined) {
