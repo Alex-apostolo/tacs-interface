@@ -1,5 +1,28 @@
 {
+  "name": "tacs-interface",
+  "version": "1.0.0",
+  "description": "A powerful tool that uses our Cyber Security dictionary to analyse your documents",
+  "main": "js/index.js",
+  "scripts": {
+    "start": "snowpack dev",
+    "build": "snowpack build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alex-apostolo/tacs-interface.git"
+  },
+  "author": "Alexandros Apostolopoulos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Alex-apostolo/tacs-interface/issues"
+  },
+  "homepage": "https://github.com/Alex-apostolo/tacs-interface#readme",
+  "devDependencies": {
+    "snowpack": "^3.0.13"
+  },
   "dependencies": {
+    "google-charts": "^2.0.0",
     "particlesjs": "^2.2.3"
   }
 }

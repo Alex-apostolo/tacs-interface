@@ -1,6 +1,7 @@
 /*
  CSS Dependencies: minus-btn, dropdown 
 */
+import { GoogleCharts } from 'google-charts';
 
 // Uses Google Charts along with other elements to create this custom element
 export default class TacsChart extends HTMLElement {
@@ -76,19 +77,14 @@ export default class TacsChart extends HTMLElement {
 
     // Wrapper method for drawCallback
     drawChart(type, data, options) {
-
-        // Load the Visualization API and the piechart package.
-        google.load('visualization', '1.0', { 'packages': ['corechart'] });
-
         // Set a callback to run when the Google Visualization API is loaded.
-        google.setOnLoadCallback(this.drawCallback.bind(this, type, data, options));
-
+        GoogleCharts.load(this.drawChartCallback.bind(this, type, data, options));
     }
 
     // Callback that creates and populates a data table,
     // instantiates the pie chart, passes in the data and
     // draws it.
-    drawCallback(type, data, options) {
+    drawChartCallback(type, data, options) {
 
         if (options === undefined) {
             // Set chart options
@@ -125,7 +121,7 @@ export default class TacsChart extends HTMLElement {
         if (data === undefined) {
             switch (type) {
                 case 'PieChart':
-                    data = new google.visualization.DataTable();
+                    data = new GoogleCharts.api.visualization.DataTable();
                     data.addColumn('string', 'Topping');
                     data.addColumn('number', 'Slices');
                     data.addRows([
@@ -137,7 +133,7 @@ export default class TacsChart extends HTMLElement {
                     ]);
                     break;
                 case 'ColumnChart':
-                    data = new google.visualization.DataTable();
+                    data = new GoogleCharts.api.visualization.DataTable();
                     data.addColumn('string', 'Year');
                     data.addColumn('number', 'Sales');
                     data.addColumn('number', 'Expenses');
@@ -149,7 +145,7 @@ export default class TacsChart extends HTMLElement {
                     ]);
                     break;
                 case 'BarChart':
-                    data = google.visualization.arrayToDataTable([
+                    data = GoogleCharts.api.visualization.arrayToDataTable([
                         ['Genre', 'Fantasy & Sci Fi', 'Romance', 'Mystery/Crime', 'General',
                             'Western', 'Literature', { role: 'annotation' }],
                         ['2010', 10, 24, 20, 32, 18, 5, ''],
@@ -168,11 +164,11 @@ export default class TacsChart extends HTMLElement {
         // Instantiate and draw our chart, passing in some options.
         let chart;
         if (type === 'ColumnChart')
-            chart = new google.visualization.ColumnChart(this.querySelector('.tacs-container'));
+            chart = new GoogleCharts.api.visualization.ColumnChart(this.querySelector('.tacs-container'));
         else if (type === 'BarChart')
-            chart = new google.visualization.BarChart(this.querySelector('.tacs-container'));
+            chart = new GoogleCharts.api.visualization.BarChart(this.querySelector('.tacs-container'));
         else
-            chart = new google.visualization.PieChart(this.querySelector('.tacs-container'));
+            chart = new GoogleCharts.api.visualization.PieChart(this.querySelector('.tacs-container'));
 
         chart.draw(data, options);
     }

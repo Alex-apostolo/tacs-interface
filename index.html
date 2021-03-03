@@ -5,16 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TACS</title>
-    <link rel="stylesheet" href="main.css">
-    <link rel="stylesheet" href="buttons.css">
+    <!-- Loads css files and google font -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/buttons.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
+
+    <script src="js/index.js" type="module"></script>
+    <!-- Loads particlejs module from node_modules -->
+    <script src="node_modules/particlesjs/dist/particles.min.js"></script> 
 </head>
 
 <body>
     <header>
         <div class="logo-container">
-            <img src="logo.png" alt="logo.png" class="logo">
+            <img src="img/logo.png" alt="logo.png" class="logo">
             <p>Textual Analysis for Cyber Security</p>
             <div class="navigation-bar"></div>
             <button id='easter-egg'></button>
@@ -73,9 +78,6 @@
         </div>
     </main>
 
-    <script src="./node_modules/particlesjs/dist/particles.min.js"></script>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script src="js/main.js" type="module"></script>
 </body>
 
 </html>
