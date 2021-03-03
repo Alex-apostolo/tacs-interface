@@ -25,7 +25,7 @@ const generalBtn = document.getElementById('add-btn-general');
 generalBtn.addEventListener('click', () => {
     const newChart = new TacsChart();
     newChart.setAttribute('showminus', 'true');
-    document.getElementById('general-container').append(newChart);
+    document.querySelector('#general-section .chart-container').append(newChart);
 })
 
 // Add event listener for comparisson container
@@ -34,5 +34,5 @@ comparissonBtn.addEventListener('click', () => {
     const newChart = new TacsChart();
     newChart.setAttribute('showminus', 'true');
     newChart.setAttribute('type', 'ColumnChart');
-    document.getElementById('comparisson-container').append(newChart);
+    document.querySelector('#comparisson-section .chart-container').append(newChart);
 })

@@ -76,16 +76,15 @@ export default class TacsChart extends HTMLElement {
     }
 
     // Wrapper method for drawCallback
-    drawChart(type, data, options) {
+    drawChart(type, data, level, options) {
         // Set a callback to run when the Google Visualization API is loaded.
-        GoogleCharts.load(this.drawChartCallback.bind(this, type, data, options));
+        GoogleCharts.load(this.drawChartCallback.bind(this, type, data, level, options));
     }
 
     // Callback that creates and populates a data table,
     // instantiates the pie chart, passes in the data and
     // draws it.
-    drawChartCallback(type, data, options) {
-
+    drawChartCallback(type, data, level, options) {
         if (options === undefined) {
             // Set chart options
             options = {
@@ -158,7 +157,7 @@ export default class TacsChart extends HTMLElement {
         }
 
         if (data !== undefined) {
-            // Call function to change JSON data into a DataTable
+            // Call function to process JSON data
         }
 
         // Instantiate and draw our chart, passing in some options.
