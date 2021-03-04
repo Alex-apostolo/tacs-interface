@@ -26,41 +26,86 @@ form.addEventListener('submit', e => {
         body: formData
     })
         .then(response => response.json())
-        .then(response => {
-            console.log(groups);
-            console.log(response);
-            responseHandler(groups, response);
-            // Iterate through all the files and combine the frequency counter
-
-            // If more than one group is used, then calculate their general parts and compare
-            // Display first five in Specific field
-        });
+        .then(response => responseHandler(groups, response));
 });
 
-function responseHandler(groups, response) {
+const responseHandler = (groups, response) => {
+    // Display results page and scroll into view
     document.querySelector('main').style.display = 'block';
     document.getElementById('pagebrake').scrollIntoView({
         behavior: 'smooth'
     });
+
+    // Get the elements needed from the 3 sections
+    const generalSection = document.getElementById('general-section');
+    const comparissonSection = document.getElementById('comparisson-section');
+    const specificSection = document.getElementById('specific-section');
+
+    const generalChartContainer = generalSection.querySelector('.chart-container');
+    const comparissonChartContainer = comparissonSection.querySelector('.chart-container');
+    const specificChartContainer = specificSection.querySelector('.chart-container');
+
+    // Reset the 3 sections and hide them
+    generalChartContainer.innerHTML = "";
+    comparissonChartContainer.innerHTML = "";
+    specificChartContainer.innerHTML = "";
+
+    generalSection.style.display = 'none';
+    comparissonSection.style.display = 'none';
+    specificSection.style.display = 'none';
+
     // If there is one file then display only the specific section
     if (response.length === 1) {
-        console.log('success')
-        document.getElementById('general-section').style.display = 'none';
-        document.getElementById('comparisson-section').style.display = 'none';
+        specificSection.style.display = 'flex';
+
+        // Append specific chart
+        const specificChart = document.createElement('tacs-chart');
+        specificChart.setAttribute('type', 'BarChart');
+        specificChartContainer.append(specificChart);
+
+        // Draw the charts
+        // specificChart.drawChart();
     }
+
     // If there is more than one file on the same group create the general and specific section
     if (groups.length === 1 && response.length > 1) {
-        document.getElementById('general-section').style.display = 'flex';
-        document.getElementById('comparisson-section').style.display = 'none';
+        generalSection.style.display = 'flex';
+        specificSection.style.display = 'flex';
+
+        // Append general and specific chart
+        const generalChart = document.createElement('tacs-chart');
+        generalChartContainer.append(generalChart);
+
+        const specificChart = document.createElement('tacs-chart');
+        specificChart.setAttribute('type', 'BarChart');
+        specificChartContainer.append(specificChart);
+
+        // Draw the charts
+        // generalChart.drawChart();
+        // specificChart.drawChart();
     }
+
     // If there is multiple groups then create the general, comparisson, specific section
     if (groups.length > 1) {
-        document.getElementById('general-section').style.display = 'flex';
-        document.getElementById('comparisson-section').style.display = 'flex';
-    }
-    
-    response.forEach(element => {
-        console.log('Processing ', element[0]);
+        generalSection.style.display = 'flex';
+        comparissonSection.style.display = 'flex';
+        specificSection.style.display = 'flex';
 
-    });
+        // Append general, comparisson and specific chart
+        const generalChart = document.createElement('tacs-chart');
+        generalChartContainer.append(generalChart);
+
+        const comparissonChart = document.createElement('tacs-chart');
+        comparissonChart.setAttribute('type', 'ColumnChart');
+        comparissonChartContainer.append(comparissonChart);
+
+        const specificChart = document.createElement('tacs-chart');
+        specificChart.setAttribute('type', 'BarChart');
+        specificChartContainer.append(specificChart);
+
+        // Draw the charts
+        // generalChart.drawChart();
+        // comparissonChart.drawChart();
+        // specificChart.drawChart();
+    }
 }
