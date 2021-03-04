@@ -722,7 +722,6 @@ require("./controller.js");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // document.querySelector('main').hidden = true;
-console.log('hello');
 window.onload = _particles.default; // Max browse-input elements we can have
 
 var limit = 4; // Add event listener for adding browse-input elements
@@ -778,7 +777,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52933" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57800" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

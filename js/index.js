@@ -5,7 +5,6 @@ import './controller.js';
 
 // document.querySelector('main').hidden = true;
 
-console.log('hello')
 window.onload = particles;
 
 // Max browse-input elements we can have
