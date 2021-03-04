@@ -6,6 +6,11 @@ import { GoogleCharts } from 'google-charts';
 // Uses Google Charts along with other elements to create this custom element
 export default class TacsChart extends HTMLElement {
 
+    constructor(data) {
+        super();
+        this.data = data;
+    }
+
     static get observedAttributes() {
         return ['showminus', 'type'];
     }
@@ -23,8 +28,6 @@ export default class TacsChart extends HTMLElement {
                 this.querySelector('.minus-btn').remove();
             }
         }
-        if ('type' === name)
-            this.drawChart('newValue');
     }
 
     connectedCallback() {
@@ -72,11 +75,11 @@ export default class TacsChart extends HTMLElement {
                 })
             }
         }
-        this.hasAttribute('type') ? this.drawChart(this.getAttribute('type')) : this.drawChart();
+        this.hasAttribute('type') ? this.drawChart({ type: this.getAttribute('type') }) : this.drawChart();
     }
 
-    // Wrapper method for drawCallback
-    drawChart(type, data, level, options) {
+    // Wrapper method for drawChartCallback
+    drawChart({ type='PieChart', data, level='Dict', options } = {}) {
         // Set a callback to run when the Google Visualization API is loaded.
         GoogleCharts.load(this.drawChartCallback.bind(this, type, data, level, options));
     }
@@ -114,9 +117,14 @@ export default class TacsChart extends HTMLElement {
             };
         }
 
+        if (data !== undefined) {
+            // Switch on type
+            // Create datatable
+            console.log('success');
+            console.log(data);
+        }
+
         // The below conditional statements outline the default behaviour
-        if (type === undefined)
-            type = 'PieChart';
         if (data === undefined) {
             switch (type) {
                 case 'PieChart':
@@ -154,10 +162,6 @@ export default class TacsChart extends HTMLElement {
                     options.isStacked = 'percent';
                     break;
             }
-        }
-
-        if (data !== undefined) {
-            // Call function to process JSON data
         }
 
         // Instantiate and draw our chart, passing in some options.

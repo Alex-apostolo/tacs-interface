@@ -1,3 +1,5 @@
+import TacsChart from "./TacsChart";
+
 const backend = 'http://127.0.0.1:5000'
 
 // Add event listener for submitting the files
@@ -59,12 +61,12 @@ const responseHandler = (groups, response) => {
         specificSection.style.display = 'flex';
 
         // Append specific chart
-        const specificChart = document.createElement('tacs-chart');
+        const specificChart = new TacsChart(response);
         specificChart.setAttribute('type', 'BarChart');
         specificChartContainer.append(specificChart);
 
         // Draw the charts
-        // specificChart.drawChart();
+        specificChart.drawChart({ data: specificChart.data });
     }
 
     // If there is more than one file on the same group create the general and specific section
@@ -73,16 +75,16 @@ const responseHandler = (groups, response) => {
         specificSection.style.display = 'flex';
 
         // Append general and specific chart
-        const generalChart = document.createElement('tacs-chart');
+        const generalChart = new TacsChart(response);
         generalChartContainer.append(generalChart);
 
-        const specificChart = document.createElement('tacs-chart');
+        const specificChart = new TacsChart(response);
         specificChart.setAttribute('type', 'BarChart');
         specificChartContainer.append(specificChart);
 
         // Draw the charts
-        // generalChart.drawChart();
-        // specificChart.drawChart();
+        generalChart.drawChart({ data: generalChart.data });
+        specificChart.drawChart({ data: specificChart.data });
     }
 
     // If there is multiple groups then create the general, comparisson, specific section
@@ -92,20 +94,20 @@ const responseHandler = (groups, response) => {
         specificSection.style.display = 'flex';
 
         // Append general, comparisson and specific chart
-        const generalChart = document.createElement('tacs-chart');
+        const generalChart = new TacsChart(response);
         generalChartContainer.append(generalChart);
 
-        const comparissonChart = document.createElement('tacs-chart');
+        const comparissonChart = new TacsChart(response);
         comparissonChart.setAttribute('type', 'ColumnChart');
         comparissonChartContainer.append(comparissonChart);
 
-        const specificChart = document.createElement('tacs-chart');
+        const specificChart = new TacsChart(response);
         specificChart.setAttribute('type', 'BarChart');
         specificChartContainer.append(specificChart);
 
         // Draw the charts
-        // generalChart.drawChart();
-        // comparissonChart.drawChart();
-        // specificChart.drawChart();
+        generalChart.drawChart({ data: generalChart.data });
+        comparissonChart.drawChart({ data: comparissonChart.data });
+        specificChart.drawChart({ data: specificChart.data });
     }
 }
