@@ -62,11 +62,10 @@ const responseHandler = (groups, response) => {
 
         // Append specific chart
         const specificChart = new TacsChart(response);
-        specificChart.setAttribute('type', 'BarChart');
         specificChartContainer.append(specificChart);
 
         // Draw the charts
-        specificChart.drawChart({ data: specificChart.data });
+        specificChart.drawChart({ data: specificChart.data, type: 'BarChart' });
     }
 
     // If there is more than one file on the same group create the general and specific section
@@ -79,12 +78,11 @@ const responseHandler = (groups, response) => {
         generalChartContainer.append(generalChart);
 
         const specificChart = new TacsChart(response);
-        specificChart.setAttribute('type', 'BarChart');
         specificChartContainer.append(specificChart);
 
         // Draw the charts
-        generalChart.drawChart({ data: generalChart.data });
-        specificChart.drawChart({ data: specificChart.data });
+        generalChart.drawChart({ data: generalChart.data, type: 'PieChart' });
+        specificChart.drawChart({ data: specificChart.data, type: 'BarChart' });
     }
 
     // If there is multiple groups then create the general, comparisson, specific section
@@ -98,16 +96,14 @@ const responseHandler = (groups, response) => {
         generalChartContainer.append(generalChart);
 
         const comparissonChart = new TacsChart(response);
-        comparissonChart.setAttribute('type', 'ColumnChart');
         comparissonChartContainer.append(comparissonChart);
 
         const specificChart = new TacsChart(response);
-        specificChart.setAttribute('type', 'BarChart');
         specificChartContainer.append(specificChart);
 
         // Draw the charts
-        generalChart.drawChart({ data: generalChart.data });
-        comparissonChart.drawChart({ data: comparissonChart.data });
-        specificChart.drawChart({ data: specificChart.data });
+        generalChart.drawChart({ data: generalChart.data, type: 'PieChart' });
+        comparissonChart.drawChart({ data: comparissonChart.data, type: 'ColumnChart'});
+        specificChart.drawChart({ data: specificChart.data, type: 'BarChart' });
     }
 }

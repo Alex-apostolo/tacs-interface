@@ -16,7 +16,7 @@ export default class TacsChart extends HTMLElement {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        if ('showminus' === name) {
+        if ( name === 'showminus' ) {
             if (newValue === 'true') {
                 let minusBtn = document.createElement('div');
                 minusBtn.classList.add('minus-btn');
@@ -118,10 +118,22 @@ export default class TacsChart extends HTMLElement {
         }
 
         if (data !== undefined) {
-            // Switch on type
-            // Create datatable
-            console.log('success');
-            console.log(data);
+            // Draw based on level
+            switch (type) {
+                case 'PieChart':
+                    data = new GoogleCharts.api.visualization.DataTable();
+                    data.addColumn('string', 'terms');
+                    data.addColumn('number', 'frequency');
+                    const count = []
+                    data.forEach(element => count.concat(element[1]));
+                    console.log(count);
+                    data.addRows();
+                    break;
+                case 'CoulmnChart':
+                    break;
+                case 'BarChart':
+                    break;
+            }
         }
 
         // The below conditional statements outline the default behaviour

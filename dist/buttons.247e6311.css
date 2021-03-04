@@ -1,0 +1,188 @@
+/* ADD */
+/*  */
+.add-btn {
+    align-self: flex-start;
+    width: 1.4rem;
+    height: 1.4rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    border: 0.123rem solid;
+    border-radius: 50%;
+    border-color: #408ec6;
+    cursor: pointer;
+    outline: none;
+}
+/* Vertical bar */
+.add-btn::after {
+    position: relative;
+    display: block;
+    background-color: #1e2761;
+    width: 0.125rem;
+    height: 0.75rem;
+    top: -4.2%;
+    left: 43.75%;
+    content: " ";
+}
+/* Horizontal bar */
+.add-btn::before {
+    position: relative;
+    display: block;
+    background-color: #1e2761;
+    width: 0.75rem;
+    height: 0.125rem;
+    left: 15%;
+    top: 34%;
+    content: " ";
+}
+
+/* MINUS */
+/*  */
+.minus-btn {
+    /* align-self: flex-start; */
+    position: relative;
+    width: 1.4rem;
+    height: 1.4rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    border: 0.123rem solid;
+    border-radius: 50%;
+    border-color: #408ec6;
+    background-color: whitesmoke;
+    cursor: pointer;
+    outline: none;
+}
+/* Horizontal bar */
+.minus-btn::before {
+    position: absolute;
+    display: block;
+    background-color: #1e2761;
+    width: 11px;
+    height: 2px;
+    bottom: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(50%);
+    content: " ";
+}
+
+/* APPLY BTN */
+/*  */
+.apply-btn {
+    width: 20rem;
+    height: 2rem;
+    border: none;
+    outline: transparent;
+    color: #1e2761;
+    cursor: pointer;
+    border-radius: 5rem;
+    margin-top: 2rem;
+    align-self: center;
+}
+
+/* DROPOWN BTN */
+/*  */
+.dropdown-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 1.75rem;
+    border: none;
+    border-radius: 4px;
+    text-align: start;
+    color: #1e2761;
+    padding: 0.3rem;
+    outline: none;
+    cursor: pointer;
+}
+
+.dropdown-btn::after {
+    width: 0.6rem;
+    height: 0.6rem;
+    margin-bottom: 0.25rem;
+    margin-right: 0.2rem;
+    content: "";
+    display: block;
+    border: solid #1e2761;
+    border-width: 0 0.15rem 0.15rem 0;
+    transform: rotate(45deg);
+}
+
+.dropdown li button {
+    background: none;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    width: 100%;
+    height: 100%;
+    text-align: start;
+    padding: 0.3rem;
+}
+
+/* UPLOAD */
+/*  */
+input[type="file"]::-ms-browse {
+    font: inherit;
+    font-style: initial;
+    width: 8rem;
+    height: 2rem;
+    border: none;
+    outline: transparent;
+    color: #1e2761;
+    cursor: pointer;
+    border-radius: 5rem;
+    margin-right: 0.5rem;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+    font: inherit;
+    font-style: initial;
+    width: 8rem;
+    height: 2rem;
+    border: none;
+    outline: transparent;
+    color: #1e2761;
+    cursor: pointer;
+    border-radius: 5rem;
+    margin-right: 0.5rem;
+}
+
+/* EASTER EGG */
+/*  */
+#easter-egg {
+    position: relative;
+    align-self: flex-start;
+    margin-left: auto;
+    border: none;
+    border-top: 2rem solid whitesmoke;
+    border-left: 2rem solid #7a2048;
+    outline: none;
+    cursor: pointer;
+}
+
+/* HOVER */
+/*  */
+.add-btn:hover, .minus-btn:hover, .apply-btn:hover, .dropdown-btn:hover, .dropdown li button:hover, input[type="file"]::-webkit-file-upload-button:hover{
+    background-color: #408ec6;
+    transition: 0.3s;
+}
+
+input[type="file"]::-ms-browse:hover {
+    background-color: #408ec6;
+    transition: 0.3s;
+}
+
+#easter-egg:hover {
+    border-top: 2rem solid #408ec6;
+    transition: 0.3s;
+}
+
+/* FOCUS */
+/*  */
+.dropdown-btn:focus + ul {
+    opacity: 1;
+    transition: all 0.5s ease;
+    pointer-events: all;
+}
+
+/*# sourceMappingURL=/buttons.247e6311.css.map */

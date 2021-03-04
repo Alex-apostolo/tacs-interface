@@ -18,11 +18,12 @@
     "url": "https://github.com/Alex-apostolo/tacs-interface/issues"
   },
   "homepage": "https://github.com/Alex-apostolo/tacs-interface#readme",
-  "devDependencies": {
-    "snowpack": "^3.0.13"
-  },
   "dependencies": {
     "google-charts": "^2.0.0",
     "particlesjs": "^2.2.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.8",
+    "@babel/plugin-proposal-class-properties": "^7.13.0"
   }
 }

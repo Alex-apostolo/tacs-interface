@@ -1,0 +1,151 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    z-index: 1;
+}
+
+body {
+    font-family: 'EB Garamond', serif;
+    font-size: 100%;
+    background-color: #1f2761;
+    color: whitesmoke;
+}
+
+/* HEADER SECTION */
+/*  */
+header {
+    position: relative;
+    height: 100vh;
+    background: linear-gradient(to top, #1e2761, #7a2048);
+}
+
+.background {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.logo-container {
+    width: 100%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.logo-container .logo {
+    width: 10rem;
+    height: 5rem;
+}
+
+.center-container {
+    position: absolute;
+    width: 100%;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    right: auto;
+}
+
+.center-container h1 {
+    text-align: center;
+    max-width: 40rem;
+    margin-bottom: 2.5rem;
+}
+
+.center-container h4 {
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.center-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 27rem;
+}
+
+.pagebrake {
+    width: 100vw;
+    height: 4px;
+    background: linear-gradient(to right, transparent, whitesmoke, transparent);
+}
+
+header .pagebrake {
+    position: absolute;
+    bottom: 0;
+}
+
+/* MAIN SECTION */
+/*  */
+main {
+    display: none;
+    min-height: 100vh;
+    width: 100vw;
+}
+
+main h1 {
+    text-align: center;
+    margin-top: 2.3rem;
+    margin-bottom: 3rem;
+    font-size: 3rem;
+}
+
+main h2 {
+    margin-bottom: 2rem;
+    font-size: 1.7rem;
+    /* text-decoration: underline wavy #408ec6; */
+    text-underline-offset: 0.45rem;
+    text-underline-position: right;
+}
+
+.heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.heading .add-btn {
+    margin-top: 0.62rem;
+    margin-left: 0.62rem;
+}
+
+#general-section, #comparisson-section, #specific-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 1rem;
+}
+
+.chart-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-evenly
+}
+
+.dropdown {
+    width: 6rem;
+    min-height: 3rem;
+}
+
+.dropdown ul{
+    background-color: #458ec2a6;
+    border-radius: 0 0 5px 5px;
+    opacity: 0;
+    transition: all 0.5s ease;
+    pointer-events: none;
+    margin-top: 0.2rem;
+    list-style: none;
+    box-sizing: content-box;
+}
+
+/*# sourceMappingURL=/main.c52e0fe2.css.map */

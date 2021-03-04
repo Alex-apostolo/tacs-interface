@@ -1,3 +1,5 @@
+import Particles from "particlesjs";
+
 export default function () {
     let particles = Particles.init({
         selector: '.background',
