@@ -16,7 +16,7 @@ export default class TacsChart extends HTMLElement {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        if ( name === 'showminus' ) {
+        if (name === 'showminus') {
             if (newValue === 'true') {
                 let minusBtn = document.createElement('div');
                 minusBtn.classList.add('minus-btn');
@@ -79,7 +79,7 @@ export default class TacsChart extends HTMLElement {
     }
 
     // Wrapper method for drawChartCallback
-    drawChart({ type='PieChart', data, level='Dict', options } = {}) {
+    drawChart({ type = 'PieChart', data, level = 'Dict', options } = {}) {
         // Set a callback to run when the Google Visualization API is loaded.
         GoogleCharts.load(this.drawChartCallback.bind(this, type, data, level, options));
     }
@@ -121,13 +121,20 @@ export default class TacsChart extends HTMLElement {
             // Draw based on level
             switch (type) {
                 case 'PieChart':
-                    data = new GoogleCharts.api.visualization.DataTable();
-                    data.addColumn('string', 'terms');
-                    data.addColumn('number', 'frequency');
-                    const count = []
-                    data.forEach(element => count.concat(element[1]));
-                    console.log(count);
-                    data.addRows();
+                    let googleData = new GoogleCharts.api.visualization.DataTable();
+                    googleData.addColumn('string', 'terms');
+                    googleData.addColumn('number', 'frequency');
+                    // count consists of the tacs analysis
+                    let count = [];
+                    data.forEach(element => count = count.concat(element[1]));
+                    // TODO: Change based on level
+                    let res = Object.values(count.reduce((acc, cur) => (acc[cur.dict]
+                        ? (acc[cur.dict].freq += cur.freq)
+                        : (acc[cur.dict] = {...cur}), acc), {}))
+                        .map(item => [item.dict, item.freq]);
+                    
+                    googleData.addRows(res);
+                    data = googleData;
                     break;
                 case 'CoulmnChart':
                     break;

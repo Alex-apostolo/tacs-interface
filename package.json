@@ -4,7 +4,7 @@
   "description": "A powerful tool that uses our Cyber Security dictionary to analyse your documents",
   "main": "js/index.js",
   "scripts": {
-    "start": "parcel index.html & \"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --remote-debugging-port=9222",
+    "start": "parcel index.html & \"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" http://localhost:1234 --remote-debugging-port=9222",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
