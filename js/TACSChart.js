@@ -119,26 +119,52 @@ export default class TacsChart extends HTMLElement {
 
         if (data !== undefined) {
             // Draw based on level
+            let googleData;
+            let res;
+            let count = [];
             switch (type) {
                 case 'PieChart':
-                    let googleData = new GoogleCharts.api.visualization.DataTable();
+                    googleData = new GoogleCharts.api.visualization.DataTable();
                     googleData.addColumn('string', 'terms');
                     googleData.addColumn('number', 'frequency');
                     // count consists of the tacs analysis
-                    let count = [];
                     data.forEach(element => count = count.concat(element[1]));
                     // TODO: Change based on level
-                    let res = Object.values(count.reduce((acc, cur) => (acc[cur.dict]
+                    res = Object.values(count.reduce((acc, cur) => (acc[cur.dict]
                         ? (acc[cur.dict].freq += cur.freq)
-                        : (acc[cur.dict] = {...cur}), acc), {}))
+                        : (acc[cur.dict] = { ...cur }), acc), {}))
                         .map(item => [item.dict, item.freq]);
-                    
+
                     googleData.addRows(res);
                     data = googleData;
                     break;
                 case 'CoulmnChart':
                     break;
                 case 'BarChart':
+
+                    data.forEach(element => count = count.concat(element[1]));
+                    let arr = [count.map(item => item.dict)
+                        .filter((value, index, self) => self.indexOf(value) === index)];
+                    arr[0].unshift('File');
+
+                    res = data.forEach(el => {
+                        let res = [];
+                        res.push(el[0]);
+                        let ac = (Object.values(el[1].reduce((acc, cur) => (acc[cur.dict]
+                            ? (acc[cur.dict].freq += cur.freq)
+                            : (acc[cur.dict] = { ...cur }), acc), {})));
+                        arr[0].forEach(element => {
+                            if(element !== 'File') {
+                                let o = ac.filter(value => value.dict === element);
+                                o[0] === undefined ? res.push(0) : res.push(o[0].freq);
+                            }
+                        });
+                        arr.push(res);
+                    });
+
+
+                    data = GoogleCharts.api.visualization.arrayToDataTable(arr);
+                    options.isStacked = 'percent';
                     break;
             }
         }

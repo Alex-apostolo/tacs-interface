@@ -523,18 +523,21 @@ function (_HTMLElement) {
 
       if (data !== undefined) {
         // Draw based on level
+        var googleData;
+        var res;
+        var count = [];
+
         switch (type) {
           case 'PieChart':
-            var googleData = new _googleCharts.GoogleCharts.api.visualization.DataTable();
+            googleData = new _googleCharts.GoogleCharts.api.visualization.DataTable();
             googleData.addColumn('string', 'terms');
             googleData.addColumn('number', 'frequency'); // count consists of the tacs analysis
 
-            var count = [];
             data.forEach(function (element) {
               return count = count.concat(element[1]);
             }); // TODO: Change based on level
 
-            var res = Object.values(count.reduce(function (acc, cur) {
+            res = Object.values(count.reduce(function (acc, cur) {
               return acc[cur.dict] ? acc[cur.dict].freq += cur.freq : acc[cur.dict] = _objectSpread({}, cur), acc;
             }, {})).map(function (item) {
               return [item.dict, item.freq];
@@ -547,6 +550,33 @@ function (_HTMLElement) {
             break;
 
           case 'BarChart':
+            data.forEach(function (element) {
+              return count = count.concat(element[1]);
+            });
+            var arr = [count.map(function (item) {
+              return item.dict;
+            }).filter(function (value, index, self) {
+              return self.indexOf(value) === index;
+            })];
+            arr[0].unshift('File');
+            res = data.forEach(function (el) {
+              var res = [];
+              res.push(el[0]);
+              var ac = Object.values(el[1].reduce(function (acc, cur) {
+                return acc[cur.dict] ? acc[cur.dict].freq += cur.freq : acc[cur.dict] = _objectSpread({}, cur), acc;
+              }, {}));
+              arr[0].forEach(function (element) {
+                if (element !== 'File') {
+                  var o = ac.filter(function (value) {
+                    return value.dict === element;
+                  });
+                  o[0] === undefined ? res.push(0) : res.push(o[0].freq);
+                }
+              });
+              arr.push(res);
+            });
+            data = _googleCharts.GoogleCharts.api.visualization.arrayToDataTable(arr);
+            options.isStacked = 'percent';
             break;
         }
       } // The below conditional statements outline the default behaviour
@@ -790,7 +820,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57619" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56380" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
