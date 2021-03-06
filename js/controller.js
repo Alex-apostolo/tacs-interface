@@ -65,7 +65,7 @@ const responseHandler = (groups, response) => {
         specificChartContainer.append(specificChart);
 
         // Draw the charts
-        specificChart.drawChart({ data: specificChart.data, type: 'BarChart' });
+        specificChart.drawChart({ data: specificChart.data, level: 'cat', type: 'BarChart' });
     }
 
     // If there is more than one file on the same group create the general and specific section
@@ -81,8 +81,8 @@ const responseHandler = (groups, response) => {
         specificChartContainer.append(specificChart);
 
         // Draw the charts
-        generalChart.drawChart({ data: generalChart.data, type: 'PieChart' });
-        specificChart.drawChart({ data: specificChart.data, type: 'BarChart' });
+        generalChart.drawChart({ data: generalChart.data, level: 'cat', type: 'PieChart' });
+        specificChart.drawChart({ data: specificChart.data, level: 'cat', type: 'BarChart' });
     }
 
     // If there is multiple groups then create the general, comparisson, specific section
@@ -102,8 +102,8 @@ const responseHandler = (groups, response) => {
         specificChartContainer.append(specificChart);
 
         // Draw the charts
-        generalChart.drawChart({ data: generalChart.data, type: 'PieChart' });
-        comparissonChart.drawChart({ data: comparissonChart.data, type: 'ColumnChart'});
-        specificChart.drawChart({ data: specificChart.data, type: 'BarChart' });
+        generalChart.drawChart({ data: generalChart.data, level: 'cat', type: 'PieChart' });
+        comparissonChart.drawChart({ data: comparissonChart.data, level: 'cat', type: 'ColumnChart'});
+        specificChart.drawChart({ data: specificChart.data, level: 'cat', type: 'BarChart' });
     }
 }

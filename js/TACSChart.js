@@ -79,7 +79,8 @@ export default class TacsChart extends HTMLElement {
     }
 
     // Wrapper method for drawChartCallback
-    drawChart({ type = 'PieChart', data, level = 'Dict', options } = {}) {
+    drawChart({ type = 'PieChart', data, level = 'dict', options } = {}) {
+        this.level = level;
         // Set a callback to run when the Google Visualization API is loaded.
         GoogleCharts.load(this.drawChartCallback.bind(this, type, data, level, options));
     }
@@ -129,29 +130,29 @@ export default class TacsChart extends HTMLElement {
                     // count consists of the tacs analysis
                     data.forEach(element => count = count.concat(element[1]));
                     // TODO: Change based on level
-                    res = Object.values(count.reduce((acc, cur) => (acc[cur.dict]
-                        ? (acc[cur.dict].freq += cur.freq)
-                        : (acc[cur.dict] = { ...cur }), acc), {}))
-                        .map(item => [item.dict, item.freq]);
+                    res = Object.values(count.reduce((acc, cur) => (acc[cur[level]]
+                        ? (acc[cur[level]].freq += cur.freq)
+                        : (acc[cur[level]] = { ...cur }), acc), {}))
+                        .map(item => [item[level], item.freq]);
 
                     googleData.addRows(res);
                     data = googleData;
                     break;
                 case 'ColumnChart':
                     data.forEach(element => count = count.concat(element[1]));
-                    arr = [count.map(item => item.dict)
+                    arr = [count.map(item => item[level])
                         .filter((value, index, self) => self.indexOf(value) === index)];
                     arr[0].unshift('File');
 
                     res = data.forEach(el => {
                         res = [];
                         res.push(el[0]);
-                        let ac = (Object.values(el[1].reduce((acc, cur) => (acc[cur.dict]
-                            ? (acc[cur.dict].freq += cur.freq)
-                            : (acc[cur.dict] = { ...cur }), acc), {})));
+                        let ac = (Object.values(el[1].reduce((acc, cur) => (acc[cur[level]]
+                            ? (acc[cur[level]].freq += cur.freq)
+                            : (acc[cur[level]] = { ...cur }), acc), {})));
                         arr[0].forEach(element => {
                             if(element !== 'File') {
-                                let o = ac.filter(value => value.dict === element);
+                                let o = ac.filter(value => value[level] === element);
                                 o[0] === undefined ? res.push(0) : res.push(o[0].freq);
                             }
                         });
@@ -162,19 +163,19 @@ export default class TacsChart extends HTMLElement {
                     break;
                 case 'BarChart':
                     data.forEach(element => count = count.concat(element[1]));
-                    arr = [count.map(item => item.dict)
+                    arr = [count.map(item => item[level])
                         .filter((value, index, self) => self.indexOf(value) === index)];
                     arr[0].unshift('File');
 
                     res = data.forEach(el => {
                         res = [];
                         res.push(el[0]);
-                        let ac = (Object.values(el[1].reduce((acc, cur) => (acc[cur.dict]
-                            ? (acc[cur.dict].freq += cur.freq)
-                            : (acc[cur.dict] = { ...cur }), acc), {})));
+                        let ac = (Object.values(el[1].reduce((acc, cur) => (acc[cur[level]]
+                            ? (acc[cur[level]].freq += cur.freq)
+                            : (acc[cur[level]] = { ...cur }), acc), {})));
                         arr[0].forEach(element => {
                             if(element !== 'File') {
-                                let o = ac.filter(value => value.dict === element);
+                                let o = ac.filter(value => value[level] === element);
                                 o[0] === undefined ? res.push(0) : res.push(o[0].freq);
                             }
                         });

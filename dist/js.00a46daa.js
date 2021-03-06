@@ -477,10 +477,11 @@ function (_HTMLElement) {
           type = _ref$type === void 0 ? 'PieChart' : _ref$type,
           data = _ref.data,
           _ref$level = _ref.level,
-          level = _ref$level === void 0 ? 'Dict' : _ref$level,
+          level = _ref$level === void 0 ? 'dict' : _ref$level,
           options = _ref.options;
 
-      // Set a callback to run when the Google Visualization API is loaded.
+      this.level = level; // Set a callback to run when the Google Visualization API is loaded.
+
       _googleCharts.GoogleCharts.load(this.drawChartCallback.bind(this, type, data, level, options));
     } // Callback that creates and populates a data table,
     // instantiates the pie chart, passes in the data and
@@ -537,9 +538,9 @@ function (_HTMLElement) {
             }); // TODO: Change based on level
 
             res = Object.values(count.reduce(function (acc, cur) {
-              return acc[cur.dict] ? acc[cur.dict].freq += cur.freq : acc[cur.dict] = _objectSpread({}, cur), acc;
+              return acc[cur[level]] ? acc[cur[level]].freq += cur.freq : acc[cur[level]] = _objectSpread({}, cur), acc;
             }, {})).map(function (item) {
-              return [item.dict, item.freq];
+              return [item[level], item.freq];
             });
             googleData.addRows(res);
             data = googleData;
@@ -550,7 +551,7 @@ function (_HTMLElement) {
               return count = count.concat(element[1]);
             });
             arr = [count.map(function (item) {
-              return item.dict;
+              return item[level];
             }).filter(function (value, index, self) {
               return self.indexOf(value) === index;
             })];
@@ -559,12 +560,12 @@ function (_HTMLElement) {
               res = [];
               res.push(el[0]);
               var ac = Object.values(el[1].reduce(function (acc, cur) {
-                return acc[cur.dict] ? acc[cur.dict].freq += cur.freq : acc[cur.dict] = _objectSpread({}, cur), acc;
+                return acc[cur[level]] ? acc[cur[level]].freq += cur.freq : acc[cur[level]] = _objectSpread({}, cur), acc;
               }, {}));
               arr[0].forEach(function (element) {
                 if (element !== 'File') {
                   var o = ac.filter(function (value) {
-                    return value.dict === element;
+                    return value[level] === element;
                   });
                   o[0] === undefined ? res.push(0) : res.push(o[0].freq);
                 }
@@ -579,7 +580,7 @@ function (_HTMLElement) {
               return count = count.concat(element[1]);
             });
             arr = [count.map(function (item) {
-              return item.dict;
+              return item[level];
             }).filter(function (value, index, self) {
               return self.indexOf(value) === index;
             })];
@@ -588,12 +589,12 @@ function (_HTMLElement) {
               res = [];
               res.push(el[0]);
               var ac = Object.values(el[1].reduce(function (acc, cur) {
-                return acc[cur.dict] ? acc[cur.dict].freq += cur.freq : acc[cur.dict] = _objectSpread({}, cur), acc;
+                return acc[cur[level]] ? acc[cur[level]].freq += cur.freq : acc[cur[level]] = _objectSpread({}, cur), acc;
               }, {}));
               arr[0].forEach(function (element) {
                 if (element !== 'File') {
                   var o = ac.filter(function (value) {
-                    return value.dict === element;
+                    return value[level] === element;
                   });
                   o[0] === undefined ? res.push(0) : res.push(o[0].freq);
                 }
@@ -717,6 +718,7 @@ var responseHandler = function responseHandler(groups, response) {
 
     specificChart.drawChart({
       data: specificChart.data,
+      level: 'cat',
       type: 'BarChart'
     });
   } // If there is more than one file on the same group create the general and specific section
@@ -735,11 +737,13 @@ var responseHandler = function responseHandler(groups, response) {
 
     generalChart.drawChart({
       data: generalChart.data,
+      level: 'cat',
       type: 'PieChart'
     });
 
     _specificChart.drawChart({
       data: _specificChart.data,
+      level: 'cat',
       type: 'BarChart'
     });
   } // If there is multiple groups then create the general, comparisson, specific section
@@ -762,16 +766,19 @@ var responseHandler = function responseHandler(groups, response) {
 
     _generalChart.drawChart({
       data: _generalChart.data,
+      level: 'cat',
       type: 'PieChart'
     });
 
     comparissonChart.drawChart({
       data: comparissonChart.data,
+      level: 'cat',
       type: 'ColumnChart'
     });
 
     _specificChart2.drawChart({
       data: _specificChart2.data,
+      level: 'cat',
       type: 'BarChart'
     });
   }
@@ -813,6 +820,7 @@ generalBtn.addEventListener('click', function () {
   document.querySelector('#general-section .chart-container').append(newChart);
   newChart.drawChart({
     'type': 'PieChart',
+    'level': oldChart.level,
     'data': newChart.data
   });
 }); // Add event listener for comparisson container
@@ -826,6 +834,7 @@ comparissonBtn.addEventListener('click', function () {
   document.querySelector('#comparisson-section .chart-container').append(newChart);
   newChart.drawChart({
     'type': 'ColumnChart',
+    'level': oldChart.level,
     'data': newChart.data
   });
 });
