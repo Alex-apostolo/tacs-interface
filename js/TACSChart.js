@@ -119,8 +119,7 @@ export default class TacsChart extends HTMLElement {
 
         if (data !== undefined) {
             // Draw based on level
-            let googleData;
-            let res;
+            let googleData, res, arr;
             let count = [];
             switch (type) {
                 case 'PieChart':
@@ -138,17 +137,14 @@ export default class TacsChart extends HTMLElement {
                     googleData.addRows(res);
                     data = googleData;
                     break;
-                case 'CoulmnChart':
-                    break;
-                case 'BarChart':
-
+                case 'ColumnChart':
                     data.forEach(element => count = count.concat(element[1]));
-                    let arr = [count.map(item => item.dict)
+                    arr = [count.map(item => item.dict)
                         .filter((value, index, self) => self.indexOf(value) === index)];
                     arr[0].unshift('File');
 
                     res = data.forEach(el => {
-                        let res = [];
+                        res = [];
                         res.push(el[0]);
                         let ac = (Object.values(el[1].reduce((acc, cur) => (acc[cur.dict]
                             ? (acc[cur.dict].freq += cur.freq)
@@ -162,6 +158,28 @@ export default class TacsChart extends HTMLElement {
                         arr.push(res);
                     });
 
+                    data = GoogleCharts.api.visualization.arrayToDataTable(arr);
+                    break;
+                case 'BarChart':
+                    data.forEach(element => count = count.concat(element[1]));
+                    arr = [count.map(item => item.dict)
+                        .filter((value, index, self) => self.indexOf(value) === index)];
+                    arr[0].unshift('File');
+
+                    res = data.forEach(el => {
+                        res = [];
+                        res.push(el[0]);
+                        let ac = (Object.values(el[1].reduce((acc, cur) => (acc[cur.dict]
+                            ? (acc[cur.dict].freq += cur.freq)
+                            : (acc[cur.dict] = { ...cur }), acc), {})));
+                        arr[0].forEach(element => {
+                            if(element !== 'File') {
+                                let o = ac.filter(value => value.dict === element);
+                                o[0] === undefined ? res.push(0) : res.push(o[0].freq);
+                            }
+                        });
+                        arr.push(res);
+                    });
 
                     data = GoogleCharts.api.visualization.arrayToDataTable(arr);
                     options.isStacked = 'percent';

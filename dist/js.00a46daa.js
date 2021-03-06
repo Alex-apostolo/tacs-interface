@@ -523,8 +523,7 @@ function (_HTMLElement) {
 
       if (data !== undefined) {
         // Draw based on level
-        var googleData;
-        var res;
+        var googleData, res, arr;
         var count = [];
 
         switch (type) {
@@ -546,21 +545,47 @@ function (_HTMLElement) {
             data = googleData;
             break;
 
-          case 'CoulmnChart':
-            break;
-
-          case 'BarChart':
+          case 'ColumnChart':
             data.forEach(function (element) {
               return count = count.concat(element[1]);
             });
-            var arr = [count.map(function (item) {
+            arr = [count.map(function (item) {
               return item.dict;
             }).filter(function (value, index, self) {
               return self.indexOf(value) === index;
             })];
             arr[0].unshift('File');
             res = data.forEach(function (el) {
-              var res = [];
+              res = [];
+              res.push(el[0]);
+              var ac = Object.values(el[1].reduce(function (acc, cur) {
+                return acc[cur.dict] ? acc[cur.dict].freq += cur.freq : acc[cur.dict] = _objectSpread({}, cur), acc;
+              }, {}));
+              arr[0].forEach(function (element) {
+                if (element !== 'File') {
+                  var o = ac.filter(function (value) {
+                    return value.dict === element;
+                  });
+                  o[0] === undefined ? res.push(0) : res.push(o[0].freq);
+                }
+              });
+              arr.push(res);
+            });
+            data = _googleCharts.GoogleCharts.api.visualization.arrayToDataTable(arr);
+            break;
+
+          case 'BarChart':
+            data.forEach(function (element) {
+              return count = count.concat(element[1]);
+            });
+            arr = [count.map(function (item) {
+              return item.dict;
+            }).filter(function (value, index, self) {
+              return self.indexOf(value) === index;
+            })];
+            arr[0].unshift('File');
+            res = data.forEach(function (el) {
+              res = [];
               res.push(el[0]);
               var ac = Object.values(el[1].reduce(function (acc, cur) {
                 return acc[cur.dict] ? acc[cur.dict].freq += cur.freq : acc[cur.dict] = _objectSpread({}, cur), acc;
@@ -780,17 +805,29 @@ browseBtn.addEventListener('click', function () {
 
 var generalBtn = document.getElementById('add-btn-general');
 generalBtn.addEventListener('click', function () {
-  var newChart = new _TacsChart.default();
+  // var newChart = Object.assign({}, document.querySelector('#general-section tacs-chart'));
+  var oldChart = document.querySelector('#general-section tacs-chart');
+  var newChart = oldChart.cloneNode(true);
+  newChart.data = oldChart.data;
   newChart.setAttribute('showminus', 'true');
   document.querySelector('#general-section .chart-container').append(newChart);
+  newChart.drawChart({
+    'type': 'PieChart',
+    'data': newChart.data
+  });
 }); // Add event listener for comparisson container
 
 var comparissonBtn = document.getElementById('add-btn-comparisson');
 comparissonBtn.addEventListener('click', function () {
-  var newChart = new _TacsChart.default();
+  var oldChart = document.querySelector('#comparisson-section tacs-chart');
+  var newChart = oldChart.cloneNode(true);
+  newChart.data = oldChart.data;
   newChart.setAttribute('showminus', 'true');
-  newChart.setAttribute('type', 'ColumnChart');
   document.querySelector('#comparisson-section .chart-container').append(newChart);
+  newChart.drawChart({
+    'type': 'ColumnChart',
+    'data': newChart.data
+  });
 });
 },{"./particles.js":"js/particles.js","./BrowseInput.js":"js/BrowseInput.js","./TacsChart.js":"js/TacsChart.js","./controller.js":"js/controller.js"}],"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -820,7 +857,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56380" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57608" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

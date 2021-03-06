@@ -23,16 +23,22 @@ browseBtn.addEventListener('click', () => {
 // Add event listener for general container
 const generalBtn = document.getElementById('add-btn-general');
 generalBtn.addEventListener('click', () => {
-    const newChart = new TacsChart();
+    // var newChart = Object.assign({}, document.querySelector('#general-section tacs-chart'));
+    const oldChart = document.querySelector('#general-section tacs-chart');
+    var newChart = oldChart.cloneNode(true);
+    newChart.data = oldChart.data;
     newChart.setAttribute('showminus', 'true');
     document.querySelector('#general-section .chart-container').append(newChart);
+    newChart.drawChart({'type': 'PieChart', 'data': newChart.data});
 })
 
 // Add event listener for comparisson container
 const comparissonBtn = document.getElementById('add-btn-comparisson');
 comparissonBtn.addEventListener('click', () => {
-    const newChart = new TacsChart();
+     const oldChart = document.querySelector('#comparisson-section tacs-chart');
+    var newChart = oldChart.cloneNode(true);
+    newChart.data = oldChart.data;
     newChart.setAttribute('showminus', 'true');
-    newChart.setAttribute('type', 'ColumnChart');
     document.querySelector('#comparisson-section .chart-container').append(newChart);
+    newChart.drawChart({'type': 'ColumnChart', 'data': newChart.data});
 })
