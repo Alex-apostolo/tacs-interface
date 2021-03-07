@@ -416,20 +416,16 @@ function (_HTMLElement) {
 
   var _super = _createSuper(TacsChart);
 
-  function TacsChart(data) {
-    var _this;
-
+  function TacsChart() {
     _classCallCheck(this, TacsChart);
 
-    _this = _super.call(this);
-    _this.data = data;
-    return _this;
+    return _super.apply(this, arguments);
   }
 
   _createClass(TacsChart, [{
     key: "attributeChangedCallback",
     value: function attributeChangedCallback(name, oldValue, newValue) {
-      var _this2 = this;
+      var _this = this;
 
       if (name === 'showminus') {
         if (newValue === 'true') {
@@ -437,7 +433,7 @@ function (_HTMLElement) {
           minusBtn.classList.add('minus-btn');
           this.append(minusBtn);
           minusBtn.addEventListener('click', function () {
-            _this2.remove();
+            _this.remove();
           });
         } else if (newValue === 'false') {
           this.querySelector('.minus-btn').remove();
@@ -447,9 +443,9 @@ function (_HTMLElement) {
   }, {
     key: "connectedCallback",
     value: function connectedCallback() {
-      var _this3 = this;
+      var _this2 = this;
 
-      this.innerHTML = "\n            <style>\n                tacs-chart {\n                    position: relative;\n                }\n\n                tacs-chart .dropdown {\n                    position: absolute;\n                    top: 0;\n                    left: 0;\n                    z-index: 2;\n                }\n\n                tacs-chart .minus-btn {\n                    position: absolute;\n                    top: 0;\n                    right: 0;\n                }\n\n                tacs-chart .tacs-container {\n                    margin-bottom: 2.5rem;\n                }\n            </style>\n                <div class=\"dropdown\">\n                    <button class=\"dropdown-btn\">Dictionary</button>\n                    <ul>\n                        <li><button>Dictionary</button></li>\n                        <li><button>Category</button></li>\n                        <li><button>Concept</button></li>\n                    </ul>\n                </div>\n            <div class=\"tacs-container\"></div>\n        ";
+      this.innerHTML = "\n            <style>\n                tacs-chart {\n                    position: relative;\n                }\n\n                tacs-chart .dropdown {\n                    position: absolute;\n                    top: 0;\n                    left: 0;\n                    z-index: 2;\n                }\n\n                tacs-chart .minus-btn {\n                    position: absolute;\n                    top: 0;\n                    right: 0;\n                }\n\n                tacs-chart .tacs-container {\n                    margin-bottom: 2.5rem;\n                }\n            </style>\n            <div class=\"dropdown\">\n                <button class=\"dropdown-btn\">Dictionary</button>\n                <ul>\n                    <li><button>Dictionary</button></li>\n                    <li><button>Category</button></li>\n                    <li><button>Concept</button></li>\n                </ul>\n            </div>\n            <div class=\"tacs-container\"></div>\n        ";
 
       if (this.hasAttribute('showminus')) {
         var showMinus = this.getAttribute('showminus');
@@ -459,11 +455,41 @@ function (_HTMLElement) {
           minusBtn.classList.add('minus-btn');
           this.append(minusBtn);
           minusBtn.addEventListener('click', function () {
-            _this3.remove();
+            _this2.remove();
           });
         }
       }
 
+      var dropName = this.querySelector('.dropdown .dropdown-btn');
+      var levels = this.querySelectorAll('.dropdown ul li button');
+      levels.forEach(function (element) {
+        var level = 'dict';
+
+        switch (element.innerText) {
+          case 'Dictionary':
+            level = 'dict';
+            break;
+
+          case 'Category':
+            level = 'cat';
+            break;
+
+          case 'Concept':
+            level = 'concept';
+            break;
+        }
+
+        element.addEventListener('click', function () {
+          _this2.drawChart({
+            type: _this2.type,
+            data: _this2.data,
+            options: _this2.options,
+            level: level
+          });
+
+          dropName.innerText = element.innerText;
+        });
+      });
       this.hasAttribute('type') ? this.drawChart({
         type: this.getAttribute('type')
       }) : this.drawChart();
@@ -480,7 +506,10 @@ function (_HTMLElement) {
           level = _ref$level === void 0 ? 'dict' : _ref$level,
           options = _ref.options;
 
-      this.level = level; // Set a callback to run when the Google Visualization API is loaded.
+      this.level = level;
+      this.type = type;
+      this.data = data;
+      this.options = options; // Set a callback to run when the Google Visualization API is loaded.
 
       _googleCharts.GoogleCharts.load(this.drawChartCallback.bind(this, type, data, level, options));
     } // Callback that creates and populates a data table,
@@ -713,12 +742,11 @@ var responseHandler = function responseHandler(groups, response) {
   if (response.length === 1) {
     specificSection.style.display = 'flex'; // Append specific chart
 
-    var specificChart = new _TacsChart.default(response);
+    var specificChart = new _TacsChart.default();
     specificChartContainer.append(specificChart); // Draw the charts
 
     specificChart.drawChart({
-      data: specificChart.data,
-      level: 'cat',
+      data: response,
       type: 'BarChart'
     });
   } // If there is more than one file on the same group create the general and specific section
@@ -728,22 +756,20 @@ var responseHandler = function responseHandler(groups, response) {
     generalSection.style.display = 'flex';
     specificSection.style.display = 'flex'; // Append general and specific chart
 
-    var generalChart = new _TacsChart.default(response);
+    var generalChart = new _TacsChart.default();
     generalChartContainer.append(generalChart);
 
-    var _specificChart = new _TacsChart.default(response);
+    var _specificChart = new _TacsChart.default();
 
     specificChartContainer.append(_specificChart); // Draw the charts
 
     generalChart.drawChart({
-      data: generalChart.data,
-      level: 'cat',
+      data: response,
       type: 'PieChart'
     });
 
     _specificChart.drawChart({
-      data: _specificChart.data,
-      level: 'cat',
+      data: response,
       type: 'BarChart'
     });
   } // If there is multiple groups then create the general, comparisson, specific section
@@ -754,31 +780,28 @@ var responseHandler = function responseHandler(groups, response) {
     comparissonSection.style.display = 'flex';
     specificSection.style.display = 'flex'; // Append general, comparisson and specific chart
 
-    var _generalChart = new _TacsChart.default(response);
+    var _generalChart = new _TacsChart.default();
 
     generalChartContainer.append(_generalChart);
-    var comparissonChart = new _TacsChart.default(response);
+    var comparissonChart = new _TacsChart.default();
     comparissonChartContainer.append(comparissonChart);
 
-    var _specificChart2 = new _TacsChart.default(response);
+    var _specificChart2 = new _TacsChart.default();
 
     specificChartContainer.append(_specificChart2); // Draw the charts
 
     _generalChart.drawChart({
-      data: _generalChart.data,
-      level: 'cat',
+      data: response,
       type: 'PieChart'
     });
 
     comparissonChart.drawChart({
-      data: comparissonChart.data,
-      level: 'cat',
+      data: response,
       type: 'ColumnChart'
     });
 
     _specificChart2.drawChart({
-      data: _specificChart2.data,
-      level: 'cat',
+      data: response,
       type: 'BarChart'
     });
   }
@@ -812,16 +835,14 @@ browseBtn.addEventListener('click', function () {
 
 var generalBtn = document.getElementById('add-btn-general');
 generalBtn.addEventListener('click', function () {
-  // var newChart = Object.assign({}, document.querySelector('#general-section tacs-chart'));
   var oldChart = document.querySelector('#general-section tacs-chart');
   var newChart = oldChart.cloneNode(true);
-  newChart.data = oldChart.data;
   newChart.setAttribute('showminus', 'true');
   document.querySelector('#general-section .chart-container').append(newChart);
   newChart.drawChart({
-    'type': 'PieChart',
+    'type': oldChart.type,
     'level': oldChart.level,
-    'data': newChart.data
+    'data': oldChart.data
   });
 }); // Add event listener for comparisson container
 
@@ -829,13 +850,12 @@ var comparissonBtn = document.getElementById('add-btn-comparisson');
 comparissonBtn.addEventListener('click', function () {
   var oldChart = document.querySelector('#comparisson-section tacs-chart');
   var newChart = oldChart.cloneNode(true);
-  newChart.data = oldChart.data;
   newChart.setAttribute('showminus', 'true');
   document.querySelector('#comparisson-section .chart-container').append(newChart);
   newChart.drawChart({
-    'type': 'ColumnChart',
+    'type': oldChart.type,
     'level': oldChart.level,
-    'data': newChart.data
+    'data': oldChart.data
   });
 });
 },{"./particles.js":"js/particles.js","./BrowseInput.js":"js/BrowseInput.js","./TacsChart.js":"js/TacsChart.js","./controller.js":"js/controller.js"}],"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -866,7 +886,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57608" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61873" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

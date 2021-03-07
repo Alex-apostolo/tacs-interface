@@ -78,7 +78,25 @@
     align-self: center;
 }
 
-/* DROPOWN BTN */
+/* DROPDOWN */
+/*  */
+.dropdown {
+    width: 6rem;
+    min-height: 3rem;
+}
+
+.dropdown ul{
+    background-color: #458ec2a6;
+    border-radius: 0 0 5px 5px;
+    opacity: 0;
+    transition: all 0.5s ease;
+    pointer-events: 'auto';
+    margin-top: 0.2rem;
+    list-style: none;
+    box-sizing: content-box;
+}
+
+/* DROPDOWN BTN */
 /*  */
 .dropdown-btn {
     display: flex;
@@ -182,5 +200,5 @@ input[type="file"]::-ms-browse:hover {
 .dropdown-btn:focus + ul {
     opacity: 1;
     transition: all 0.5s ease;
-    pointer-events: all;
+    pointer-events: auto;
 }

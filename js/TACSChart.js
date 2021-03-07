@@ -6,11 +6,6 @@ import { GoogleCharts } from 'google-charts';
 // Uses Google Charts along with other elements to create this custom element
 export default class TacsChart extends HTMLElement {
 
-    constructor(data) {
-        super();
-        this.data = data;
-    }
-
     static get observedAttributes() {
         return ['showminus', 'type'];
     }
@@ -54,14 +49,14 @@ export default class TacsChart extends HTMLElement {
                     margin-bottom: 2.5rem;
                 }
             </style>
-                <div class="dropdown">
-                    <button class="dropdown-btn">Dictionary</button>
-                    <ul>
-                        <li><button>Dictionary</button></li>
-                        <li><button>Category</button></li>
-                        <li><button>Concept</button></li>
-                    </ul>
-                </div>
+            <div class="dropdown">
+                <button class="dropdown-btn">Dictionary</button>
+                <ul>
+                    <li><button>Dictionary</button></li>
+                    <li><button>Category</button></li>
+                    <li><button>Concept</button></li>
+                </ul>
+            </div>
             <div class="tacs-container"></div>
         `
         if (this.hasAttribute('showminus')) {
@@ -75,12 +70,36 @@ export default class TacsChart extends HTMLElement {
                 })
             }
         }
+        const dropName = this.querySelector('.dropdown .dropdown-btn');
+        const levels = this.querySelectorAll('.dropdown ul li button');
+        levels.forEach(element => {
+            let level = 'dict';
+            switch(element.innerText) {
+                case 'Dictionary':
+                    level = 'dict';
+                    break;
+                case 'Category':
+                    level = 'cat';
+                    break; 
+                case 'Concept':
+                    level = 'concept';
+                    break;
+            }
+            element.addEventListener('click', () => {
+                this.drawChart({type: this.type, data: this.data, options: this.options, level: level})
+                dropName.innerText = element.innerText;
+            })
+        });
+
         this.hasAttribute('type') ? this.drawChart({ type: this.getAttribute('type') }) : this.drawChart();
     }
 
     // Wrapper method for drawChartCallback
     drawChart({ type = 'PieChart', data, level = 'dict', options } = {}) {
         this.level = level;
+        this.type = type;
+        this.data = data;
+        this.options = options;
         // Set a callback to run when the Google Visualization API is loaded.
         GoogleCharts.load(this.drawChartCallback.bind(this, type, data, level, options));
     }

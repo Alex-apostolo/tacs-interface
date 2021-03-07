@@ -61,11 +61,11 @@ const responseHandler = (groups, response) => {
         specificSection.style.display = 'flex';
 
         // Append specific chart
-        const specificChart = new TacsChart(response);
+        const specificChart = new TacsChart();
         specificChartContainer.append(specificChart);
 
         // Draw the charts
-        specificChart.drawChart({ data: specificChart.data, level: 'cat', type: 'BarChart' });
+        specificChart.drawChart({ data: response, type: 'BarChart' });
     }
 
     // If there is more than one file on the same group create the general and specific section
@@ -74,15 +74,15 @@ const responseHandler = (groups, response) => {
         specificSection.style.display = 'flex';
 
         // Append general and specific chart
-        const generalChart = new TacsChart(response);
+        const generalChart = new TacsChart();
         generalChartContainer.append(generalChart);
 
-        const specificChart = new TacsChart(response);
+        const specificChart = new TacsChart();
         specificChartContainer.append(specificChart);
 
         // Draw the charts
-        generalChart.drawChart({ data: generalChart.data, level: 'cat', type: 'PieChart' });
-        specificChart.drawChart({ data: specificChart.data, level: 'cat', type: 'BarChart' });
+        generalChart.drawChart({ data: response, type: 'PieChart' });
+        specificChart.drawChart({ data: response, type: 'BarChart' });
     }
 
     // If there is multiple groups then create the general, comparisson, specific section
@@ -92,18 +92,18 @@ const responseHandler = (groups, response) => {
         specificSection.style.display = 'flex';
 
         // Append general, comparisson and specific chart
-        const generalChart = new TacsChart(response);
+        const generalChart = new TacsChart();
         generalChartContainer.append(generalChart);
 
-        const comparissonChart = new TacsChart(response);
+        const comparissonChart = new TacsChart();
         comparissonChartContainer.append(comparissonChart);
 
-        const specificChart = new TacsChart(response);
+        const specificChart = new TacsChart();
         specificChartContainer.append(specificChart);
 
         // Draw the charts
-        generalChart.drawChart({ data: generalChart.data, level: 'cat', type: 'PieChart' });
-        comparissonChart.drawChart({ data: comparissonChart.data, level: 'cat', type: 'ColumnChart'});
-        specificChart.drawChart({ data: specificChart.data, level: 'cat', type: 'BarChart' });
+        generalChart.drawChart({ data: response, type: 'PieChart' });
+        comparissonChart.drawChart({ data: response, type: 'ColumnChart'});
+        specificChart.drawChart({ data: response, type: 'BarChart' });
     }
 }
