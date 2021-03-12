@@ -88,9 +88,7 @@
 .dropdown ul{
     background-color: #458ec2a6;
     border-radius: 0 0 5px 5px;
-    opacity: 0;
     transition: all 0.5s ease;
-    pointer-events: 'auto';
     margin-top: 0.2rem;
     list-style: none;
     box-sizing: content-box;
@@ -193,12 +191,4 @@ input[type="file"]::-ms-browse:hover {
 #easter-egg:hover {
     border-top: 2rem solid #408ec6;
     transition: 0.3s;
-}
-
-/* FOCUS */
-/*  */
-.dropdown-btn:focus + ul {
-    opacity: 1;
-    transition: all 0.5s ease;
-    pointer-events: auto;
 }

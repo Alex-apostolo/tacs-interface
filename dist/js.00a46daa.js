@@ -460,7 +460,15 @@ function (_HTMLElement) {
         }
       }
 
-      var dropName = this.querySelector('.dropdown .dropdown-btn');
+      var dropdownBtn = this.querySelector('.dropdown .dropdown-btn');
+      var dropdownUl = this.querySelector('.dropdown ul');
+      dropdownUl.style.display = 'none';
+      dropdownBtn.addEventListener('focus', function () {
+        return dropdownUl.style.display = 'block';
+      });
+      dropdownBtn.addEventListener('blur', function () {
+        return dropdownUl.style.display = 'none';
+      });
       var levels = this.querySelectorAll('.dropdown ul li button');
       levels.forEach(function (element) {
         var level = 'dict';
@@ -479,7 +487,7 @@ function (_HTMLElement) {
             break;
         }
 
-        element.addEventListener('click', function () {
+        element.addEventListener('mousedown', function (e) {
           _this2.drawChart({
             type: _this2.type,
             data: _this2.data,
@@ -487,7 +495,7 @@ function (_HTMLElement) {
             level: level
           });
 
-          dropName.innerText = element.innerText;
+          dropdownBtn.innerText = element.innerText;
         });
       });
       this.hasAttribute('type') ? this.drawChart({
@@ -886,7 +894,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61873" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61085" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -70,24 +70,29 @@ export default class TacsChart extends HTMLElement {
                 })
             }
         }
-        const dropName = this.querySelector('.dropdown .dropdown-btn');
+
+        const dropdownBtn = this.querySelector('.dropdown .dropdown-btn');
+        const dropdownUl = this.querySelector('.dropdown ul');
+        dropdownUl.style.display = 'none';
+        dropdownBtn.addEventListener('focus', () => dropdownUl.style.display = 'block');
+        dropdownBtn.addEventListener('blur', () => dropdownUl.style.display = 'none');
         const levels = this.querySelectorAll('.dropdown ul li button');
         levels.forEach(element => {
             let level = 'dict';
-            switch(element.innerText) {
+            switch (element.innerText) {
                 case 'Dictionary':
                     level = 'dict';
                     break;
                 case 'Category':
                     level = 'cat';
-                    break; 
+                    break;
                 case 'Concept':
                     level = 'concept';
                     break;
             }
-            element.addEventListener('click', () => {
-                this.drawChart({type: this.type, data: this.data, options: this.options, level: level})
-                dropName.innerText = element.innerText;
+            element.addEventListener('mousedown', e => {
+                this.drawChart({ type: this.type, data: this.data, options: this.options, level: level })
+                dropdownBtn.innerText = element.innerText;
             })
         });
 
@@ -170,7 +175,7 @@ export default class TacsChart extends HTMLElement {
                             ? (acc[cur[level]].freq += cur.freq)
                             : (acc[cur[level]] = { ...cur }), acc), {})));
                         arr[0].forEach(element => {
-                            if(element !== 'File') {
+                            if (element !== 'File') {
                                 let o = ac.filter(value => value[level] === element);
                                 o[0] === undefined ? res.push(0) : res.push(o[0].freq);
                             }
@@ -193,7 +198,7 @@ export default class TacsChart extends HTMLElement {
                             ? (acc[cur[level]].freq += cur.freq)
                             : (acc[cur[level]] = { ...cur }), acc), {})));
                         arr[0].forEach(element => {
-                            if(element !== 'File') {
+                            if (element !== 'File') {
                                 let o = ac.filter(value => value[level] === element);
                                 o[0] === undefined ? res.push(0) : res.push(o[0].freq);
                             }
