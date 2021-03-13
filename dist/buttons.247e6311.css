@@ -88,7 +88,6 @@
 .dropdown ul{
     background-color: #458ec2a6;
     border-radius: 0 0 5px 5px;
-    transition: all 0.5s ease;
     margin-top: 0.2rem;
     list-style: none;
     box-sizing: content-box;

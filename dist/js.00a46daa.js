@@ -487,7 +487,7 @@ function (_HTMLElement) {
             break;
         }
 
-        element.addEventListener('mousedown', function (e) {
+        element.addEventListener('mousedown', function () {
           _this2.drawChart({
             type: _this2.type,
             data: _this2.data,
@@ -512,21 +512,22 @@ function (_HTMLElement) {
           data = _ref.data,
           _ref$level = _ref.level,
           level = _ref$level === void 0 ? 'dict' : _ref$level,
-          options = _ref.options;
+          options = _ref.options,
+          groups = _ref.groups;
 
       this.level = level;
       this.type = type;
       this.data = data;
       this.options = options; // Set a callback to run when the Google Visualization API is loaded.
 
-      _googleCharts.GoogleCharts.load(this.drawChartCallback.bind(this, type, data, level, options));
+      _googleCharts.GoogleCharts.load(this.drawChartCallback.bind(this, type, data, level, options, groups));
     } // Callback that creates and populates a data table,
     // instantiates the pie chart, passes in the data and
     // draws it.
 
   }, {
     key: "drawChartCallback",
-    value: function drawChartCallback(type, data, level, options) {
+    value: function drawChartCallback(type, data, level, options, groups) {
       if (options === undefined) {
         // Set chart options
         options = {
@@ -609,6 +610,8 @@ function (_HTMLElement) {
               });
               arr.push(res);
             });
+            console.log(groups);
+            console.log(arr);
             data = _googleCharts.GoogleCharts.api.visualization.arrayToDataTable(arr);
             break;
 
@@ -805,7 +808,8 @@ var responseHandler = function responseHandler(groups, response) {
 
     comparissonChart.drawChart({
       data: response,
-      type: 'ColumnChart'
+      type: 'ColumnChart',
+      groups: groups
     });
 
     _specificChart2.drawChart({
@@ -894,7 +898,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61085" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58080" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

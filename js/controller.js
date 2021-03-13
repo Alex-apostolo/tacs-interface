@@ -103,7 +103,7 @@ const responseHandler = (groups, response) => {
 
         // Draw the charts
         generalChart.drawChart({ data: response, type: 'PieChart' });
-        comparissonChart.drawChart({ data: response, type: 'ColumnChart'});
+        comparissonChart.drawChart({ data: response, type: 'ColumnChart', groups: groups});
         specificChart.drawChart({ data: response, type: 'BarChart' });
     }
 }

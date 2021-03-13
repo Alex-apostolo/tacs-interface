@@ -90,7 +90,7 @@ export default class TacsChart extends HTMLElement {
                     level = 'concept';
                     break;
             }
-            element.addEventListener('mousedown', e => {
+            element.addEventListener('mousedown', () => {
                 this.drawChart({ type: this.type, data: this.data, options: this.options, level: level })
                 dropdownBtn.innerText = element.innerText;
             })
@@ -100,19 +100,19 @@ export default class TacsChart extends HTMLElement {
     }
 
     // Wrapper method for drawChartCallback
-    drawChart({ type = 'PieChart', data, level = 'dict', options } = {}) {
+    drawChart({ type = 'PieChart', data, level = 'dict', options, groups } = {}) {
         this.level = level;
         this.type = type;
         this.data = data;
         this.options = options;
         // Set a callback to run when the Google Visualization API is loaded.
-        GoogleCharts.load(this.drawChartCallback.bind(this, type, data, level, options));
+        GoogleCharts.load(this.drawChartCallback.bind(this, type, data, level, options, groups));
     }
 
     // Callback that creates and populates a data table,
     // instantiates the pie chart, passes in the data and
     // draws it.
-    drawChartCallback(type, data, level, options) {
+    drawChartCallback(type, data, level, options, groups) {
         if (options === undefined) {
             // Set chart options
             options = {
@@ -183,6 +183,8 @@ export default class TacsChart extends HTMLElement {
                         arr.push(res);
                     });
 
+                    console.log(groups);
+                    console.log(arr);
                     data = GoogleCharts.api.visualization.arrayToDataTable(arr);
                     break;
                 case 'BarChart':
