@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Alex-apostolo/tacs-interface#readme",
   "dependencies": {
+    "dataframe-js": "^1.4.4",
     "google-charts": "^2.0.0",
     "particlesjs": "^2.2.3"
   },

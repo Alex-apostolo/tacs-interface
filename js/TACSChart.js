@@ -2,6 +2,7 @@
  CSS Dependencies: minus-btn, dropdown 
 */
 import { GoogleCharts } from 'google-charts';
+import DataFrame from 'dataframe-js';
 
 // Uses Google Charts along with other elements to create this custom element
 export default class TacsChart extends HTMLElement {
@@ -144,72 +145,68 @@ export default class TacsChart extends HTMLElement {
 
         if (data !== undefined) {
             // Draw based on level
-            let googleData, res, arr;
-            let count = [];
+            let googleData, count, res, arr;
             switch (type) {
                 case 'PieChart':
+                    // Make data table for Google Chart
                     googleData = new GoogleCharts.api.visualization.DataTable();
                     googleData.addColumn('string', 'terms');
                     googleData.addColumn('number', 'frequency');
-                    // count consists of the tacs analysis
+                    // Combine all tacs_count analysis in one string named 'count'
+                    count = [];
                     data.forEach(element => count = count.concat(element[1]));
-                    // TODO: Change based on level
-                    res = Object.values(count.reduce((acc, cur) => (acc[cur[level]]
-                        ? (acc[cur[level]].freq += cur.freq)
-                        : (acc[cur[level]] = { ...cur }), acc), {}))
-                        .map(item => [item[level], item.freq]);
-
+                    // Create a DataFrame from count
+                    let df = new DataFrame(count);
+                    // GroupBy the level selected and include the count for each group
+                    res = df.groupBy(level).aggregate(group => group.count()).rename('aggregation', 'groupCount').toArray();
+                    // Add the result to the data table
                     googleData.addRows(res);
                     data = googleData;
                     break;
                 case 'ColumnChart':
-                    data.forEach(element => count = count.concat(element[1]));
-                    arr = [count.map(item => item[level])
-                        .filter((value, index, self) => self.indexOf(value) === index)];
-                    arr[0].unshift('File');
-
-                    res = data.forEach(el => {
-                        res = [];
-                        res.push(el[0]);
-                        let ac = (Object.values(el[1].reduce((acc, cur) => (acc[cur[level]]
-                            ? (acc[cur[level]].freq += cur.freq)
-                            : (acc[cur[level]] = { ...cur }), acc), {})));
-                        arr[0].forEach(element => {
-                            if (element !== 'File') {
-                                let o = ac.filter(value => value[level] === element);
-                                o[0] === undefined ? res.push(0) : res.push(o[0].freq);
-                            }
-                        });
-                        arr.push(res);
-                    });
-
-                    console.log(groups);
-                    console.log(arr);
-                    data = GoogleCharts.api.visualization.arrayToDataTable(arr);
+                    let intermediateForm = [];
+                    // Counter for groups iterated 
+                    let group = 0;
+                    // Counter for files iterated
+                    let file = 0;
+                    groups.forEach(fileCount => {
+                        // Combine all the files of the group to count[]
+                        count = [];
+                        for (let i = file; i < fileCount + file; i++)
+                            count = count.concat(data[i][1]);
+                        // Create a DataFrame from count
+                        let df = new DataFrame(count); 
+                        // GroupBy the level selected and include the count for each group
+                        res = df.groupBy(level).aggregate(group => group.count()).rename('aggregation', 'groupCount').toArray();
+                        res.unshift(['group', 'Group ' + ++group]);
+                        intermediateForm.push(Object.fromEntries(res));
+                        fileCount += file;
+                    })
+                    data = googleData;
                     break;
-                case 'BarChart':
-                    data.forEach(element => count = count.concat(element[1]));
-                    arr = [count.map(item => item[level])
-                        .filter((value, index, self) => self.indexOf(value) === index)];
-                    arr[0].unshift('File');
+                case 'barchart':
+                    // data.foreach(element => count = count.concat(element[1]));
+                    // arr = [count.map(item => item[level])
+                    //     .filter((value, index, self) => self.indexof(value) === index)];
+                    // arr[0].unshift('file');
 
-                    res = data.forEach(el => {
-                        res = [];
-                        res.push(el[0]);
-                        let ac = (Object.values(el[1].reduce((acc, cur) => (acc[cur[level]]
-                            ? (acc[cur[level]].freq += cur.freq)
-                            : (acc[cur[level]] = { ...cur }), acc), {})));
-                        arr[0].forEach(element => {
-                            if (element !== 'File') {
-                                let o = ac.filter(value => value[level] === element);
-                                o[0] === undefined ? res.push(0) : res.push(o[0].freq);
-                            }
-                        });
-                        arr.push(res);
-                    });
+                    // res = data.foreach(el => {
+                    //     res = [];
+                    //     res.push(el[0]);
+                    //     let ac = (Object.values(el[1].reduce((acc, cur) => (acc[cur[level]]
+                    //         ? (acc[cur[level]].freq += cur.freq)
+                    //         : (acc[cur[level]] = { ...cur }), acc), {})));
+                    //     arr[0].forEach(element => {
+                    //         if (element !== 'File') {
+                    //             let o = ac.filter(value => value[level] === element);
+                    //             o[0] === undefined ? res.push(0) : res.push(o[0].freq);
+                    //         }
+                    //     });
+                    //     arr.push(res);
+                    // });
 
-                    data = GoogleCharts.api.visualization.arrayToDataTable(arr);
-                    options.isStacked = 'percent';
+                    // data = GoogleCharts.api.visualization.arrayToDataTable(arr);
+                    // options.isStacked = 'percent';
                     break;
             }
         }

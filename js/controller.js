@@ -4,6 +4,9 @@ const backend = 'http://127.0.0.1:5000'
 
 // Add event listener for submitting the files
 const form = document.getElementById('form');
+const btn = form.querySelector('.apply-btn');
+// btn.dispatchEvent(new Event("click"));
+
 form.addEventListener('submit', e => {
     e.preventDefault();
 
@@ -28,10 +31,11 @@ form.addEventListener('submit', e => {
         body: formData
     })
         .then(response => response.json())
-        .then(response => responseHandler(groups, response));
+        .then(response => responseHandler([1,1], response));
 });
 
 const responseHandler = (groups, response) => {
+    console.log(response);
     // Display results page and scroll into view
     document.querySelector('main').style.display = 'block';
     document.getElementById('pagebrake').scrollIntoView({
