@@ -11171,12 +11171,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -11416,38 +11410,27 @@ function (_HTMLElement) {
 
           case 'BarChart':
             {
-              var _count = [];
-              data.forEach(function (element) {
-                return _count = _count.concat(element[1]);
+              var _result = [];
+              data.forEach(function (row) {
+                var df = new _dataframeJs.default(row[1]); // GroupBy the level selected and include the count for each group
+
+                var res = df.groupBy(level).aggregate(function (group) {
+                  return group.count();
+                }).rename('aggregation', 'groupCount').toArray();
+                res.unshift(['file', row[0]]);
+                res = Object.fromEntries(res);
+
+                _result.push(res);
               });
-              var arr = [_count.map(function (item) {
-                return item[level];
-              }).filter(function (value, index, self) {
-                return self.indexOf(value) === index;
-              })];
-              arr[0].unshift('file');
-
-              var _res = data.forEach(function (el) {
-                _res = [];
-
-                _res.push(el[0]);
-
-                var ac = Object.values(el[1].reduce(function (acc, cur) {
-                  return acc[cur[level]] ? acc[cur[level]].freq += cur.freq : acc[cur[level]] = _objectSpread({}, cur), acc;
-                }, {}));
-                arr[0].forEach(function (element) {
-                  if (element !== 'File') {
-                    var o = ac.filter(function (value) {
-                      return value[level] === element;
-                    });
-                    o[0] === undefined ? _res.push(0) : _res.push(o[0].freq);
-                  }
-                });
-                arr.push(_res);
-              });
-
-              data = _googleCharts.GoogleCharts.api.visualization.arrayToDataTable(arr);
               options.isStacked = 'percent';
+
+              var _df = new _dataframeJs.default(_result);
+
+              _result = _df.toArray();
+
+              _result.unshift(_df.listColumns());
+
+              data = _googleCharts.GoogleCharts.api.visualization.arrayToDataTable(_result);
               break;
             }
         }
@@ -11707,7 +11690,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57651" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54043" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -92,7 +92,7 @@ export default class TacsChart extends HTMLElement {
                     break;
             }
             element.addEventListener('mousedown', () => {
-                this.drawChart({ type: this.type, data: this.data, options: this.options, level: level, groups: this.groups})
+                this.drawChart({ type: this.type, data: this.data, options: this.options, level: level, groups: this.groups })
                 dropdownBtn.innerText = element.innerText;
             })
         });
@@ -176,13 +176,13 @@ export default class TacsChart extends HTMLElement {
                         for (let i = file; i < fileCount + file; i++)
                             count = count.concat(data[i][1]);
                         // Create a DataFrame from count
-                        const df = new DataFrame(count); 
+                        const df = new DataFrame(count);
                         // GroupBy the level selected and include the count for each group
                         const res = df.groupBy(level).aggregate(group => group.count()).rename('aggregation', 'groupCount').toArray();
                         res.unshift(['Term', 'Group ' + ++group]);
-                        if( result === undefined)
+                        if (result === undefined)
                             result = new DataFrame(res);
-                        else 
+                        else
                             result = result.withColumn(group + 1, (_, index) => res[index][1]);
                         fileCount += file;
                     })
@@ -190,29 +190,20 @@ export default class TacsChart extends HTMLElement {
                     break;
                 }
                 case 'BarChart': {
-                    let count = [];
-                    data.forEach(element => count = count.concat(element[1]));
-                    let arr = [count.map(item => item[level])
-                        .filter((value, index, self) => self.indexOf(value) === index)];
-                    arr[0].unshift('file');
-
-                    let res = data.forEach(el => {
-                        res = [];
-                        res.push(el[0]);
-                        let ac = (Object.values(el[1].reduce((acc, cur) => (acc[cur[level]]
-                            ? (acc[cur[level]].freq += cur.freq)
-                            : (acc[cur[level]] = { ...cur }), acc), {})));
-                        arr[0].forEach(element => {
-                            if (element !== 'File') {
-                                let o = ac.filter(value => value[level] === element);
-                                o[0] === undefined ? res.push(0) : res.push(o[0].freq);
-                            }
-                        });
-                        arr.push(res);
+                    let result = [];
+                    data.forEach(row => {
+                        let df = new DataFrame(row[1]);
+                        // GroupBy the level selected and include the count for each group
+                        let res = df.groupBy(level).aggregate(group => group.count()).rename('aggregation', 'groupCount').toArray();
+                        res.unshift(['file', row[0]]);
+                        res = Object.fromEntries(res);
+                        result.push(res);
                     });
-
-                    data = GoogleCharts.api.visualization.arrayToDataTable(arr);
                     options.isStacked = 'percent';
+                    let df = new DataFrame(result);
+                    result = df.toArray();
+                    result.unshift(df.listColumns());
+                    data = GoogleCharts.api.visualization.arrayToDataTable(result);
                     break;
                 }
             }
