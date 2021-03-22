@@ -35,7 +35,6 @@ form.addEventListener('submit', e => {
 });
 
 const responseHandler = (groups, response) => {
-    console.log(response);
     // Display results page and scroll into view
     document.querySelector('main').style.display = 'block';
     document.getElementById('pagebrake').scrollIntoView({

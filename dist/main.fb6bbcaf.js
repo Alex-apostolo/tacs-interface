@@ -11171,6 +11171,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -11353,81 +11359,97 @@ function (_HTMLElement) {
 
       if (data !== undefined) {
         // Draw based on level
-        var googleData, count, res, arr;
-
         switch (type) {
           case 'PieChart':
-            // Make data table for Google Chart
-            googleData = new _googleCharts.GoogleCharts.api.visualization.DataTable();
-            googleData.addColumn('string', 'terms');
-            googleData.addColumn('number', 'frequency'); // Combine all tacs_count analysis in one string named 'count'
+            {
+              // Make data table for Google Chart
+              var googleData = new _googleCharts.GoogleCharts.api.visualization.DataTable();
+              googleData.addColumn('string', 'terms');
+              googleData.addColumn('number', 'frequency'); // Combine all tacs_count analysis in one string named 'count'
 
-            count = [];
-            data.forEach(function (element) {
-              return count = count.concat(element[1]);
-            }); // Create a DataFrame from count
-
-            var df = new _dataframeJs.default(count); // GroupBy the level selected and include the count for each group
-
-            res = df.groupBy(level).aggregate(function (group) {
-              return group.count();
-            }).rename('aggregation', 'groupCount').toArray(); // Add the result to the data table
-
-            googleData.addRows(res);
-            data = googleData;
-            break;
-
-          case 'ColumnChart':
-            var result; // Counter for groups iterated 
-
-            var group = 0; // Counter for files iterated
-
-            var file = 0;
-            groups.forEach(function (fileCount) {
-              // Combine all the files of the group to count[]
-              count = [];
-
-              for (var i = file; i < fileCount + file; i++) {
-                count = count.concat(data[i][1]);
-              } // Create a DataFrame from count
-
+              var count = [];
+              data.forEach(function (row) {
+                return count = count.concat(row[1]);
+              }); // Create a DataFrame from count
 
               var df = new _dataframeJs.default(count); // GroupBy the level selected and include the count for each group
 
-              res = df.groupBy(level).aggregate(function (group) {
+              var res = df.groupBy(level).aggregate(function (group) {
                 return group.count();
-              }).rename('aggregation', 'groupCount').toArray();
-              res.unshift(['Term', 'Group ' + ++group]);
-              if (result === undefined) result = new _dataframeJs.default(res);else result = result.withColumn(group + 1, function (_, index) {
-                return res[index][1];
-              });
-              fileCount += file;
-            });
-            data = _googleCharts.GoogleCharts.api.visualization.arrayToDataTable(result.toArray());
-            break;
+              }).rename('aggregation', 'groupCount').toArray(); // Add the result to the data table
 
-          case 'barchart':
-            // data.foreach(element => count = count.concat(element[1]));
-            // arr = [count.map(item => item[level])
-            //     .filter((value, index, self) => self.indexof(value) === index)];
-            // arr[0].unshift('file');
-            // res = data.foreach(el => {
-            //     res = [];
-            //     res.push(el[0]);
-            //     let ac = (Object.values(el[1].reduce((acc, cur) => (acc[cur[level]]
-            //         ? (acc[cur[level]].freq += cur.freq)
-            //         : (acc[cur[level]] = { ...cur }), acc), {})));
-            //     arr[0].forEach(element => {
-            //         if (element !== 'File') {
-            //             let o = ac.filter(value => value[level] === element);
-            //             o[0] === undefined ? res.push(0) : res.push(o[0].freq);
-            //         }
-            //     });
-            //     arr.push(res);
-            // });
-            // data = GoogleCharts.api.visualization.arrayToDataTable(arr);
-            // options.isStacked = 'percent';
-            break;
+              googleData.addRows(res);
+              data = googleData;
+              break;
+            }
+
+          case 'ColumnChart':
+            {
+              var result; // Counter for groups iterated 
+
+              var group = 0; // Counter for files iterated
+
+              var file = 0;
+              groups.forEach(function (fileCount) {
+                // Combine all the files of the group to count[]
+                var count = [];
+
+                for (var i = file; i < fileCount + file; i++) {
+                  count = count.concat(data[i][1]);
+                } // Create a DataFrame from count
+
+
+                var df = new _dataframeJs.default(count); // GroupBy the level selected and include the count for each group
+
+                var res = df.groupBy(level).aggregate(function (group) {
+                  return group.count();
+                }).rename('aggregation', 'groupCount').toArray();
+                res.unshift(['Term', 'Group ' + ++group]);
+                if (result === undefined) result = new _dataframeJs.default(res);else result = result.withColumn(group + 1, function (_, index) {
+                  return res[index][1];
+                });
+                fileCount += file;
+              });
+              data = _googleCharts.GoogleCharts.api.visualization.arrayToDataTable(result.toArray());
+              break;
+            }
+
+          case 'BarChart':
+            {
+              var _count = [];
+              data.forEach(function (element) {
+                return _count = _count.concat(element[1]);
+              });
+              var arr = [_count.map(function (item) {
+                return item[level];
+              }).filter(function (value, index, self) {
+                return self.indexOf(value) === index;
+              })];
+              arr[0].unshift('file');
+
+              var _res = data.forEach(function (el) {
+                _res = [];
+
+                _res.push(el[0]);
+
+                var ac = Object.values(el[1].reduce(function (acc, cur) {
+                  return acc[cur[level]] ? acc[cur[level]].freq += cur.freq : acc[cur[level]] = _objectSpread({}, cur), acc;
+                }, {}));
+                arr[0].forEach(function (element) {
+                  if (element !== 'File') {
+                    var o = ac.filter(function (value) {
+                      return value[level] === element;
+                    });
+                    o[0] === undefined ? _res.push(0) : _res.push(o[0].freq);
+                  }
+                });
+                arr.push(_res);
+              });
+
+              data = _googleCharts.GoogleCharts.api.visualization.arrayToDataTable(arr);
+              options.isStacked = 'percent';
+              break;
+            }
         }
       } // The below conditional statements outline the default behaviour
 
@@ -11604,7 +11626,7 @@ var responseHandler = function responseHandler(groups, response) {
     });
   }
 };
-},{"./TacsChart":"js/TacsChart.js"}],"js/index.js":[function(require,module,exports) {
+},{"./TacsChart":"js/TacsChart.js"}],"js/main.js":[function(require,module,exports) {
 "use strict";
 
 var _particles = _interopRequireDefault(require("./particles.js"));
@@ -11653,7 +11675,8 @@ comparissonBtn.addEventListener('click', function () {
   newChart.drawChart({
     'type': oldChart.type,
     'level': oldChart.level,
-    'data': oldChart.data
+    'data': oldChart.data,
+    'groups': oldChart.groups
   });
 });
 },{"./particles.js":"js/particles.js","./BrowseInput.js":"js/BrowseInput.js","./TacsChart.js":"js/TacsChart.js","./controller.js":"js/controller.js"}],"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -11859,5 +11882,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","js/index.js"], null)
-//# sourceMappingURL=/js.00a46daa.js.map
+},{}]},{},["../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","js/main.js"], null)
+//# sourceMappingURL=/main.fb6bbcaf.js.map

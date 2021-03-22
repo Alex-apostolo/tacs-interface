@@ -37,5 +37,5 @@ comparissonBtn.addEventListener('click', () => {
     var newChart = oldChart.cloneNode(true);
     newChart.setAttribute('showminus', 'true');
     document.querySelector('#comparisson-section .chart-container').append(newChart);
-    newChart.drawChart({'type': oldChart.type, 'level': oldChart.level, 'data': oldChart.data});
+    newChart.drawChart({'type': oldChart.type, 'level': oldChart.level, 'data': oldChart.data, 'groups': oldChart.groups});
 })
