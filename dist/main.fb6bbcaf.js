@@ -11402,7 +11402,7 @@ function (_HTMLElement) {
                 if (result === undefined) result = new _dataframeJs.default(res);else result = result.withColumn(group + 1, function (_, index) {
                   return res[index][1];
                 });
-                fileCount += file;
+                file += fileCount;
               });
               data = _googleCharts.GoogleCharts.api.visualization.arrayToDataTable(result.toArray());
               break;
@@ -11690,7 +11690,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54043" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54291" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

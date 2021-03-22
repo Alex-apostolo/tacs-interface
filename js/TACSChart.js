@@ -184,7 +184,7 @@ export default class TacsChart extends HTMLElement {
                             result = new DataFrame(res);
                         else
                             result = result.withColumn(group + 1, (_, index) => res[index][1]);
-                        fileCount += file;
+                        file += fileCount;
                     })
                     data = GoogleCharts.api.visualization.arrayToDataTable(result.toArray());
                     break;
