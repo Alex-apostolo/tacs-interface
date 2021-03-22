@@ -158,7 +158,7 @@ export default class TacsChart extends HTMLElement {
                     // Create a DataFrame from count
                     let df = new DataFrame(count);
                     // GroupBy the level selected and include the count for each group
-                    let res = df.groupBy(level).aggregate(group => group.count()).rename('aggregation', 'groupCount').toArray();
+                    let res = df.groupBy(level).aggregate(group => group.reduce((p,n) => n.get('freq') + p, 0)).rename('aggregation', 'groupCount').toArray();
                     // Add the result to the data table
                     googleData.addRows(res);
                     data = googleData;
@@ -178,7 +178,7 @@ export default class TacsChart extends HTMLElement {
                         // Create a DataFrame from count
                         const df = new DataFrame(count);
                         // GroupBy the level selected and include the count for each group
-                        const res = df.groupBy(level).aggregate(group => group.count()).rename('aggregation', 'groupCount').toArray();
+                        const res = df.groupBy(level).aggregate(group => group.reduce((p,n) => n.get('freq') + p, 0)).rename('aggregation', 'groupCount').toArray();
                         res.unshift(['Term', 'Group ' + ++group]);
                         if (result === undefined)
                             result = new DataFrame(res);
@@ -194,7 +194,7 @@ export default class TacsChart extends HTMLElement {
                     data.forEach(row => {
                         let df = new DataFrame(row[1]);
                         // GroupBy the level selected and include the count for each group
-                        let res = df.groupBy(level).aggregate(group => group.count()).rename('aggregation', 'groupCount').toArray();
+                        let res = df.groupBy(level).aggregate(group => group.reduce((p,n) => n.get('freq') + p, 0)).rename('aggregation', 'groupCount').toArray();
                         res.unshift(['file', row[0]]);
                         res = Object.fromEntries(res);
                         result.push(res);

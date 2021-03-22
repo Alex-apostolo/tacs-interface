@@ -11369,7 +11369,9 @@ function (_HTMLElement) {
               var df = new _dataframeJs.default(count); // GroupBy the level selected and include the count for each group
 
               var res = df.groupBy(level).aggregate(function (group) {
-                return group.count();
+                return group.reduce(function (p, n) {
+                  return n.get('freq') + p;
+                }, 0);
               }).rename('aggregation', 'groupCount').toArray(); // Add the result to the data table
 
               googleData.addRows(res);
@@ -11396,7 +11398,9 @@ function (_HTMLElement) {
                 var df = new _dataframeJs.default(count); // GroupBy the level selected and include the count for each group
 
                 var res = df.groupBy(level).aggregate(function (group) {
-                  return group.count();
+                  return group.reduce(function (p, n) {
+                    return n.get('freq') + p;
+                  }, 0);
                 }).rename('aggregation', 'groupCount').toArray();
                 res.unshift(['Term', 'Group ' + ++group]);
                 if (result === undefined) result = new _dataframeJs.default(res);else result = result.withColumn(group + 1, function (_, index) {
@@ -11415,7 +11419,9 @@ function (_HTMLElement) {
                 var df = new _dataframeJs.default(row[1]); // GroupBy the level selected and include the count for each group
 
                 var res = df.groupBy(level).aggregate(function (group) {
-                  return group.count();
+                  return group.reduce(function (p, n) {
+                    return n.get('freq') + p;
+                  }, 0);
                 }).rename('aggregation', 'groupCount').toArray();
                 res.unshift(['file', row[0]]);
                 res = Object.fromEntries(res);
