@@ -11497,11 +11497,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var backend = 'http://127.0.0.1:5000'; // Add event listener for submitting the files
 
+var body = document.querySelector('body');
 var form = document.getElementById('form');
-var btn = form.querySelector('.apply-btn'); // btn.dispatchEvent(new Event("click"));
-
+var loader = document.querySelector('.loader-container');
 form.addEventListener('submit', function (e) {
   e.preventDefault();
+  loader.style.display = 'flex';
+  body.classList.add('stop-scrolling');
   var formData = new FormData();
   var browseInput = document.querySelectorAll('browse-input');
   var groups = [];
@@ -11523,15 +11525,22 @@ form.addEventListener('submit', function (e) {
     return response.json();
   }).then(function (response) {
     return responseHandler([1, 1], response);
+  }).catch(function (error) {
+    return console.error(error);
+  }).finally(function () {
+    setTimeout(function () {
+      loader.style.display = 'none';
+      body.classList.remove('stop-scrolling'); // Display results page and scroll into view
+
+      document.getElementById('pagebrake').scrollIntoView({
+        behavior: 'smooth'
+      });
+    }, 1000);
   });
 });
 
 var responseHandler = function responseHandler(groups, response) {
-  // Display results page and scroll into view
-  document.querySelector('main').style.display = 'block';
-  document.getElementById('pagebrake').scrollIntoView({
-    behavior: 'smooth'
-  }); // Get the elements needed from the 3 sections
+  document.querySelector('main').style.display = 'block'; // Get the elements needed from the 3 sections
 
   var generalSection = document.getElementById('general-section');
   var comparissonSection = document.getElementById('comparisson-section');
@@ -11696,7 +11705,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54291" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49474" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

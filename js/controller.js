@@ -3,12 +3,14 @@ import TacsChart from "./TacsChart";
 const backend = 'http://127.0.0.1:5000'
 
 // Add event listener for submitting the files
+const body = document.querySelector('body');
 const form = document.getElementById('form');
-const btn = form.querySelector('.apply-btn');
-// btn.dispatchEvent(new Event("click"));
+const loader = document.querySelector('.loader-container');
 
 form.addEventListener('submit', e => {
     e.preventDefault();
+    loader.style.display = 'flex';
+    body.classList.add('stop-scrolling');
 
     const formData = new FormData();
     const browseInput = document.querySelectorAll('browse-input');
@@ -31,16 +33,23 @@ form.addEventListener('submit', e => {
         body: formData
     })
         .then(response => response.json())
-        .then(response => responseHandler([1,1], response));
+        .then(response => responseHandler([1, 1], response))
+        .catch(error => console.error(error))
+        .finally(() => {
+            setTimeout(() => {
+                loader.style.display = 'none';
+                body.classList.remove('stop-scrolling');
+                // Display results page and scroll into view
+                document.getElementById('pagebrake').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }, 1000);
+        })
 });
 
 const responseHandler = (groups, response) => {
-    // Display results page and scroll into view
-    document.querySelector('main').style.display = 'block';
-    document.getElementById('pagebrake').scrollIntoView({
-        behavior: 'smooth'
-    });
 
+    document.querySelector('main').style.display = 'block';
     // Get the elements needed from the 3 sections
     const generalSection = document.getElementById('general-section');
     const comparissonSection = document.getElementById('comparisson-section');
@@ -106,7 +115,7 @@ const responseHandler = (groups, response) => {
 
         // Draw the charts
         generalChart.drawChart({ data: response, type: 'PieChart' });
-        comparissonChart.drawChart({ data: response, type: 'ColumnChart', groups: groups});
+        comparissonChart.drawChart({ data: response, type: 'ColumnChart', groups: groups });
         specificChart.drawChart({ data: response, type: 'BarChart' });
     }
 }
