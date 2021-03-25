@@ -33,9 +33,11 @@ generalBtn.addEventListener('click', () => {
 // Add event listener for comparisson container
 const comparissonBtn = document.getElementById('add-btn-comparisson');
 comparissonBtn.addEventListener('click', () => {
-     const oldChart = document.querySelector('#comparisson-section tacs-chart');
+    const oldChart = document.querySelector('#comparisson-section tacs-chart');
     var newChart = oldChart.cloneNode(true);
     newChart.setAttribute('showminus', 'true');
     document.querySelector('#comparisson-section .chart-container').append(newChart);
     newChart.drawChart({'type': oldChart.type, 'level': oldChart.level, 'data': oldChart.data, 'groups': oldChart.groups});
 })
+
+

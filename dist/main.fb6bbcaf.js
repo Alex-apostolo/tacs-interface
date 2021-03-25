@@ -11491,6 +11491,8 @@ customElements.define('tacs-chart', TacsChart);
 },{"google-charts":"node_modules/google-charts/dist/googleCharts.esm.js","dataframe-js":"node_modules/dataframe-js/lib/index.js"}],"js/controller.js":[function(require,module,exports) {
 "use strict";
 
+var _dataframeJs = require("dataframe-js");
+
 var _TacsChart = _interopRequireDefault(require("./TacsChart"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -11540,6 +11542,21 @@ form.addEventListener('submit', function (e) {
 });
 
 var responseHandler = function responseHandler(groups, response) {
+  // Add event listener for Exporting
+  var exp = document.getElementById('export');
+  exp.addEventListener('click', function () {
+    // Get the results page 
+    // Get the response from fetch
+    var result = response.reduce(function (acc, file) {
+      var df = new _dataframeJs.DataFrame(file[1]);
+      df = df.withColumn('file', function () {
+        return file[0];
+      });
+      df = df.restructure(['file', 'dict', 'cat', 'concept', 'freq', 'top_sub']);
+      return acc.fullJoin(df, ['file', 'dict', 'cat', 'concept', 'freq', 'top_sub']);
+    }, new _dataframeJs.DataFrame([]));
+    result.toCSV();
+  });
   document.querySelector('main').style.display = 'block'; // Get the elements needed from the 3 sections
 
   var generalSection = document.getElementById('general-section');
@@ -11624,7 +11641,7 @@ var responseHandler = function responseHandler(groups, response) {
     });
   }
 };
-},{"./TacsChart":"js/TacsChart.js"}],"js/main.js":[function(require,module,exports) {
+},{"dataframe-js":"node_modules/dataframe-js/lib/index.js","./TacsChart":"js/TacsChart.js"}],"js/main.js":[function(require,module,exports) {
 "use strict";
 
 var _particles = _interopRequireDefault(require("./particles.js"));
@@ -11705,7 +11722,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49474" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51301" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

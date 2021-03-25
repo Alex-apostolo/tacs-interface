@@ -1,3 +1,4 @@
+import { DataFrame } from "dataframe-js";
 import TacsChart from "./TacsChart";
 
 const backend = 'http://127.0.0.1:5000'
@@ -48,6 +49,20 @@ form.addEventListener('submit', e => {
 });
 
 const responseHandler = (groups, response) => {
+
+    // Add event listener for Exporting
+    const exp = document.getElementById('export');
+    exp.addEventListener('click', () => {
+        // Get the results page 
+        // Get the response from fetch
+        const result = response.reduce((acc, file) => {
+            let df = new DataFrame(file[1]);
+            df = df.withColumn('file', () => file[0]);
+            df = df.restructure(['file', 'dict', 'cat', 'concept', 'freq', 'top_sub']);
+            return acc.fullJoin(df, ['file', 'dict', 'cat', 'concept', 'freq', 'top_sub']);
+        }, new DataFrame([]));
+        result.toCSV();
+    })
 
     document.querySelector('main').style.display = 'block';
     // Get the elements needed from the 3 sections
