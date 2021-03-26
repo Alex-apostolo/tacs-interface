@@ -34,7 +34,7 @@ form.addEventListener('submit', e => {
         body: formData
     })
         .then(response => response.json())
-        .then(response => responseHandler([1, 1], response))
+        .then(response => responseHandler(groups, response))
         .catch(error => console.error(error))
         .finally(() => {
             setTimeout(() => {
@@ -61,7 +61,14 @@ const responseHandler = (groups, response) => {
             df = df.restructure(['file', 'dict', 'cat', 'concept', 'freq', 'top_sub']);
             return acc.fullJoin(df, ['file', 'dict', 'cat', 'concept', 'freq', 'top_sub']);
         }, new DataFrame([]));
-        result.toCSV();
+        const blob = new Blob([result.toCSV()], {
+            encoding: 'UTF-8',
+            type: 'text/csv;charset=UTF-8'
+        })
+        const blobURL = URL.createObjectURL(blob);
+        const anchor = document.getElementById('export-anchor');
+        anchor.href = blobURL;
+        anchor.download = 'cybersec-analysis';
     })
 
     document.querySelector('main').style.display = 'block';

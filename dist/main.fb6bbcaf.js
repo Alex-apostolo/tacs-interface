@@ -11526,7 +11526,7 @@ form.addEventListener('submit', function (e) {
   }).then(function (response) {
     return response.json();
   }).then(function (response) {
-    return responseHandler([1, 1], response);
+    return responseHandler(groups, response);
   }).catch(function (error) {
     return console.error(error);
   }).finally(function () {
@@ -11555,7 +11555,14 @@ var responseHandler = function responseHandler(groups, response) {
       df = df.restructure(['file', 'dict', 'cat', 'concept', 'freq', 'top_sub']);
       return acc.fullJoin(df, ['file', 'dict', 'cat', 'concept', 'freq', 'top_sub']);
     }, new _dataframeJs.DataFrame([]));
-    result.toCSV();
+    var blob = new Blob([result.toCSV()], {
+      encoding: 'UTF-8',
+      type: 'text/csv;charset=UTF-8'
+    });
+    var blobURL = URL.createObjectURL(blob);
+    var anchor = document.getElementById('export-anchor');
+    anchor.href = blobURL;
+    anchor.download = 'cybersec-analysis';
   });
   document.querySelector('main').style.display = 'block'; // Get the elements needed from the 3 sections
 
@@ -11722,7 +11729,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51301" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58601" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
