@@ -118,8 +118,8 @@ export default class TacsChart extends HTMLElement {
         if (options === undefined) {
             // Set chart options
             options = {
-                width: 400,
-                height: 300,
+                width: 420,
+                height: 320,
                 backgroundColor: '#1f2761',
                 chartArea: { width: '100%', height: '80%' },
                 legend: {
@@ -130,6 +130,13 @@ export default class TacsChart extends HTMLElement {
                     }
                 },
                 hAxis: {
+                    textStyle: {
+                        color: 'whitesmoke',
+                        fontName: 'EB Garamond',
+                        fontSize: 13
+                    }
+                },
+                vAxis: {
                     textStyle: {
                         color: 'whitesmoke',
                         fontName: 'EB Garamond',
@@ -187,6 +194,8 @@ export default class TacsChart extends HTMLElement {
                         file += fileCount;
                     })
                     data = GoogleCharts.api.visualization.arrayToDataTable(result.toArray());
+                    options.chartArea = {width: '85%', height: '80%'};
+                    this.querySelector('.tacs-container').style.marginTop = '1.5rem';
                     break;
                 }
                 case 'BarChart': {
@@ -204,6 +213,7 @@ export default class TacsChart extends HTMLElement {
                     result = df.toArray();
                     result.unshift(df.listColumns());
                     data = GoogleCharts.api.visualization.arrayToDataTable(result);
+                    options.chartArea = {width: '80%', height: '80%'};
                     break;
                 }
             }

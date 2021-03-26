@@ -11322,8 +11322,8 @@ function (_HTMLElement) {
       if (options === undefined) {
         // Set chart options
         options = {
-          width: 400,
-          height: 300,
+          width: 420,
+          height: 320,
           backgroundColor: '#1f2761',
           chartArea: {
             width: '100%',
@@ -11337,6 +11337,13 @@ function (_HTMLElement) {
             }
           },
           hAxis: {
+            textStyle: {
+              color: 'whitesmoke',
+              fontName: 'EB Garamond',
+              fontSize: 13
+            }
+          },
+          vAxis: {
             textStyle: {
               color: 'whitesmoke',
               fontName: 'EB Garamond',
@@ -11409,6 +11416,11 @@ function (_HTMLElement) {
                 file += fileCount;
               });
               data = _googleCharts.GoogleCharts.api.visualization.arrayToDataTable(result.toArray());
+              options.chartArea = {
+                width: '85%',
+                height: '80%'
+              };
+              this.querySelector('.tacs-container').style.marginTop = '1.5rem';
               break;
             }
 
@@ -11437,6 +11449,10 @@ function (_HTMLElement) {
               _result.unshift(_df.listColumns());
 
               data = _googleCharts.GoogleCharts.api.visualization.arrayToDataTable(_result);
+              options.chartArea = {
+                width: '80%',
+                height: '80%'
+              };
               break;
             }
         }
@@ -11517,14 +11533,10 @@ form.addEventListener('submit', function (e) {
         formData.append('file', selectedFiles.files[i]);
       }
     });
-  });
-
-  if (groups.length === 0 || groups.reduce(function (p, n) {
-    return p + n;
-  }, 0) === 0) {
-    alert('No file/s selected');
-    return;
-  }
+  }); // if( (groups.length === 0) || (groups.reduce((p,n) => p + n, 0) === 0) ) {
+  //     alert('No file(s) selected');
+  //     return;
+  // }
 
   loader.style.display = 'flex';
   body.classList.add('stop-scrolling');
@@ -11550,7 +11562,11 @@ form.addEventListener('submit', function (e) {
 });
 
 var responseHandler = function responseHandler(groups, response) {
-  // Add event listener for Exporting
+  if (true) {
+    groups = [1, 1];
+  } // Add event listener for Exporting
+
+
   var exp = document.getElementById('export');
   exp.addEventListener('click', function () {
     // Get the results page 
@@ -11737,7 +11753,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60464" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63936" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
