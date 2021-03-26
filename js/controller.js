@@ -10,8 +10,6 @@ const loader = document.querySelector('.loader-container');
 
 form.addEventListener('submit', e => {
     e.preventDefault();
-    loader.style.display = 'flex';
-    body.classList.add('stop-scrolling');
 
     const formData = new FormData();
     const browseInput = document.querySelectorAll('browse-input');
@@ -29,13 +27,21 @@ form.addEventListener('submit', e => {
         });
     });
 
+    if( (groups.length === 0) || (groups.reduce((p,n) => p + n, 0) === 0) ) {
+        alert('No file/s selected');
+        return;
+    }
+
+    loader.style.display = 'flex';
+    body.classList.add('stop-scrolling');
+
     fetch(backend + '/tacs', {
         method: 'POST',
         body: formData
     })
         .then(response => response.json())
         .then(response => responseHandler(groups, response))
-        .catch(error => console.error(error))
+        .catch(error => alert(error))
         .finally(() => {
             setTimeout(() => {
                 loader.style.display = 'none';
@@ -49,7 +55,6 @@ form.addEventListener('submit', e => {
 });
 
 const responseHandler = (groups, response) => {
-
     // Add event listener for Exporting
     const exp = document.getElementById('export');
     exp.addEventListener('click', () => {

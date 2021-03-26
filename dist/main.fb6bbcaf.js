@@ -11504,8 +11504,6 @@ var form = document.getElementById('form');
 var loader = document.querySelector('.loader-container');
 form.addEventListener('submit', function (e) {
   e.preventDefault();
-  loader.style.display = 'flex';
-  body.classList.add('stop-scrolling');
   var formData = new FormData();
   var browseInput = document.querySelectorAll('browse-input');
   var groups = [];
@@ -11520,6 +11518,16 @@ form.addEventListener('submit', function (e) {
       }
     });
   });
+
+  if (groups.length === 0 || groups.reduce(function (p, n) {
+    return p + n;
+  }, 0) === 0) {
+    alert('No file/s selected');
+    return;
+  }
+
+  loader.style.display = 'flex';
+  body.classList.add('stop-scrolling');
   fetch(backend + '/tacs', {
     method: 'POST',
     body: formData
@@ -11528,7 +11536,7 @@ form.addEventListener('submit', function (e) {
   }).then(function (response) {
     return responseHandler(groups, response);
   }).catch(function (error) {
-    return console.error(error);
+    return alert(error);
   }).finally(function () {
     setTimeout(function () {
       loader.style.display = 'none';
@@ -11729,7 +11737,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58601" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60464" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
