@@ -165,7 +165,7 @@ export default class TacsChart extends HTMLElement {
                     // Create a DataFrame from count
                     let df = new DataFrame(count);
                     // GroupBy the level selected and include the count for each group
-                    let res = df.groupBy(level).aggregate(group => group.reduce((p,n) => n.get('freq') + p, 0)).rename('aggregation', 'groupCount').toArray();
+                    let res = df.groupBy(level).aggregate(group => group.reduce((p, n) => n.get('freq') + p, 0)).rename('aggregation', 'groupCount').toArray();
                     // Add the result to the data table
                     googleData.addRows(res);
                     data = googleData;
@@ -185,7 +185,7 @@ export default class TacsChart extends HTMLElement {
                         // Create a DataFrame from count
                         const df = new DataFrame(count);
                         // GroupBy the level selected and include the count for each group
-                        const res = df.groupBy(level).aggregate(group => group.reduce((p,n) => n.get('freq') + p, 0)).rename('aggregation', 'groupCount').toArray();
+                        const res = df.groupBy(level).aggregate(group => group.reduce((p, n) => n.get('freq') + p, 0)).rename('aggregation', 'groupCount').toArray();
                         res.unshift(['Term', 'Group ' + ++group]);
                         if (result === undefined)
                             result = new DataFrame(res);
@@ -194,7 +194,7 @@ export default class TacsChart extends HTMLElement {
                         file += fileCount;
                     })
                     data = GoogleCharts.api.visualization.arrayToDataTable(result.toArray());
-                    options.chartArea = {width: '85%', height: '80%'};
+                    options.chartArea = { width: '85%', height: '80%' };
                     this.querySelector('.tacs-container').style.marginTop = '1.5rem';
                     break;
                 }
@@ -203,8 +203,14 @@ export default class TacsChart extends HTMLElement {
                     data.forEach(row => {
                         let df = new DataFrame(row[1]);
                         // GroupBy the level selected and include the count for each group
-                        let res = df.groupBy(level).aggregate(group => group.reduce((p,n) => n.get('freq') + p, 0)).rename('aggregation', 'groupCount').toArray();
+                        let res = df.groupBy(level).aggregate(group => group.reduce((p, n) => n.get('freq') + p, 0)).rename('aggregation', 'groupCount').toArray();
                         res.unshift(['file', row[0]]);
+                        // TODO: Make row[2] to blob
+                        let blob = new Blob([row[2]], {
+                            type: 'text/html;charset=utf-8'
+                        });
+                        let url = URL.createObjectURL(blob);
+                        res.push(["link", url]);
                         res = Object.fromEntries(res);
                         result.push(res);
                     });
@@ -212,8 +218,9 @@ export default class TacsChart extends HTMLElement {
                     let df = new DataFrame(result);
                     result = df.toArray();
                     result.unshift(df.listColumns());
+                    result[0][result[0].length - 1] = { role: 'link' };
                     data = GoogleCharts.api.visualization.arrayToDataTable(result);
-                    options.chartArea = {width: '80%', height: '80%'};
+                    options.chartArea = { width: '80%', height: '80%' };
                     break;
                 }
             }
@@ -263,10 +270,17 @@ export default class TacsChart extends HTMLElement {
         let chart;
         if (type === 'ColumnChart')
             chart = new GoogleCharts.api.visualization.ColumnChart(this.querySelector('.tacs-container'));
-        else if (type === 'BarChart')
+        else if (type === 'BarChart') {
             chart = new GoogleCharts.api.visualization.BarChart(this.querySelector('.tacs-container'));
+            GoogleCharts.api.visualization.events.addListener(chart, 'select', () => {
+                var row = chart.getSelection()[0].row;
+                let link = data.getValue(row, 3);
+                window.open(link);
+            });
+        }
         else
             chart = new GoogleCharts.api.visualization.PieChart(this.querySelector('.tacs-container'));
+
 
         chart.draw(data, options);
     }

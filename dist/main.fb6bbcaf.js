@@ -11435,7 +11435,13 @@ function (_HTMLElement) {
                     return n.get('freq') + p;
                   }, 0);
                 }).rename('aggregation', 'groupCount').toArray();
-                res.unshift(['file', row[0]]);
+                res.unshift(['file', row[0]]); // TODO: Make row[2] to blob
+
+                var blob = new Blob([row[2]], {
+                  type: 'text/html;charset=utf-8'
+                });
+                var url = URL.createObjectURL(blob);
+                res.push(["link", url]);
                 res = Object.fromEntries(res);
 
                 _result.push(res);
@@ -11448,6 +11454,9 @@ function (_HTMLElement) {
 
               _result.unshift(_df.listColumns());
 
+              _result[0][_result[0].length - 1] = {
+                role: 'link'
+              };
               data = _googleCharts.GoogleCharts.api.visualization.arrayToDataTable(_result);
               options.chartArea = {
                 width: '80%',
@@ -11487,7 +11496,15 @@ function (_HTMLElement) {
 
 
       var chart;
-      if (type === 'ColumnChart') chart = new _googleCharts.GoogleCharts.api.visualization.ColumnChart(this.querySelector('.tacs-container'));else if (type === 'BarChart') chart = new _googleCharts.GoogleCharts.api.visualization.BarChart(this.querySelector('.tacs-container'));else chart = new _googleCharts.GoogleCharts.api.visualization.PieChart(this.querySelector('.tacs-container'));
+      if (type === 'ColumnChart') chart = new _googleCharts.GoogleCharts.api.visualization.ColumnChart(this.querySelector('.tacs-container'));else if (type === 'BarChart') {
+        chart = new _googleCharts.GoogleCharts.api.visualization.BarChart(this.querySelector('.tacs-container'));
+
+        _googleCharts.GoogleCharts.api.visualization.events.addListener(chart, 'select', function () {
+          var row = chart.getSelection()[0].row;
+          var link = data.getValue(row, 3);
+          window.open(link);
+        });
+      } else chart = new _googleCharts.GoogleCharts.api.visualization.PieChart(this.querySelector('.tacs-container'));
       chart.draw(data, options);
     }
   }], [{
@@ -11753,7 +11770,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63936" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51800" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
