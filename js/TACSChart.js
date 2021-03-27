@@ -218,7 +218,7 @@ export default class TacsChart extends HTMLElement {
                     let df = new DataFrame(result);
                     result = df.toArray();
                     result.unshift(df.listColumns());
-                    result[0][result[0].length - 1] = { role: 'link' };
+                    result[0][result[0].indexOf('link')] = { role: 'link' };
                     data = GoogleCharts.api.visualization.arrayToDataTable(result);
                     options.chartArea = { width: '80%', height: '80%' };
                     break;

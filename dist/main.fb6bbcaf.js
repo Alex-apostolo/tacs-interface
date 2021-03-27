@@ -11454,7 +11454,7 @@ function (_HTMLElement) {
 
               _result.unshift(_df.listColumns());
 
-              _result[0][_result[0].length - 1] = {
+              _result[0][_result[0].indexOf('link')] = {
                 role: 'link'
               };
               data = _googleCharts.GoogleCharts.api.visualization.arrayToDataTable(_result);
