@@ -11601,9 +11601,13 @@ var responseHandler = function responseHandler(groups, response) {
       type: 'text/csv;charset=UTF-8'
     });
     var blobURL = URL.createObjectURL(blob);
-    var anchor = document.getElementById('export-anchor');
+    var anchor = document.createElement('a');
+    document.body.appendChild(anchor);
+    anchor.style = "display: none";
     anchor.href = blobURL;
     anchor.download = 'cybersec-analysis';
+    anchor.click();
+    window.URL.revokeObjectURL(blobURL);
   });
   document.querySelector('main').style.display = 'block'; // Get the elements needed from the 3 sections
 
@@ -11770,7 +11774,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51800" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52849" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

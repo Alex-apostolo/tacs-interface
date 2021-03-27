@@ -56,7 +56,7 @@ form.addEventListener('submit', e => {
 
 const responseHandler = (groups, response) => {
     if (true) {
-        groups = [1,1]
+        groups = [1, 1]
     }
     // Add event listener for Exporting
     const exp = document.getElementById('export');
@@ -74,9 +74,13 @@ const responseHandler = (groups, response) => {
             type: 'text/csv;charset=UTF-8'
         })
         const blobURL = URL.createObjectURL(blob);
-        const anchor = document.getElementById('export-anchor');
+        var anchor = document.createElement('a');
+        document.body.appendChild(anchor);
+        anchor.style = "display: none";
         anchor.href = blobURL;
         anchor.download = 'cybersec-analysis';
+        anchor.click();
+        window.URL.revokeObjectURL(blobURL);
     })
 
     document.querySelector('main').style.display = 'block';
