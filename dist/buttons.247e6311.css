@@ -156,6 +156,10 @@
     transform: rotate(45deg);
 }
 
+.level {
+    cursor: pointer;
+}
+
 /* UPLOAD */
 /*  */
 input[type="file"]::-ms-browse {

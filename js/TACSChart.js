@@ -51,29 +51,44 @@ export default class TacsChart extends HTMLElement {
                 }
             </style>
             <div class="menu">
-            <button class="menu-hover">Dictionary</button>
-            <ul>
-                <li><button>Dictionary</button></li>
-                <li><button>Category</button>
-                    <div class="sub-menu">
+                <button class="menu-hover">Dictionary</button>
+                <ul>
+                    <li><button class="level">Dictionary</button></li>
+                    <li class="sub-menu"><button>Category</button>
                         <ul>
-                            <li><button>All</button></li>
-                            <li><button>Security</button></li>
-                            <li><button>Context</button></li>
+                            <li><button class="level" data-type="Category">All</button></li>
+                            <li><button class="level">Security</button></li>
+                            <li><button class="level">Context</button></li>
                         </ul>
-                    </div>
-                </li>
-                <li><button>Concept</button>
-                    <div class="sub-menu">
-                    <ul>
-                        <li><button>All</button></li>
-                        <li><button>Security</button></li>
-                        <li><button>Context</button></li>
-                    </ul>
-                    </div>
-                </li>
-            </ul>
-        </div>
+                    </li>
+                    <li class="sub-menu"><button>Concept</button>
+                        <ul>
+                            <li><button class="level" data-type="Concept">All</button></li>
+                            <li class="sub-menu"><button>Security</button>
+                                <ul>
+                                    <li><button class="level" data-type="Concept Security">All</button></li>
+                                    <li><button class="level">Threat Actor</button></li>
+                                    <li><button class="level">Threat General</button></li>
+                                    <li><button class="level">Threat Mechanism</button></li>
+                                    <li><button class="level">Safety Actor</button></li>
+                                    <li><button class="level">Safety General</button></li>
+                                    <li><button class="level">Safety Mechanism</button></li>
+                                </ul>
+                            </li>
+                            <li class="sub-menu"><button>Context</button>
+                                <ul>
+                                    <li><button class="level" data-type="Concept Context">All</button></li>
+                                    <li><button class="level">Individual</button></li>
+                                    <li><button class="level">Cyber Entity</button></li>
+                                    <li><button class="level">Quality</button></li>
+                                    <li><button class="level">Activity</button></li>
+                                    <li><button class="level">Organasation</button></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
             <div class="tacs-container"></div>
         `
         if (this.hasAttribute('showminus')) {
@@ -88,28 +103,60 @@ export default class TacsChart extends HTMLElement {
             }
         }
 
-        const dropdownBtn = this.querySelector('.menu .menu-hover');
-        const dropdownUl = this.querySelector('.menu ul');
-        dropdownUl.style.display = 'none';
-        dropdownBtn.addEventListener('focus', () => dropdownUl.style.display = 'block');
-        dropdownBtn.addEventListener('blur', () => dropdownUl.style.display = 'none');
-        const levels = this.querySelectorAll('.menu ul li button');
+        const levels = this.querySelectorAll('.level');
         levels.forEach(element => {
             let level = 'dict';
+            let filter;
             switch (element.innerText) {
+                case 'All':
+                    switch (element.dataset.type) {
+                        case 'Category':
+                            level = 'cat';
+                            break;
+                        case 'Concept':
+                            level = 'concept';
+                            break;
+                        case 'Concept Security':
+                            level = 'concept';
+                            filter = 'Security';
+                            break;
+                        case 'Concept Context':
+                            level = 'concept';
+                            filter = 'Context';
+                            break;
+                    }
+                    break;
                 case 'Dictionary':
                     level = 'dict';
                     break;
-                case 'Category':
+                case 'Security':
                     level = 'cat';
+                    filter = 'Security';
                     break;
-                case 'Concept':
+                case 'Context':
+                    level = 'cat';
+                    filter = 'Context';
+                    break;
+                case 'Threat Actor':
+                case 'Threat General':
+                case 'Threat Mechanism':
+                case 'Safety Actor':
+                case 'Safety General':
+                case 'Safety Mechanism':
+                case 'Individual':
+                case 'Cyber Entity':
+                case 'Quality':
+                case 'Activity':
+                case 'Organasation':
                     level = 'concept';
+                    filter = element.innerText;
                     break;
             }
             element.addEventListener('mousedown', () => {
-                this.drawChart({ type: this.type, data: this.data, options: this.options, level: level, groups: this.groups })
-                dropdownBtn.innerText = element.innerText;
+                // this.drawChart({ type: this.type, data: this.data, options: this.options, level: level, groups: this.groups })
+                // dropdownBtn.innerText = element.innerText;
+                console.log(level);
+                console.log(filter);
             })
         });
 

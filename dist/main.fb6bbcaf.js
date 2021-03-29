@@ -11234,7 +11234,7 @@ function (_HTMLElement) {
     value: function connectedCallback() {
       var _this2 = this;
 
-      this.innerHTML = "\n            <style>\n                tacs-chart {\n                    position: relative;\n                }\n\n                tacs-chart .menu {\n                    position: absolute;\n                    top: 0;\n                    left: 0;\n                    z-index: 2;\n                }\n\n                tacs-chart .minus-btn {\n                    position: absolute;\n                    top: 0;\n                    right: 0;\n                }\n\n                tacs-chart .tacs-container {\n                    margin-bottom: 2.5rem;\n                }\n            </style>\n            <div class=\"menu\">\n            <button class=\"menu-hover\">Dictionary</button>\n            <ul>\n                <li><button>Dictionary</button></li>\n                <li><button>Category</button>\n                    <div class=\"sub-menu\">\n                        <ul>\n                            <li><button>All</button></li>\n                            <li><button>Security</button></li>\n                            <li><button>Context</button></li>\n                        </ul>\n                    </div>\n                </li>\n                <li><button>Concept</button>\n                    <div class=\"sub-menu\">\n                    <ul>\n                        <li><button>All</button></li>\n                        <li><button>Security</button></li>\n                        <li><button>Context</button></li>\n                    </ul>\n                    </div>\n                </li>\n            </ul>\n        </div>\n            <div class=\"tacs-container\"></div>\n        ";
+      this.innerHTML = "\n            <style>\n                tacs-chart {\n                    position: relative;\n                }\n\n                tacs-chart .menu {\n                    position: absolute;\n                    top: 0;\n                    left: 0;\n                    z-index: 2;\n                }\n\n                tacs-chart .minus-btn {\n                    position: absolute;\n                    top: 0;\n                    right: 0;\n                }\n\n                tacs-chart .tacs-container {\n                    margin-bottom: 2.5rem;\n                }\n            </style>\n            <div class=\"menu\">\n                <button class=\"menu-hover\">Dictionary</button>\n                <ul>\n                    <li><button class=\"level\">Dictionary</button></li>\n                    <li class=\"sub-menu\"><button>Category</button>\n                        <ul>\n                            <li><button class=\"level\" data-type=\"Category\">All</button></li>\n                            <li><button class=\"level\">Security</button></li>\n                            <li><button class=\"level\">Context</button></li>\n                        </ul>\n                    </li>\n                    <li class=\"sub-menu\"><button>Concept</button>\n                        <ul>\n                            <li><button class=\"level\" data-type=\"Concept\">All</button></li>\n                            <li class=\"sub-menu\"><button>Security</button>\n                                <ul>\n                                    <li><button class=\"level\" data-type=\"Concept Security\">All</button></li>\n                                    <li><button class=\"level\">Threat Actor</button></li>\n                                    <li><button class=\"level\">Threat General</button></li>\n                                    <li><button class=\"level\">Threat Mechanism</button></li>\n                                    <li><button class=\"level\">Safety Actor</button></li>\n                                    <li><button class=\"level\">Safety General</button></li>\n                                    <li><button class=\"level\">Safety Mechanism</button></li>\n                                </ul>\n                            </li>\n                            <li class=\"sub-menu\"><button>Context</button>\n                                <ul>\n                                    <li><button class=\"level\" data-type=\"Concept Context\">All</button></li>\n                                    <li><button class=\"level\">Individual</button></li>\n                                    <li><button class=\"level\">Cyber Entity</button></li>\n                                    <li><button class=\"level\">Quality</button></li>\n                                    <li><button class=\"level\">Activity</button></li>\n                                    <li><button class=\"level\">Organasation</button></li>\n                                </ul>\n                            </li>\n                        </ul>\n                    </li>\n                </ul>\n            </div>\n            <div class=\"tacs-container\"></div>\n        ";
 
       if (this.hasAttribute('showminus')) {
         var showMinus = this.getAttribute('showminus');
@@ -11249,43 +11249,70 @@ function (_HTMLElement) {
         }
       }
 
-      var dropdownBtn = this.querySelector('.menu .menu-hover');
-      var dropdownUl = this.querySelector('.menu ul');
-      dropdownUl.style.display = 'none';
-      dropdownBtn.addEventListener('focus', function () {
-        return dropdownUl.style.display = 'block';
-      });
-      dropdownBtn.addEventListener('blur', function () {
-        return dropdownUl.style.display = 'none';
-      });
-      var levels = this.querySelectorAll('.menu ul li button');
+      var levels = this.querySelectorAll('.level');
       levels.forEach(function (element) {
         var level = 'dict';
+        var filter;
 
         switch (element.innerText) {
+          case 'All':
+            switch (element.dataset.type) {
+              case 'Category':
+                level = 'cat';
+                break;
+
+              case 'Concept':
+                level = 'concept';
+                break;
+
+              case 'Concept Security':
+                level = 'concept';
+                filter = 'Security';
+                break;
+
+              case 'Concept Context':
+                level = 'concept';
+                filter = 'Context';
+                break;
+            }
+
+            break;
+
           case 'Dictionary':
             level = 'dict';
             break;
 
-          case 'Category':
+          case 'Security':
             level = 'cat';
+            filter = 'Security';
             break;
 
-          case 'Concept':
+          case 'Context':
+            level = 'cat';
+            filter = 'Context';
+            break;
+
+          case 'Threat Actor':
+          case 'Threat General':
+          case 'Threat Mechanism':
+          case 'Safety Actor':
+          case 'Safety General':
+          case 'Safety Mechanism':
+          case 'Individual':
+          case 'Cyber Entity':
+          case 'Quality':
+          case 'Activity':
+          case 'Organasation':
             level = 'concept';
+            filter = element.innerText;
             break;
         }
 
         element.addEventListener('mousedown', function () {
-          _this2.drawChart({
-            type: _this2.type,
-            data: _this2.data,
-            options: _this2.options,
-            level: level,
-            groups: _this2.groups
-          });
-
-          dropdownBtn.innerText = element.innerText;
+          // this.drawChart({ type: this.type, data: this.data, options: this.options, level: level, groups: this.groups })
+          // dropdownBtn.innerText = element.innerText;
+          console.log(level);
+          console.log(filter);
         });
       });
       this.hasAttribute('type') ? this.drawChart({
