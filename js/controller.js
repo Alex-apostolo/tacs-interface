@@ -13,7 +13,7 @@ form.addEventListener('submit', e => {
 
     const formData = new FormData();
     const browseInput = document.querySelectorAll('browse-input');
-    const groups = [];
+    let groups = [];
 
     browseInput.forEach(selectedInput => {
         const selectedFiles = selectedInput.querySelectorAll('input');
@@ -27,10 +27,14 @@ form.addEventListener('submit', e => {
         });
     });
 
-    // if( (groups.length === 0) || (groups.reduce((p,n) => p + n, 0) === 0) ) {
-    //     alert('No file(s) selected');
-    //     return;
-    // }
+    if (true) {
+        groups = [1, 1]
+    }
+
+    if( (groups.length === 0) || (groups.reduce((p,n) => p + n, 0) === 0) ) {
+        alert('No file(s) selected');
+        return;
+    }
 
     loader.style.display = 'flex';
     body.classList.add('stop-scrolling');
@@ -55,9 +59,7 @@ form.addEventListener('submit', e => {
 });
 
 const responseHandler = (groups, response) => {
-    if (true) {
-        groups = [1, 1]
-    }
+    
     // Add event listener for Exporting
     const exp = document.getElementById('export');
     exp.addEventListener('click', () => {

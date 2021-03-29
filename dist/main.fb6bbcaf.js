@@ -11234,7 +11234,7 @@ function (_HTMLElement) {
     value: function connectedCallback() {
       var _this2 = this;
 
-      this.innerHTML = "\n            <style>\n                tacs-chart {\n                    position: relative;\n                }\n\n                tacs-chart .dropdown {\n                    position: absolute;\n                    top: 0;\n                    left: 0;\n                    z-index: 2;\n                }\n\n                tacs-chart .minus-btn {\n                    position: absolute;\n                    top: 0;\n                    right: 0;\n                }\n\n                tacs-chart .tacs-container {\n                    margin-bottom: 2.5rem;\n                }\n            </style>\n            <div class=\"dropdown\">\n                <button class=\"dropdown-btn\">Dictionary</button>\n                <ul>\n                    <li><button>Dictionary</button></li>\n                    <li><button>Category</button></li>\n                    <li><button>Concept</button></li>\n                </ul>\n            </div>\n            <div class=\"tacs-container\"></div>\n        ";
+      this.innerHTML = "\n            <style>\n                tacs-chart {\n                    position: relative;\n                }\n\n                tacs-chart .menu {\n                    position: absolute;\n                    top: 0;\n                    left: 0;\n                    z-index: 2;\n                }\n\n                tacs-chart .minus-btn {\n                    position: absolute;\n                    top: 0;\n                    right: 0;\n                }\n\n                tacs-chart .tacs-container {\n                    margin-bottom: 2.5rem;\n                }\n            </style>\n            <div class=\"menu\">\n            <button class=\"menu-hover\">Dictionary</button>\n            <ul>\n                <li><button>Dictionary</button></li>\n                <li><button>Category</button>\n                    <div class=\"sub-menu\">\n                        <ul>\n                            <li><button>All</button></li>\n                            <li><button>Security</button></li>\n                            <li><button>Context</button></li>\n                        </ul>\n                    </div>\n                </li>\n                <li><button>Concept</button>\n                    <div class=\"sub-menu\">\n                    <ul>\n                        <li><button>All</button></li>\n                        <li><button>Security</button></li>\n                        <li><button>Context</button></li>\n                    </ul>\n                    </div>\n                </li>\n            </ul>\n        </div>\n            <div class=\"tacs-container\"></div>\n        ";
 
       if (this.hasAttribute('showminus')) {
         var showMinus = this.getAttribute('showminus');
@@ -11249,8 +11249,8 @@ function (_HTMLElement) {
         }
       }
 
-      var dropdownBtn = this.querySelector('.dropdown .dropdown-btn');
-      var dropdownUl = this.querySelector('.dropdown ul');
+      var dropdownBtn = this.querySelector('.menu .menu-hover');
+      var dropdownUl = this.querySelector('.menu ul');
       dropdownUl.style.display = 'none';
       dropdownBtn.addEventListener('focus', function () {
         return dropdownUl.style.display = 'block';
@@ -11258,7 +11258,7 @@ function (_HTMLElement) {
       dropdownBtn.addEventListener('blur', function () {
         return dropdownUl.style.display = 'none';
       });
-      var levels = this.querySelectorAll('.dropdown ul li button');
+      var levels = this.querySelectorAll('.menu ul li button');
       levels.forEach(function (element) {
         var level = 'dict';
 
@@ -11550,10 +11550,18 @@ form.addEventListener('submit', function (e) {
         formData.append('file', selectedFiles.files[i]);
       }
     });
-  }); // if( (groups.length === 0) || (groups.reduce((p,n) => p + n, 0) === 0) ) {
-  //     alert('No file(s) selected');
-  //     return;
-  // }
+  });
+
+  if (true) {
+    groups = [1, 1];
+  }
+
+  if (groups.length === 0 || groups.reduce(function (p, n) {
+    return p + n;
+  }, 0) === 0) {
+    alert('No file(s) selected');
+    return;
+  }
 
   loader.style.display = 'flex';
   body.classList.add('stop-scrolling');
@@ -11579,11 +11587,7 @@ form.addEventListener('submit', function (e) {
 });
 
 var responseHandler = function responseHandler(groups, response) {
-  if (true) {
-    groups = [1, 1];
-  } // Add event listener for Exporting
-
-
+  // Add event listener for Exporting
   var exp = document.getElementById('export');
   exp.addEventListener('click', function () {
     // Get the results page 
@@ -11774,7 +11778,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52849" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50258" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -1,5 +1,5 @@
 /*
- CSS Dependencies: minus-btn, dropdown 
+ CSS Dependencies: minus-btn, menu 
 */
 import { GoogleCharts } from 'google-charts';
 import DataFrame from 'dataframe-js';
@@ -33,7 +33,7 @@ export default class TacsChart extends HTMLElement {
                     position: relative;
                 }
 
-                tacs-chart .dropdown {
+                tacs-chart .menu {
                     position: absolute;
                     top: 0;
                     left: 0;
@@ -50,14 +50,30 @@ export default class TacsChart extends HTMLElement {
                     margin-bottom: 2.5rem;
                 }
             </style>
-            <div class="dropdown">
-                <button class="dropdown-btn">Dictionary</button>
-                <ul>
-                    <li><button>Dictionary</button></li>
-                    <li><button>Category</button></li>
-                    <li><button>Concept</button></li>
-                </ul>
-            </div>
+            <div class="menu">
+            <button class="menu-hover">Dictionary</button>
+            <ul>
+                <li><button>Dictionary</button></li>
+                <li><button>Category</button>
+                    <div class="sub-menu">
+                        <ul>
+                            <li><button>All</button></li>
+                            <li><button>Security</button></li>
+                            <li><button>Context</button></li>
+                        </ul>
+                    </div>
+                </li>
+                <li><button>Concept</button>
+                    <div class="sub-menu">
+                    <ul>
+                        <li><button>All</button></li>
+                        <li><button>Security</button></li>
+                        <li><button>Context</button></li>
+                    </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
             <div class="tacs-container"></div>
         `
         if (this.hasAttribute('showminus')) {
@@ -72,12 +88,12 @@ export default class TacsChart extends HTMLElement {
             }
         }
 
-        const dropdownBtn = this.querySelector('.dropdown .dropdown-btn');
-        const dropdownUl = this.querySelector('.dropdown ul');
+        const dropdownBtn = this.querySelector('.menu .menu-hover');
+        const dropdownUl = this.querySelector('.menu ul');
         dropdownUl.style.display = 'none';
         dropdownBtn.addEventListener('focus', () => dropdownUl.style.display = 'block');
         dropdownBtn.addEventListener('blur', () => dropdownUl.style.display = 'none');
-        const levels = this.querySelectorAll('.dropdown ul li button');
+        const levels = this.querySelectorAll('.menu ul li button');
         levels.forEach(element => {
             let level = 'dict';
             switch (element.innerText) {
