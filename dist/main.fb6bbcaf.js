@@ -11484,8 +11484,8 @@ function (_HTMLElement) {
               result = result.toArray();
               this.querySelector('.tacs-container').style.marginTop = '1.5rem';
               options.chartArea = {
-                width: '85%',
-                height: '80%'
+                width: '50%',
+                height: '50%'
               };
               break;
             }
@@ -11850,7 +11850,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50146" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64886" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

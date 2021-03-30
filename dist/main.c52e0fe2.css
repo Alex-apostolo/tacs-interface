@@ -5,71 +5,63 @@
     z-index: 1;
 }
 
-body {
+html {
     font-family: 'EB Garamond', serif;
     font-size: 100%;
     background-color: #1f2761;
     color: whitesmoke;
 }
 
-/* HEADER SECTION */
-/*  */
+.homepage {
+  height: 100vh;
+  width: 100vw;
+  background: linear-gradient(to top, #1e2761, #7a2048);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 header {
-    position: relative;
-    height: 100vh;
-    background: linear-gradient(to top, #1e2761, #7a2048);
+  display: flex;
+  align-items: center;
+}
+
+header .logo {
+  width: 160px;
+  height: 80px;
 }
 
 .background {
     position: absolute;
-    display: block;
+    height: 100vh;
+    width: 100vw;
     top: 0;
     left: 0;
     z-index: 0;
 }
 
-.logo-container {
-    width: 100%;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: start;
-}
-
-.logo-container .logo {
-    width: 10rem;
-    height: 5rem;
-}
-
-.center-container {
-    position: absolute;
-    width: 100%;
-    bottom: 50%;
-    left: 50%;
-    transform: translate(-50%, 50%);
+.input-section {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    right: auto;
 }
 
-.center-container h1 {
+.input-section .large-text {
     text-align: center;
-    max-width: 40rem;
+    max-width: 640px;
     margin-bottom: 2.5rem;
 }
 
-.center-container h4 {
+.input-section .small-text {
     text-align: center;
     margin-bottom: 0.5rem;
 }
 
-.center-container form {
+.input-section form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 27rem;
 }
 
 .pagebrake {
@@ -83,22 +75,22 @@ header .pagebrake {
     bottom: 0;
 }
 
-/* MAIN SECTION */
+/* .generate-section SECTION */
 /*  */
-main {
+.generate-section {
     display: none;
     min-height: 100vh;
     width: 100vw;
 }
 
-main h1 {
+.generate-section h1 {
     text-align: center;
     margin-top: 2.3rem;
     margin-bottom: 3rem;
     font-size: 2.5rem;
 }
 
-main h2 {
+.generate-section h2 {
     margin-bottom: 2rem;
     font-size: 1.7rem;
     /* text-decoration: underline wavy #408ec6; */
@@ -148,7 +140,7 @@ main h2 {
     width: 100%;
     height: 100%;
     background-color:rgba(0,0,0,0.8);
-    z-index: 100;
+    z-index: 2;
 }
 
 .loader {

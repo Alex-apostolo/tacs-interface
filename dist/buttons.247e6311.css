@@ -191,7 +191,6 @@ input[type="file"]::-webkit-file-upload-button {
 /* EASTER EGG */
 /*  */
 #easter-egg {
-    position: relative;
     align-self: flex-start;
     margin-left: auto;
     border: none;

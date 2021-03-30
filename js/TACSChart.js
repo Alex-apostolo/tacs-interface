@@ -260,7 +260,7 @@ export default class TacsChart extends HTMLElement {
                     })
                     result = result.toArray();
                     this.querySelector('.tacs-container').style.marginTop = '1.5rem';
-                    options.chartArea = { width: '85%', height: '80%' };
+                    options.chartArea = { width: '50%', height: '50%' };
                     break;
                 }
                 case 'BarChart': {

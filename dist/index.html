@@ -15,33 +15,34 @@
 <script src="/main.c52e0fe2.js"></script><script src="/buttons.247e6311.js"></script></head>
 
 <body>
+    <!-- Loading Screen -->
     <div class="loader-container">
         <span class="loader"><span class="loader-inner"></span></span>
-        <h4>Please wait while we process your documents</h4>
+        <div>Please wait while we process your documents</div>
     </div>
-    <header>
-        <div class="logo-container">
+    <div class="homepage">
+        <!-- Header -->
+        <header>
             <img src="/logo.cecc779a.png" alt="logo.png" class="logo">
-            <p>Textual Analysis for Cyber Security</p>
-            <div class="navigation-bar"></div>
+            <h1 style="font-size: 17px;">Textual Analysis for Cyber Security</h1>
             <button id="easter-egg"></button>
-        </div>
-        <div class="center-container">
-            <h1>A powerful tool that uses our Cyber Security dictionary to analyse your documents</h1>
-            <h4>To use the tool make a folder with your .txt file/s and select them below:</h4>
+        </header>
+        <!-- Input File Section -->
+        <section class="input-section">
+            <div class="large-text">A powerful tool that uses our Cyber Security dictionary to analyse your documents</div>
+            <div class="small-text">To use the tool make a folder with your .txt file/s and select them below:</div>
             <form id="form">
                 <!-- Dynamically added browse elements -->
                 <browse-input></browse-input>
                 <button type="button" class="add-btn" id="add-btn-browse"></button>
                 <button type="submit" class="apply-btn">APPLY</button>
             </form>
-        </div>
-        <div class="pagebrake" id="pagebrake"></div>
+        </section>
         <canvas class="background"></canvas>
-    </header>
-
-    <!-- This section will be generated -->
-    <main>
+        <div class="pagebrake"></div>
+    </div>
+    <!-- Generated Section -->
+    <section class="generated-section">
         <h1>Results</h1>
         <div class="pagebrake"></div>
 
@@ -75,7 +76,7 @@
             </div>
             <button class="apply-btn" id="export">DOWNLOAD</button>
         </div>
-    </main>
+    </section>
 
 </body>
 
