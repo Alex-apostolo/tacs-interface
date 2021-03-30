@@ -45,7 +45,7 @@ form.addEventListener('submit', e => {
     })
         .then(response => response.json())
         .then(response => responseHandler(groups, response))
-        .catch(error => alert(error))
+        // .catch(error => alert(error))
         .finally(() => {
             setTimeout(() => {
                 loader.style.display = 'none';
@@ -85,11 +85,11 @@ const responseHandler = (groups, response) => {
         window.URL.revokeObjectURL(blobURL);
     })
 
-    document.querySelector('main').style.display = 'block';
+    document.querySelector('.results-section').style.display = 'block';
     // Get the elements needed from the 3 sections
-    const generalSection = document.getElementById('general-section');
-    const comparissonSection = document.getElementById('comparisson-section');
-    const specificSection = document.getElementById('specific-section');
+    const generalSection = document.getElementById('general');
+    const comparissonSection = document.getElementById('groups');
+    const specificSection = document.getElementById('individual');
 
     const generalChartContainer = generalSection.querySelector('.chart-container');
     const comparissonChartContainer = comparissonSection.querySelector('.chart-container');

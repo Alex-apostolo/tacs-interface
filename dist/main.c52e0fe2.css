@@ -7,10 +7,25 @@
 
 html {
     font-family: 'EB Garamond', serif;
-    font-size: 100%;
     background-color: #1f2761;
     color: whitesmoke;
 }
+
+.large-text {
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+.medium-text {
+  font-size: 1.7rem;
+}
+
+.small-text {
+  text-align: center;
+}
+
+/* HOMEPAGE */
+/*  */
 
 .homepage {
   height: 100vh;
@@ -19,6 +34,15 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.background {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    z-index: 0;
 }
 
 header {
@@ -31,37 +55,29 @@ header .logo {
   height: 80px;
 }
 
-.background {
-    position: absolute;
-    height: 100vh;
-    width: 100vw;
-    top: 0;
-    left: 0;
-    z-index: 0;
-}
-
 .input-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.input-section .large-text {
-    text-align: center;
-    max-width: 640px;
-    margin-bottom: 2.5rem;
-}
-
-.input-section .small-text {
-    text-align: center;
-    margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  right: auto;
+  padding: 20px;
+  transform: translateY(-25px);
 }
 
 .input-section form {
     display: flex;
     flex-direction: column;
     align-items: center;
+} 
+
+.input-section .large-text {
+  margin-bottom: 50px;
+  max-width: 600px;
+}
+
+.input-section .small-text {
+  margin-bottom: 5px;
 }
 
 .pagebrake {
@@ -75,26 +91,25 @@ header .pagebrake {
     bottom: 0;
 }
 
-/* .generate-section SECTION */
+/* RESULTS */
 /*  */
-.generate-section {
+
+.results-section {
     display: none;
     min-height: 100vh;
     width: 100vw;
 }
 
-.generate-section h1 {
-    text-align: center;
-    margin-top: 2.3rem;
-    margin-bottom: 3rem;
-    font-size: 2.5rem;
+.results-section .large-text {
+    font-size: 2.3rem;
+    margin-top: 37px;
+    margin-bottom: 48px;
 }
 
-.generate-section h2 {
-    margin-bottom: 2rem;
-    font-size: 1.7rem;
+.results-section .medium-text {
+    margin-bottom: 32px;
     /* text-decoration: underline wavy #408ec6; */
-    text-underline-offset: 0.45rem;
+    text-underline-offset: 7px;
     text-underline-position: right;
 }
 
@@ -105,16 +120,16 @@ header .pagebrake {
 }
 
 .heading .add-btn {
-    margin-top: 0.62rem;
-    margin-left: 0.62rem;
+    margin-top: 10px;
+    margin-left: 10px;
 }
 
-#general-section, #comparisson-section, #specific-section {
+#general, #groups, #individual {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    margin: 1rem;
+    margin: 16px;
 }
 
 .chart-container {
@@ -129,7 +144,7 @@ header .pagebrake {
     overflow: hidden;
   }
 
-
+/* Used from https://redstapler.co/add-loading-animation-to-website/ */
 .loader-container {
     position: fixed;
     display: none;

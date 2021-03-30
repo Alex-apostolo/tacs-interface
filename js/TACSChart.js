@@ -47,7 +47,7 @@ export default class TacsChart extends HTMLElement {
                 }
 
                 tacs-chart .tacs-container {
-                    margin-bottom: 2.5rem;
+                    margin-bottom: 40px;
                 }
             </style>
             <div class="menu">

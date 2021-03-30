@@ -11234,7 +11234,7 @@ function (_HTMLElement) {
     value: function connectedCallback() {
       var _this2 = this;
 
-      this.innerHTML = "\n            <style>\n                tacs-chart {\n                    position: relative;\n                }\n\n                tacs-chart .menu {\n                    position: absolute;\n                    top: 0;\n                    left: 0;\n                    z-index: 2;\n                }\n\n                tacs-chart .minus-btn {\n                    position: absolute;\n                    top: 0;\n                    right: 0;\n                }\n\n                tacs-chart .tacs-container {\n                    margin-bottom: 2.5rem;\n                }\n            </style>\n            <div class=\"menu\">\n                <button class=\"menu-hover\">Dictionary</button>\n                <ul>\n                    <li><button class=\"level\">Dictionary</button></li>\n                    <li class=\"sub-menu\"><button>Category</button>\n                        <ul>\n                            <li><button class=\"level\" data-type=\"Category\">All</button></li>\n                            <li><button class=\"level\">Security</button></li>\n                            <li><button class=\"level\">Context</button></li>\n                        </ul>\n                    </li>\n                    <li class=\"sub-menu\"><button>Concept</button>\n                        <ul>\n                            <li><button class=\"level\" data-type=\"Concept\">All</button></li>\n                            <li class=\"sub-menu\"><button>Security</button>\n                                <ul>\n                                    <li><button class=\"level\" data-type=\"Concept Security\">All</button></li>\n                                    <li><button class=\"level\">Threat Actor</button></li>\n                                    <li><button class=\"level\">Threat General</button></li>\n                                    <li><button class=\"level\">Threat Mechanism</button></li>\n                                    <li><button class=\"level\">Safety Actor</button></li>\n                                    <li><button class=\"level\">Safety General</button></li>\n                                    <li><button class=\"level\">Safety Mechanism</button></li>\n                                </ul>\n                            </li>\n                            <li class=\"sub-menu\"><button>Context</button>\n                                <ul>\n                                    <li><button class=\"level\" data-type=\"Concept Context\">All</button></li>\n                                    <li><button class=\"level\">Individual</button></li>\n                                    <li><button class=\"level\">Cyber Entity</button></li>\n                                    <li><button class=\"level\">Quality</button></li>\n                                    <li><button class=\"level\">Activity</button></li>\n                                    <li><button class=\"level\">Organasation</button></li>\n                                </ul>\n                            </li>\n                        </ul>\n                    </li>\n                </ul>\n            </div>\n            <div class=\"tacs-container\"></div>\n        ";
+      this.innerHTML = "\n            <style>\n                tacs-chart {\n                    position: relative;\n                }\n\n                tacs-chart .menu {\n                    position: absolute;\n                    top: 0;\n                    left: 0;\n                    z-index: 2;\n                }\n\n                tacs-chart .minus-btn {\n                    position: absolute;\n                    top: 0;\n                    right: 0;\n                }\n\n                tacs-chart .tacs-container {\n                    margin-bottom: 40px;\n                }\n            </style>\n            <div class=\"menu\">\n                <button class=\"menu-hover\">Dictionary</button>\n                <ul>\n                    <li><button class=\"level\">Dictionary</button></li>\n                    <li class=\"sub-menu\"><button>Category</button>\n                        <ul>\n                            <li><button class=\"level\" data-type=\"Category\">All</button></li>\n                            <li><button class=\"level\">Security</button></li>\n                            <li><button class=\"level\">Context</button></li>\n                        </ul>\n                    </li>\n                    <li class=\"sub-menu\"><button>Concept</button>\n                        <ul>\n                            <li><button class=\"level\" data-type=\"Concept\">All</button></li>\n                            <li class=\"sub-menu\"><button>Security</button>\n                                <ul>\n                                    <li><button class=\"level\" data-type=\"Concept Security\">All</button></li>\n                                    <li><button class=\"level\">Threat Actor</button></li>\n                                    <li><button class=\"level\">Threat General</button></li>\n                                    <li><button class=\"level\">Threat Mechanism</button></li>\n                                    <li><button class=\"level\">Safety Actor</button></li>\n                                    <li><button class=\"level\">Safety General</button></li>\n                                    <li><button class=\"level\">Safety Mechanism</button></li>\n                                </ul>\n                            </li>\n                            <li class=\"sub-menu\"><button>Context</button>\n                                <ul>\n                                    <li><button class=\"level\" data-type=\"Concept Context\">All</button></li>\n                                    <li><button class=\"level\">Individual</button></li>\n                                    <li><button class=\"level\">Cyber Entity</button></li>\n                                    <li><button class=\"level\">Quality</button></li>\n                                    <li><button class=\"level\">Activity</button></li>\n                                    <li><button class=\"level\">Organasation</button></li>\n                                </ul>\n                            </li>\n                        </ul>\n                    </li>\n                </ul>\n            </div>\n            <div class=\"tacs-container\"></div>\n        ";
 
       if (this.hasAttribute('showminus')) {
         var showMinus = this.getAttribute('showminus');
@@ -11644,9 +11644,8 @@ form.addEventListener('submit', function (e) {
     return response.json();
   }).then(function (response) {
     return responseHandler(groups, response);
-  }).catch(function (error) {
-    return alert(error);
-  }).finally(function () {
+  }) // .catch(error => alert(error))
+  .finally(function () {
     setTimeout(function () {
       loader.style.display = 'none';
       body.classList.remove('stop-scrolling'); // Display results page and scroll into view
@@ -11685,11 +11684,11 @@ var responseHandler = function responseHandler(groups, response) {
     anchor.click();
     window.URL.revokeObjectURL(blobURL);
   });
-  document.querySelector('main').style.display = 'block'; // Get the elements needed from the 3 sections
+  document.querySelector('.results-section').style.display = 'block'; // Get the elements needed from the 3 sections
 
-  var generalSection = document.getElementById('general-section');
-  var comparissonSection = document.getElementById('comparisson-section');
-  var specificSection = document.getElementById('specific-section');
+  var generalSection = document.getElementById('general');
+  var comparissonSection = document.getElementById('groups');
+  var specificSection = document.getElementById('individual');
   var generalChartContainer = generalSection.querySelector('.chart-container');
   var comparissonChartContainer = comparissonSection.querySelector('.chart-container');
   var specificChartContainer = specificSection.querySelector('.chart-container'); // Reset the 3 sections and hide them
@@ -11798,10 +11797,10 @@ browseBtn.addEventListener('click', function () {
 
 var generalBtn = document.getElementById('add-btn-general');
 generalBtn.addEventListener('click', function () {
-  var oldChart = document.querySelector('#general-section tacs-chart');
+  var oldChart = document.querySelector('#general tacs-chart');
   var newChart = oldChart.cloneNode(true);
   newChart.setAttribute('showminus', 'true');
-  document.querySelector('#general-section .chart-container').append(newChart);
+  document.querySelector('#general .chart-container').append(newChart);
   newChart.drawChart({
     'type': oldChart.type,
     'level': oldChart.level,
@@ -11811,10 +11810,10 @@ generalBtn.addEventListener('click', function () {
 
 var comparissonBtn = document.getElementById('add-btn-comparisson');
 comparissonBtn.addEventListener('click', function () {
-  var oldChart = document.querySelector('#comparisson-section tacs-chart');
+  var oldChart = document.querySelector('#groups tacs-chart');
   var newChart = oldChart.cloneNode(true);
   newChart.setAttribute('showminus', 'true');
-  document.querySelector('#comparisson-section .chart-container').append(newChart);
+  document.querySelector('#groups .chart-container').append(newChart);
   newChart.drawChart({
     'type': oldChart.type,
     'level': oldChart.level,
@@ -11850,7 +11849,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64886" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52112" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

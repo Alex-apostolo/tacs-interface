@@ -24,13 +24,13 @@
         <!-- Header -->
         <header>
             <img src="img/logo.png" alt="logo.png" class="logo">
-            <h1 style="font-size: 17px;">Textual Analysis for Cyber Security</h1>
+            <h1 style="font-size: 1rem;">Textual Analysis for Cyber Security</h1>
             <button id='easter-egg'></button>
         </header>
         <!-- Input File Section -->
         <section class="input-section">
             <div class="large-text">A powerful tool that uses our Cyber Security dictionary to analyse your documents</div>
-            <div class="small-text">To use the tool make a folder with your .txt file/s and select them below:</div>
+            <div class="small-text">To use the tool make a folder with your .txt file(s) and select them below:</div>
             <form id='form'>
                 <!-- Dynamically added browse elements -->
                 <browse-input></browse-input>
@@ -39,17 +39,17 @@
             </form>
         </section>
         <canvas class="background"></canvas>
-        <div class="pagebrake"></div>
+        <div class="pagebrake" id="pagebrake"></div>
     </div>
-    <!-- Generated Section -->
-    <section class="generated-section">
-        <h1>Results</h1>
+    <!-- Results Section -->
+    <section class="results-section">
+        <div class="large-text">Result</div>
         <div class="pagebrake"></div>
 
-        <!-- General Section -->
-        <div id="general-section">
+        <!-- General -->
+        <div id="general">
             <div class="heading">
-                <h2>General</h2>
+                <div class="medium-text">General</div>
                 <button type="button" class="add-btn" id="add-btn-general"></button>
             </div>
             <div class="chart-container">
@@ -57,10 +57,10 @@
             </div>
         </div>
 
-        <!-- Comparisson Section -->
-        <div id="comparisson-section">
+        <!-- Groups -->
+        <div id="groups">
             <div class="heading">
-                <h2>Compare Groups</h2>
+                <div class="medium-text">Compare Groups</div>
                 <button type="button" class="add-btn" id="add-btn-comparisson"></button>
             </div>
             <div class="chart-container">
@@ -68,9 +68,9 @@
             </div>
         </div>
 
-        <!-- Specific Section -->
-        <div id="specific-section">
-            <h2>Individual Files</h2>
+        <!-- Individual -->
+        <div id="individual">
+            <div class="medium-text">Individual Files</div>
             <div class="chart-container">
                 <!-- Dynamically generated Google Charts -->
             </div>
