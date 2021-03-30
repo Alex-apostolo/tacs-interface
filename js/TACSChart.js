@@ -107,6 +107,7 @@ export default class TacsChart extends HTMLElement {
         levels.forEach(element => {
             let level = 'dict';
             let filter;
+            const displayName = {cat: 'Category', dict: 'Dictionary', concept: 'Concept'};
             switch (element.innerText) {
                 case 'All':
                     switch (element.dataset.type) {
@@ -118,11 +119,11 @@ export default class TacsChart extends HTMLElement {
                             break;
                         case 'Concept Security':
                             level = 'concept';
-                            filter = 'Security';
+                            filter = {prevLevel: 'dict', selection: 'Security'};
                             break;
                         case 'Concept Context':
                             level = 'concept';
-                            filter = 'Context';
+                            filter = {prevLevel: 'dict', selection: 'Context'};
                             break;
                     }
                     break;
@@ -131,11 +132,11 @@ export default class TacsChart extends HTMLElement {
                     break;
                 case 'Security':
                     level = 'cat';
-                    filter = 'Security';
+                    filter = {prevLevel: 'dict', selection: 'Security'};
                     break;
                 case 'Context':
                     level = 'cat';
-                    filter = 'Context';
+                    filter = {prevLevel: 'dict', selection: 'Context'};
                     break;
                 case 'Threat Actor':
                 case 'Threat General':
@@ -149,14 +150,12 @@ export default class TacsChart extends HTMLElement {
                 case 'Activity':
                 case 'Organasation':
                     level = 'concept';
-                    filter = element.innerText;
+                    filter = {prevLevel: 'cat', selection: element.innerText};
                     break;
             }
             element.addEventListener('mousedown', () => {
-                // this.drawChart({ type: this.type, data: this.data, options: this.options, level: level, groups: this.groups })
-                // dropdownBtn.innerText = element.innerText;
-                console.log(level);
-                console.log(filter);
+                this.drawChart({ type: this.type, data: this.data, options: this.options, level: level, filter: filter, groups: this.groups })
+                this.querySelector('.menu-hover').innerText = displayName[this.level];
             })
         });
 
@@ -164,20 +163,21 @@ export default class TacsChart extends HTMLElement {
     }
 
     // Wrapper method for drawChartCallback
-    drawChart({ type = 'PieChart', data, level = 'dict', options, groups } = {}) {
+    drawChart({ type = 'PieChart', data, level = 'dict', filter, options, groups } = {}) {
         this.level = level;
+        this.filter = filter;
         this.type = type;
         this.data = data;
         this.options = options;
         this.groups = groups;
         // Set a callback to run when the Google Visualization API is loaded.
-        GoogleCharts.load(this.drawChartCallback.bind(this, type, data, level, options, groups));
+        GoogleCharts.load(this.drawChartCallback.bind(this, type, data, level, filter, options, groups));
     }
 
     // Callback that creates and populates a data table,
     // instantiates the pie chart, passes in the data and
     // draws it.
-    drawChartCallback(type, data, level, options, groups) {
+    drawChartCallback(type, data, level, filter, options, groups) {
         if (options === undefined) {
             // Set chart options
             options = {
@@ -216,26 +216,27 @@ export default class TacsChart extends HTMLElement {
 
         if (data !== undefined) {
             // Draw based on level
+            let result;
             switch (type) {
                 case 'PieChart': {
-                    // Make data table for Google Chart
-                    let googleData = new GoogleCharts.api.visualization.DataTable();
-                    googleData.addColumn('string', 'terms');
-                    googleData.addColumn('number', 'frequency');
-                    // Combine all tacs_count analysis in one string named 'count'
+                    result = [];
+                    // Combine all tacs_count in one string named 'count'
                     let count = [];
                     data.forEach(row => count = count.concat(row[1]));
                     // Create a DataFrame from count
                     let df = new DataFrame(count);
-                    // GroupBy the level selected and include the count for each group
-                    let res = df.groupBy(level).aggregate(group => group.reduce((p, n) => n.get('freq') + p, 0)).rename('aggregation', 'groupCount').toArray();
-                    // Add the result to the data table
-                    googleData.addRows(res);
-                    data = googleData;
+
+                    if (filter !== undefined) {
+                        df = df.filter(value => value.get(filter.prevLevel) === filter.selection);
+                    }
+
+                    // GroupBy the level selected and include frequency
+                    result = df.groupBy(level).aggregate(group => group.reduce((p, n) => n.get('freq') + p, 0)).rename('aggregation', 'groupCount').toArray();
+                    result.unshift(['Term', 'Frequency']);
                     break;
                 }
                 case 'ColumnChart': {
-                    let result;
+                    result = undefined;
                     // Counter for groups iterated 
                     let group = 0;
                     // Counter for files iterated
@@ -256,37 +257,41 @@ export default class TacsChart extends HTMLElement {
                             result = result.withColumn(group + 1, (_, index) => res[index][1]);
                         file += fileCount;
                     })
-                    data = GoogleCharts.api.visualization.arrayToDataTable(result.toArray());
-                    options.chartArea = { width: '85%', height: '80%' };
+                    result = result.toArray();
                     this.querySelector('.tacs-container').style.marginTop = '1.5rem';
+                    options.chartArea = { width: '85%', height: '80%' };
                     break;
                 }
                 case 'BarChart': {
-                    let result = [];
+                    result = [];
                     data.forEach(row => {
                         let df = new DataFrame(row[1]);
-                        // GroupBy the level selected and include the count for each group
-                        let res = df.groupBy(level).aggregate(group => group.reduce((p, n) => n.get('freq') + p, 0)).rename('aggregation', 'groupCount').toArray();
-                        res.unshift(['file', row[0]]);
-                        // TODO: Make row[2] to blob
+                        if (filter !== undefined) {
+                            df = df.filter(value => value.get(filter.prevLevel) === filter.selection);
+                        }
+                        // GroupBy the level selected and include frequency
+                        let temp = df.groupBy(level).aggregate(group => group.reduce((p, n) => n.get('freq') + p, 0)).rename('aggregation', 'groupCount').toArray();
+                        temp.unshift(['file', row[0]]);
+                        // Create a link for tacs_annotate
                         let blob = new Blob([row[2]], {
                             type: 'text/html;charset=utf-8'
                         });
                         let url = URL.createObjectURL(blob);
-                        res.push(["link", url]);
-                        res = Object.fromEntries(res);
-                        result.push(res);
+                        temp.push(["link", url]);
+                        // Append to result as object
+                        result.push(Object.fromEntries(temp));
                     });
-                    options.isStacked = 'percent';
                     let df = new DataFrame(result);
                     result = df.toArray();
                     result.unshift(df.listColumns());
                     result[0][result[0].indexOf('link')] = { role: 'link' };
-                    data = GoogleCharts.api.visualization.arrayToDataTable(result);
+                    // Extra Options for Chart
+                    options.isStacked = 'percent';
                     options.chartArea = { width: '80%', height: '80%' };
                     break;
                 }
             }
+            data = GoogleCharts.api.visualization.arrayToDataTable(result);
         }
 
         // The below conditional statements outline the default behaviour

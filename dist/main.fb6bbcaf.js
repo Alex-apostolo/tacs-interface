@@ -11253,6 +11253,11 @@ function (_HTMLElement) {
       levels.forEach(function (element) {
         var level = 'dict';
         var filter;
+        var displayName = {
+          cat: 'Category',
+          dict: 'Dictionary',
+          concept: 'Concept'
+        };
 
         switch (element.innerText) {
           case 'All':
@@ -11267,12 +11272,18 @@ function (_HTMLElement) {
 
               case 'Concept Security':
                 level = 'concept';
-                filter = 'Security';
+                filter = {
+                  prevLevel: 'dict',
+                  selection: 'Security'
+                };
                 break;
 
               case 'Concept Context':
                 level = 'concept';
-                filter = 'Context';
+                filter = {
+                  prevLevel: 'dict',
+                  selection: 'Context'
+                };
                 break;
             }
 
@@ -11284,12 +11295,18 @@ function (_HTMLElement) {
 
           case 'Security':
             level = 'cat';
-            filter = 'Security';
+            filter = {
+              prevLevel: 'dict',
+              selection: 'Security'
+            };
             break;
 
           case 'Context':
             level = 'cat';
-            filter = 'Context';
+            filter = {
+              prevLevel: 'dict',
+              selection: 'Context'
+            };
             break;
 
           case 'Threat Actor':
@@ -11304,15 +11321,24 @@ function (_HTMLElement) {
           case 'Activity':
           case 'Organasation':
             level = 'concept';
-            filter = element.innerText;
+            filter = {
+              prevLevel: 'cat',
+              selection: element.innerText
+            };
             break;
         }
 
         element.addEventListener('mousedown', function () {
-          // this.drawChart({ type: this.type, data: this.data, options: this.options, level: level, groups: this.groups })
-          // dropdownBtn.innerText = element.innerText;
-          console.log(level);
-          console.log(filter);
+          _this2.drawChart({
+            type: _this2.type,
+            data: _this2.data,
+            options: _this2.options,
+            level: level,
+            filter: filter,
+            groups: _this2.groups
+          });
+
+          _this2.querySelector('.menu-hover').innerText = displayName[_this2.level];
         });
       });
       this.hasAttribute('type') ? this.drawChart({
@@ -11329,23 +11355,25 @@ function (_HTMLElement) {
           data = _ref.data,
           _ref$level = _ref.level,
           level = _ref$level === void 0 ? 'dict' : _ref$level,
+          filter = _ref.filter,
           options = _ref.options,
           groups = _ref.groups;
 
       this.level = level;
+      this.filter = filter;
       this.type = type;
       this.data = data;
       this.options = options;
       this.groups = groups; // Set a callback to run when the Google Visualization API is loaded.
 
-      _googleCharts.GoogleCharts.load(this.drawChartCallback.bind(this, type, data, level, options, groups));
+      _googleCharts.GoogleCharts.load(this.drawChartCallback.bind(this, type, data, level, filter, options, groups));
     } // Callback that creates and populates a data table,
     // instantiates the pie chart, passes in the data and
     // draws it.
 
   }, {
     key: "drawChartCallback",
-    value: function drawChartCallback(type, data, level, options, groups) {
+    value: function drawChartCallback(type, data, level, filter, options, groups) {
       if (options === undefined) {
         // Set chart options
         options = {
@@ -11387,35 +11415,39 @@ function (_HTMLElement) {
 
       if (data !== undefined) {
         // Draw based on level
+        var result;
+
         switch (type) {
           case 'PieChart':
             {
-              // Make data table for Google Chart
-              var googleData = new _googleCharts.GoogleCharts.api.visualization.DataTable();
-              googleData.addColumn('string', 'terms');
-              googleData.addColumn('number', 'frequency'); // Combine all tacs_count analysis in one string named 'count'
+              result = []; // Combine all tacs_count in one string named 'count'
 
               var count = [];
               data.forEach(function (row) {
                 return count = count.concat(row[1]);
               }); // Create a DataFrame from count
 
-              var df = new _dataframeJs.default(count); // GroupBy the level selected and include the count for each group
+              var df = new _dataframeJs.default(count);
 
-              var res = df.groupBy(level).aggregate(function (group) {
+              if (filter !== undefined) {
+                df = df.filter(function (value) {
+                  return value.get(filter.prevLevel) === filter.selection;
+                });
+              } // GroupBy the level selected and include frequency
+
+
+              result = df.groupBy(level).aggregate(function (group) {
                 return group.reduce(function (p, n) {
                   return n.get('freq') + p;
                 }, 0);
-              }).rename('aggregation', 'groupCount').toArray(); // Add the result to the data table
-
-              googleData.addRows(res);
-              data = googleData;
+              }).rename('aggregation', 'groupCount').toArray();
+              result.unshift(['Term', 'Frequency']);
               break;
             }
 
           case 'ColumnChart':
             {
-              var result; // Counter for groups iterated 
+              result = undefined; // Counter for groups iterated 
 
               var group = 0; // Counter for files iterated
 
@@ -11442,49 +11474,53 @@ function (_HTMLElement) {
                 });
                 file += fileCount;
               });
-              data = _googleCharts.GoogleCharts.api.visualization.arrayToDataTable(result.toArray());
+              result = result.toArray();
+              this.querySelector('.tacs-container').style.marginTop = '1.5rem';
               options.chartArea = {
                 width: '85%',
                 height: '80%'
               };
-              this.querySelector('.tacs-container').style.marginTop = '1.5rem';
               break;
             }
 
           case 'BarChart':
             {
-              var _result = [];
+              result = [];
               data.forEach(function (row) {
-                var df = new _dataframeJs.default(row[1]); // GroupBy the level selected and include the count for each group
+                var df = new _dataframeJs.default(row[1]);
 
-                var res = df.groupBy(level).aggregate(function (group) {
+                if (filter !== undefined) {
+                  df = df.filter(function (value) {
+                    return value.get(filter.prevLevel) === filter.selection;
+                  });
+                } // GroupBy the level selected and include frequency
+
+
+                var temp = df.groupBy(level).aggregate(function (group) {
                   return group.reduce(function (p, n) {
                     return n.get('freq') + p;
                   }, 0);
                 }).rename('aggregation', 'groupCount').toArray();
-                res.unshift(['file', row[0]]); // TODO: Make row[2] to blob
+                temp.unshift(['file', row[0]]); // Create a link for tacs_annotate
 
                 var blob = new Blob([row[2]], {
                   type: 'text/html;charset=utf-8'
                 });
                 var url = URL.createObjectURL(blob);
-                res.push(["link", url]);
-                res = Object.fromEntries(res);
+                temp.push(["link", url]); // Append to result as object
 
-                _result.push(res);
+                result.push(Object.fromEntries(temp));
               });
-              options.isStacked = 'percent';
 
-              var _df = new _dataframeJs.default(_result);
+              var _df = new _dataframeJs.default(result);
 
-              _result = _df.toArray();
-
-              _result.unshift(_df.listColumns());
-
-              _result[0][_result[0].indexOf('link')] = {
+              result = _df.toArray();
+              result.unshift(_df.listColumns());
+              result[0][result[0].indexOf('link')] = {
                 role: 'link'
-              };
-              data = _googleCharts.GoogleCharts.api.visualization.arrayToDataTable(_result);
+              }; // Extra Options for Chart
+
+              options.isStacked = 'percent';
               options.chartArea = {
                 width: '80%',
                 height: '80%'
@@ -11492,6 +11528,8 @@ function (_HTMLElement) {
               break;
             }
         }
+
+        data = _googleCharts.GoogleCharts.api.visualization.arrayToDataTable(result);
       } // The below conditional statements outline the default behaviour
 
 
@@ -11805,7 +11843,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50258" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50085" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
