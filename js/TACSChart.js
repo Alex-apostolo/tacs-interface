@@ -225,11 +225,9 @@ export default class TacsChart extends HTMLElement {
                     data.forEach(row => count = count.concat(row[1]));
                     // Create a DataFrame from count
                     let df = new DataFrame(count);
-
                     if (filter !== undefined) {
                         df = df.filter(value => value.get(filter.prevLevel) === filter.selection);
                     }
-
                     // GroupBy the level selected and include frequency
                     result = df.groupBy(level).aggregate(group => group.reduce((p, n) => n.get('freq') + p, 0)).rename('aggregation', 'groupCount').toArray();
                     result.unshift(['Term', 'Frequency']);
@@ -247,7 +245,10 @@ export default class TacsChart extends HTMLElement {
                         for (let i = file; i < fileCount + file; i++)
                             count = count.concat(data[i][1]);
                         // Create a DataFrame from count
-                        const df = new DataFrame(count);
+                        let df = new DataFrame(count);
+                        if (filter !== undefined) {
+                            df = df.filter(value => value.get(filter.prevLevel) === filter.selection);
+                        }
                         // GroupBy the level selected and include the count for each group
                         const res = df.groupBy(level).aggregate(group => group.reduce((p, n) => n.get('freq') + p, 0)).rename('aggregation', 'groupCount').toArray();
                         res.unshift(['Term', 'Group ' + ++group]);

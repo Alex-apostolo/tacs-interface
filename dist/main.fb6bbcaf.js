@@ -11461,7 +11461,14 @@ function (_HTMLElement) {
                 } // Create a DataFrame from count
 
 
-                var df = new _dataframeJs.default(count); // GroupBy the level selected and include the count for each group
+                var df = new _dataframeJs.default(count);
+
+                if (filter !== undefined) {
+                  df = df.filter(function (value) {
+                    return value.get(filter.prevLevel) === filter.selection;
+                  });
+                } // GroupBy the level selected and include the count for each group
+
 
                 var res = df.groupBy(level).aggregate(function (group) {
                   return group.reduce(function (p, n) {
@@ -11843,7 +11850,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50085" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50146" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
