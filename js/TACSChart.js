@@ -292,7 +292,7 @@ export default class TacsChart extends HTMLElement {
                     result[0][result[0].indexOf('link')] = { role: 'link' };
                     // Extra Options for Chart
                     options.isStacked = 'percent';
-                    options.chartArea = { width: '80%', height: '80%' };
+                    options.chartArea = { width: '70%', height: '80%' };
                     break;
                 }
             }
@@ -354,7 +354,9 @@ export default class TacsChart extends HTMLElement {
         else
             chart = new GoogleCharts.api.visualization.PieChart(this.querySelector('.tacs-container'));
 
-
+        GoogleCharts.api.visualization.events.addListener(chart, 'error', err => {
+            GoogleCharts.api.visualization.errors.removeError(err.id);
+        })
         chart.draw(data, options);
     }
 

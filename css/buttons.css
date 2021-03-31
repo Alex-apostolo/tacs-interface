@@ -30,7 +30,7 @@
     background-color: #1e2761;
     width: 12px;
     height: 2px;
-    left: 15%;
+    left: 16.5%;
     top: 34%;
     content: " ";
 }
@@ -44,7 +44,7 @@
     height: 22.4px;
     margin-top: 4px;
     margin-bottom: 4px;
-    border: 1.968px solid;
+    border: 1.9px solid;
     border-radius: 50%;
     border-color: #408ec6;
     background-color: whitesmoke;
@@ -205,17 +205,19 @@ input[type="file"]::-webkit-file-upload-button {
 
 /* HOVER */
 /*  */
-.add-btn:hover, .minus-btn:hover, .apply-btn:hover, .menu-hover:hover, .menu li button:hover, input[type="file"]::-webkit-file-upload-button:hover{
-    background-color: #408ec6;
-    transition: 0.3s;
-}
+@media (hover: hover) and (pointer: fine){
+    .add-btn:hover, .minus-btn:hover, .apply-btn:hover, .menu-hover:hover, .menu li button:hover, input[type="file"]::-webkit-file-upload-button:hover{
+        background-color: #408ec6;
+        transition: 0.3s;
+    }
 
-input[type="file"]::-ms-browse:hover {
-    background-color: #408ec6;
-    transition: 0.3s;
-}
+    input[type="file"]::-ms-browse:hover {
+        background-color: #408ec6;
+        transition: 0.3s;
+    }
 
-#easter-egg:hover {
-    border-top: 32px solid #408ec6;
-    transition: 0.3s;
+    #easter-egg:hover {
+        border-top: 32px solid #408ec6;
+        transition: 0.3s;
+    }
 }

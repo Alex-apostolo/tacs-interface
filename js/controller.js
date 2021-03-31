@@ -27,7 +27,7 @@ form.addEventListener('submit', e => {
         });
     });
 
-    if (true) {
+    if (false) {
         groups = [1, 1]
     }
 

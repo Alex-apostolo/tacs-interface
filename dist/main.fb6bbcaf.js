@@ -11534,7 +11534,7 @@ function (_HTMLElement) {
 
               options.isStacked = 'percent';
               options.chartArea = {
-                width: '80%',
+                width: '70%',
                 height: '80%'
               };
               break;
@@ -11582,6 +11582,11 @@ function (_HTMLElement) {
           window.open(link);
         });
       } else chart = new _googleCharts.GoogleCharts.api.visualization.PieChart(this.querySelector('.tacs-container'));
+
+      _googleCharts.GoogleCharts.api.visualization.events.addListener(chart, 'error', function (err) {
+        _googleCharts.GoogleCharts.api.visualization.errors.removeError(err.id);
+      });
+
       chart.draw(data, options);
     }
   }], [{
@@ -11629,7 +11634,7 @@ form.addEventListener('submit', function (e) {
     });
   });
 
-  if (true) {
+  if (false) {
     groups = [1, 1];
   }
 
@@ -11859,7 +11864,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52112" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63582" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
