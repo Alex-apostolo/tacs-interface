@@ -11234,7 +11234,7 @@ function (_HTMLElement) {
     value: function connectedCallback() {
       var _this2 = this;
 
-      this.innerHTML = "\n            <style>\n                tacs-chart {\n                    position: relative;\n                }\n\n                tacs-chart .menu {\n                    position: absolute;\n                    top: 0;\n                    left: 0;\n                    z-index: 2;\n                }\n\n                tacs-chart .minus-btn {\n                    position: absolute;\n                    top: 0;\n                    right: 0;\n                }\n\n                tacs-chart .tacs-container {\n                    margin-bottom: 40px;\n                }\n            </style>\n            <div class=\"menu\">\n                <button class=\"menu-hover\">Dictionary</button>\n                <ul>\n                    <li><button class=\"level\">Dictionary</button></li>\n                    <li class=\"sub-menu\"><button>Category</button>\n                        <ul>\n                            <li><button class=\"level\" data-type=\"Category\">All</button></li>\n                            <li><button class=\"level\">Security</button></li>\n                            <li><button class=\"level\">Context</button></li>\n                        </ul>\n                    </li>\n                    <li class=\"sub-menu\"><button>Concept</button>\n                        <ul>\n                            <li><button class=\"level\" data-type=\"Concept\">All</button></li>\n                            <li class=\"sub-menu\"><button>Security</button>\n                                <ul>\n                                    <li><button class=\"level\" data-type=\"Concept Security\">All</button></li>\n                                    <li><button class=\"level\">Threat Actor</button></li>\n                                    <li><button class=\"level\">Threat General</button></li>\n                                    <li><button class=\"level\">Threat Mechanism</button></li>\n                                    <li><button class=\"level\">Safety Actor</button></li>\n                                    <li><button class=\"level\">Safety General</button></li>\n                                    <li><button class=\"level\">Safety Mechanism</button></li>\n                                </ul>\n                            </li>\n                            <li class=\"sub-menu\"><button>Context</button>\n                                <ul>\n                                    <li><button class=\"level\" data-type=\"Concept Context\">All</button></li>\n                                    <li><button class=\"level\">Individual</button></li>\n                                    <li><button class=\"level\">Cyber Entity</button></li>\n                                    <li><button class=\"level\">Quality</button></li>\n                                    <li><button class=\"level\">Activity</button></li>\n                                    <li><button class=\"level\">Organasation</button></li>\n                                </ul>\n                            </li>\n                        </ul>\n                    </li>\n                </ul>\n            </div>\n            <div class=\"tacs-container\"></div>\n        ";
+      this.innerHTML = "\n            <style>\n                tacs-chart {\n                    position: relative;\n                    max-width: 100vw;\n                }\n\n                tacs-chart .menu {\n                    position: absolute;\n                    top: 0;\n                    z-index: 2;\n                }\n\n                tacs-chart .minus-btn {\n                    position: absolute;\n                    top: 0;\n                    right: 10px;\n                }\n\n                tacs-chart .tacs-container {\n                    margin-bottom: 40px;\n                }\n            </style>\n            <div class=\"menu\">\n                <button class=\"menu-hover\">Dictionary</button>\n                <ul>\n                    <li><button class=\"level\">Dictionary</button></li>\n                    <li class=\"sub-menu\"><button>Category</button>\n                        <ul>\n                            <li><button class=\"level\" data-type=\"Category\">All</button></li>\n                            <li><button class=\"level\">Security</button></li>\n                            <li><button class=\"level\">Context</button></li>\n                        </ul>\n                    </li>\n                    <li class=\"sub-menu\"><button>Concept</button>\n                        <ul>\n                            <li><button class=\"level\" data-type=\"Concept\">All</button></li>\n                            <li class=\"sub-menu\"><button>Security</button>\n                                <ul>\n                                    <li><button class=\"level\" data-type=\"Concept Security\">All</button></li>\n                                    <li><button class=\"level\">Threat Actor</button></li>\n                                    <li><button class=\"level\">Threat General</button></li>\n                                    <li><button class=\"level\">Threat Mechanism</button></li>\n                                    <li><button class=\"level\">Safety Actor</button></li>\n                                    <li><button class=\"level\">Safety General</button></li>\n                                    <li><button class=\"level\">Safety Mechanism</button></li>\n                                </ul>\n                            </li>\n                            <li class=\"sub-menu\"><button>Context</button>\n                                <ul>\n                                    <li><button class=\"level\" data-type=\"Concept Context\">All</button></li>\n                                    <li><button class=\"level\">Individual</button></li>\n                                    <li><button class=\"level\">Cyber Entity</button></li>\n                                    <li><button class=\"level\">Quality</button></li>\n                                    <li><button class=\"level\">Activity</button></li>\n                                    <li><button class=\"level\">Organasation</button></li>\n                                </ul>\n                            </li>\n                        </ul>\n                    </li>\n                </ul>\n            </div>\n            <div class=\"tacs-container\"></div>\n        ";
 
       if (this.hasAttribute('showminus')) {
         var showMinus = this.getAttribute('showminus');
@@ -11374,11 +11374,16 @@ function (_HTMLElement) {
   }, {
     key: "drawChartCallback",
     value: function drawChartCallback(type, data, level, filter, options, groups) {
+      // let dev_width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+      var dev_width = screen.width;
+      var width = dev_width > 420 ? 420 : dev_width;
+      var height = dev_width > 420 ? 320 : width / 420 * 320;
+
       if (options === undefined) {
         // Set chart options
         options = {
-          width: 420,
-          height: 320,
+          width: width - 35,
+          height: height,
           backgroundColor: '#1f2761',
           chartArea: {
             width: '100%',
@@ -11484,8 +11489,8 @@ function (_HTMLElement) {
               result = result.toArray();
               this.querySelector('.tacs-container').style.marginTop = '1.5rem';
               options.chartArea = {
-                width: '50%',
-                height: '50%'
+                width: '100%',
+                height: '70%'
               };
               break;
             }
@@ -11819,6 +11824,11 @@ comparissonBtn.addEventListener('click', function () {
     'level': oldChart.level,
     'data': oldChart.data,
     'groups': oldChart.groups
+  });
+  newChart.drawChart({
+    'type': oldChart.type,
+    'level': oldChart.level,
+    'data': oldChart.data
   });
 });
 },{"./particles.js":"js/particles.js","./BrowseInput.js":"js/BrowseInput.js","./TacsChart.js":"js/TacsChart.js","./controller.js":"js/controller.js"}],"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {

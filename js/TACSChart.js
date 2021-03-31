@@ -31,19 +31,19 @@ export default class TacsChart extends HTMLElement {
             <style>
                 tacs-chart {
                     position: relative;
+                    max-width: 100vw;
                 }
 
                 tacs-chart .menu {
                     position: absolute;
                     top: 0;
-                    left: 0;
                     z-index: 2;
                 }
 
                 tacs-chart .minus-btn {
                     position: absolute;
                     top: 0;
-                    right: 0;
+                    right: 10px;
                 }
 
                 tacs-chart .tacs-container {
@@ -178,11 +178,15 @@ export default class TacsChart extends HTMLElement {
     // instantiates the pie chart, passes in the data and
     // draws it.
     drawChartCallback(type, data, level, filter, options, groups) {
+        // let dev_width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+        let dev_width = screen.width;
+        let width = dev_width > 420 ? 420 : dev_width;
+        let height = dev_width > 420 ? 320 : (width / 420) * 320;
         if (options === undefined) {
             // Set chart options
             options = {
-                width: 420,
-                height: 320,
+                width: width - 35,
+                height: height,
                 backgroundColor: '#1f2761',
                 chartArea: { width: '100%', height: '80%' },
                 legend: {
@@ -260,7 +264,7 @@ export default class TacsChart extends HTMLElement {
                     })
                     result = result.toArray();
                     this.querySelector('.tacs-container').style.marginTop = '1.5rem';
-                    options.chartArea = { width: '50%', height: '50%' };
+                    options.chartArea = { width: '100%', height: '70%' };
                     break;
                 }
                 case 'BarChart': {
