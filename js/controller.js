@@ -1,7 +1,6 @@
 import { DataFrame } from "dataframe-js";
 import TacsChart from "./TacsChart";
 
-const backend = 'http://127.0.0.1:5000'
 
 // Add event listener for submitting the files
 const body = document.querySelector('body');
@@ -39,7 +38,7 @@ form.addEventListener('submit', e => {
     loader.style.display = 'flex';
     body.classList.add('stop-scrolling');
 
-    fetch(backend + '/tacs', {
+    fetch('http://localhost:8080/api', {
         method: 'POST',
         body: formData
     })
@@ -59,7 +58,7 @@ form.addEventListener('submit', e => {
 });
 
 const responseHandler = (groups, response) => {
-    
+    // console.log(response);
     // Add event listener for Exporting
     const exp = document.getElementById('export');
     exp.addEventListener('click', () => {

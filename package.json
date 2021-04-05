@@ -2,7 +2,7 @@
   "name": "tacs-interface",
   "version": "1.0.0",
   "description": "A powerful tool that uses our Cyber Security dictionary to analyse your documents",
-  "main": "js/index.js",
+  "main": "js/main.js",
   "scripts": {
     "start": "parcel serve index.html --open \"/Applications/Google Chrome Debug.app/Contents/MacOS/Google Chrome Debug\"",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.13.8",
-    "@babel/plugin-proposal-class-properties": "^7.13.0"
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "cssnano": "^4.1.10"
   }
 }

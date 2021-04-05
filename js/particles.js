@@ -8,7 +8,7 @@ export default function () {
         maxParticles: 70
     });
 
-    particles.pauseAnimation();
+    // particles.pauseAnimation();
     let paused = false;
     const background = document.getElementsByClassName('background')[0];
     const toggle_btn = document.getElementById('easter-egg');

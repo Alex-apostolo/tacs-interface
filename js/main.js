@@ -38,7 +38,6 @@ comparissonBtn.addEventListener('click', () => {
     newChart.setAttribute('showminus', 'true');
     document.querySelector('#groups .chart-container').append(newChart);
     newChart.drawChart({'type': oldChart.type, 'level': oldChart.level, 'data': oldChart.data, 'groups': oldChart.groups});
-    newChart.drawChart({'type': oldChart.type, 'level': oldChart.level, 'data': oldChart.data});
 })
 
 

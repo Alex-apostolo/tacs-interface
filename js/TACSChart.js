@@ -37,7 +37,7 @@ export default class TacsChart extends HTMLElement {
                 tacs-chart .menu {
                     position: absolute;
                     top: 0;
-                    z-index: 2;
+                    z-index: 10;
                 }
 
                 tacs-chart .minus-btn {
@@ -256,10 +256,7 @@ export default class TacsChart extends HTMLElement {
                         // GroupBy the level selected and include the count for each group
                         const res = df.groupBy(level).aggregate(group => group.reduce((p, n) => n.get('freq') + p, 0)).rename('aggregation', 'groupCount').toArray();
                         res.unshift(['Term', 'Group ' + ++group]);
-                        if (result === undefined)
-                            result = new DataFrame(res);
-                        else
-                            result = result.withColumn(group + 1, (_, index) => res[index][1]);
+                        result = result === undefined ? new DataFrame(res) : result.withColumn(group + 1, (_, index) => index < res.length ? res[index][1] : 0);
                         file += fileCount;
                     })
                     result = result.toArray();
@@ -292,7 +289,7 @@ export default class TacsChart extends HTMLElement {
                     result[0][result[0].indexOf('link')] = { role: 'link' };
                     // Extra Options for Chart
                     options.isStacked = 'percent';
-                    options.chartArea = { width: '70%', height: '80%' };
+                    options.chartArea = { width: '80%', height: '80%' };
                     break;
                 }
             }
