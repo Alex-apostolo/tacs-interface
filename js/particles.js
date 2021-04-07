@@ -5,7 +5,7 @@ export default function () {
         selector: '.background',
         connectParticles: 'true',
         color: '#408ec6',
-        maxParticles: 70
+        maxParticles: 30
     });
 
     // particles.pauseAnimation();

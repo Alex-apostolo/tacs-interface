@@ -13,16 +13,17 @@ form.addEventListener('submit', e => {
     const formData = new FormData();
     const browseInput = document.querySelectorAll('browse-input');
     let groups = [];
+    let size = 0;
 
     browseInput.forEach(selectedInput => {
         const selectedFiles = selectedInput.querySelectorAll('input');
         selectedFiles.forEach(selectedFiles => {
             if (selectedFiles.files.length !== 0)
                 groups.push(selectedFiles.files.length);
-            for (let i = 0; i < selectedFiles.files.length; i++) {
-                // Add additional data to file to indicate that its in a specific group
-                formData.append('file', selectedFiles.files[i]);
-            }
+            selectedFiles.files.forEach((file) => {
+                size += file.size;
+                formData.append('file', file);
+            });
         });
     });
 
@@ -30,21 +31,30 @@ form.addEventListener('submit', e => {
         groups = [1, 1]
     }
 
+    // Error Handling
     if( (groups.length === 0) || (groups.reduce((p,n) => p + n, 0) === 0) ) {
         alert('No file(s) selected');
         return;
     }
 
+    // 100MB
+    if( size > 1000000000) {
+        alert('Files cannot be more than 100MB');
+        return;
+    }
+
     loader.style.display = 'flex';
     body.classList.add('stop-scrolling');
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    sleep(1000);
 
-    fetch('http://localhost:8080/api', {
+    fetch('http://tacs.dev/api', {
         method: 'POST',
         body: formData
     })
         .then(response => response.json())
         .then(response => responseHandler(groups, response))
-        // .catch(error => alert(error))
+        .catch(error => alert('Internal error, try splitting your documents in smaller chunks and trying again.\n\nINFO: MAXIMUM CHARACTERS: 100,000 MAXIMUM SIZE: 100MB'))
         .finally(() => {
             setTimeout(() => {
                 loader.style.display = 'none';
